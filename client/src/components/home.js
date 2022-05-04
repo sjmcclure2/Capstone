@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Box, Card } from '@mui/material';
 import AirCraftCard from './aircraftcard';
+import FlyingSchedule from './flyingschedule';
 
 
 const ACInfo = [
@@ -70,6 +71,5 @@ function Home () {
     </Box>
   )
 }
-
 export default Home;
 
