@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Box, Card, Paper, Stack, Divider} from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { ACInfo } from '../constants';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -9,6 +10,9 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
+
+const planes = ACInfo
+console.log(planes[0].call_sign)
 
 function FlyingSchedule () {
   return(
@@ -21,7 +25,7 @@ function FlyingSchedule () {
             spacing={2}
             justifyContent='center'
         >          
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
+          <Item> {planes[0].call_sign} <br/> 0700-0945 <br/> 59-0001</Item>
           <Item>Reaper - 130 <br/> 0700-0945 <br/> 85-0080</Item>
           <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
           <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>

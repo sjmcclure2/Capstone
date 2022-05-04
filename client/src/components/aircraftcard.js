@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Card, Grid } from '@mui/material';
-import { styled } from '@mui/system'
+import { Card, Grid, Container } from '@mui/material';
+// import { styled } from '@mui/system'
 
 // const AircraftC = styled('Card')({
-//   border: 10
+
 // })
 
 function locationFinder(plane) {
@@ -17,7 +17,6 @@ function locationFinder(plane) {
 }
 
 function AirCraftCard({ aircraft }) {
-  // const classes = useStyles();
   let planes = aircraft
   const results = planes.map((plane)=>{
     if(plane.eng_start != null && plane.eng_start.length > 8) {
@@ -25,16 +24,26 @@ function AirCraftCard({ aircraft }) {
       console.log(plane.eng_start)
     }
     return(
-      <Card >
+      <Container style={{
+        minHeight: "10vh",
+        backgroundColor: "grey",
+        pageBreakAfter: "auto",
+        fontSize: "1.4vh",
+        marginTop: "1vh",
+        padding: "1vh",
+        textAlign: "center",
+        borderRadius: "5px",
+        minWidth: "15vw"
+      }} >
         <Grid container spacing={1} columns={10} rowSpacing={1}>
           <Grid item xs={2}>
             <Card>AC: {plane.tail_number}</Card>
           </Grid>
           <Grid item xs={2}>
-            <Card>{plane.actual_launch != null ? `Actual TO: ${plane.actual_launch.slice(11,19)}` : `Sched TO: ${plane.projected_launch.slice(11,19)}`}</Card>
+            <Card>{plane.actual_launch != null ? `Actual TO: ${plane.actual_launch.slice(11,16)}` : `Sched TO: ${plane.projected_launch.slice(11,16)}`}</Card>
           </Grid>
           <Grid item xs={2}>
-            <Card> {plane.crew_show != null ? `Crew Show: ${plane.crew_show.slice(11,19)}` : `Crew Rdy: ${plane.crew_ready.slice(11,19)}` }</Card>
+            <Card> {plane.crew_show != null ? `Crew Show: ${plane.crew_show.slice(11,16)}` : `Crew Rdy: ${plane.crew_ready.slice(11,16)}` }</Card>
           </Grid>
           <Grid item xs={2}>
             <Card>{plane.crew_show != null ? `Eng Start: ${plane.eng_start}`: `Crew Show: ${plane.crew_show}`}</Card>
@@ -46,7 +55,7 @@ function AirCraftCard({ aircraft }) {
             <Card>{plane.call_sign}</Card>
           </Grid>
           <Grid item xs={2}>
-            <Card>{plane.actual_land != null ? `Actual Land: ${plane.actual_land.slice(11,19)}` : `Sched Land: ${plane.projected_land.slice(11,19)}`}</Card>
+            <Card>{plane.actual_land != null ? `Actual Land: ${plane.actual_land.slice(11,16)}` : `Sched Land: ${plane.projected_land.slice(11,16)}`}</Card>
           </Grid>
           <Grid item xs={2}>
             <Card>Sortie: {plane.sortie_id}</Card>
@@ -58,7 +67,7 @@ function AirCraftCard({ aircraft }) {
             <Card>Target: {plane.req_fuel}k</Card>
           </Grid>
         </Grid>
-      </Card>
+      </Container>
     )
   })
 
