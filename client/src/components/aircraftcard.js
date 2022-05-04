@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, Grid } from '@mui/material';
 
-function locationFinder({ plane }) {
+function locationFinder(plane) {
   console.log(plane)
   if(plane.actual_launch == null) {
     return (`Location: ${plane.launch_location}`)
