@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, {useState, useEffect } from 'react';
 import { Card, Grid, Container } from '@mui/material';
-// import { styled } from '@mui/system'
+import Button from '@mui/material/Button';
+import AircraftModal from './aircraftmodal';
+import { ACInfo } from '../constants';
 
-// const AircraftC = styled('Card')({
-
-// })
 
 function locationFinder(plane) {
   if(plane.actual_launch == null) {
@@ -16,9 +15,11 @@ function locationFinder(plane) {
   }
 }
 
-function AirCraftCard({ aircraft }) {
-  let planes = aircraft
-  const results = planes.map((plane)=>{
+function AirCraftCard() {
+  const[aircraft, setAircracft] = useState(ACInfo);
+  const[sorties, setSorties] = useState();
+  
+  const results = aircraft.map((plane)=>{
     if(plane.eng_start != null && plane.eng_start.length > 8) {
       plane.eng_start = plane.eng_start.slice(11,19)
       console.log(plane.eng_start)
@@ -67,6 +68,7 @@ function AirCraftCard({ aircraft }) {
             <Card>Target: {plane.req_fuel}k</Card>
           </Grid>
         </Grid>
+        <AircraftModal/>
       </Container>
     )
   })

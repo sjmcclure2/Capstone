@@ -4,13 +4,13 @@ import AirCraftCard from './aircraftcard';
 import { ACInfo } from '../constants';
 
 
-
 function Home () {
   const [fliers, setFliers] = React.useState(ACInfo)
   return(
     <Box>
-     <AirCraftCard aircraft={fliers}/>
+     <AirCraftCard aircraft={fliers} />
    </Box>
   )
 }
+
 export default Home;

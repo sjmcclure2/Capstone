@@ -26,7 +26,6 @@ import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import RedBall from './components/redball';
 import ScheduledMx from './components/scheduledmx';
-import AircraftStatus from './components/aircraftstatus';
 
 const drawerWidth = 240;
 
@@ -44,7 +43,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
+      marginLeft: 0
     }),
   }),
 );
@@ -93,7 +92,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex', backgroundColor: '#242423', height: '100%' }}>
+    <Box sx={{ display: 'flex', height: '100%', width: '100%', backgroundColor: '#C5C1C0'}}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx={{backgroundColor: '#3b3a38', borderLeft: '1px solid', borderColor: '#242423'}}>

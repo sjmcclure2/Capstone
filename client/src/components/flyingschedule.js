@@ -1,16 +1,8 @@
 import * as React from 'react';
-import { Box, Card, Paper, Stack, Divider, Typography } from '@mui/material';
+import { Box, Card, Container, Paper, Stack, Divider, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { ACInfo } from '../constants';
 import { add, format } from 'date-fns'
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
 
 const dates = [
   {id: '1', day: Date()},
@@ -24,34 +16,45 @@ function FlyingSchedule () {
   const [sorties, setSorties] = React.useState(ACInfo)
 
   return(
-    <div>
+    <Container>
       {dates.map(date => ( 
         <Card sx={{
           textAlign: 'center', 
           margin: '10px', 
-          paddingBottom: '10px', 
-          paddingLeft: '10px',
-          backgroundColor: 'lightgray'}}
+          padding: '10px',
+          backgroundColor: '#1A2930'}}
         >  
-          <h3>{format(new Date(date.day), 'PPPP')}</h3>  
+          <h3 style={{color:'white'}}>{format(new Date(date.day), 'PPPP')}</h3>  
             <Stack
               direction="row"
               spacing={2}
               sx={{justifyContent:"center"}}
             >
               {sorties.map(schedules => (
-                format(new Date(schedules.projected_launch), 'P') === format(new Date(date.day), 'P') ?       
-                    <Card sx={{textAlign:"center",padding: '5px'}}><br/>
-                      {schedules.call_sign}<br/>
-                      {format(new Date(schedules.projected_launch), 'km')} - {format(new Date(schedules.projected_land), 'km')}<br/>
-                      {schedules.tail_number}
-                    </Card> 
-                  :null
+                format(new Date(schedules.projected_launch), 'P') === format(new Date(date.day), 'P') ? 
+                  <div> 
+                    <div>    
+                      <Card sx={{textAlign:"center", padding: '5px', backgroundColor: '#FDFD96'}}>
+                        {schedules.call_sign}<br/>
+                        {format(new Date(schedules.projected_launch), 'km')}-{format(new Date(schedules.projected_land), 'km')}<br/>
+                        {schedules.tail_number}
+                      </Card> 
+                    </div>
+                    {sorties.indexOf(schedules.tail_number) > 1 ? 
+                      <div>
+                        <Card sx={{textAlign:"center", marginTop: '5px', padding: '5px', backgroundColor: '#F2CE3E'}}>
+                          New Card
+                        </Card>
+                      </div>
+                    : null
+                    }
+                  </div> 
+                :null
               ))}
             </Stack>
         </Card>
       ))}
-    </div>  
+    </Container>  
   )
 }
 
