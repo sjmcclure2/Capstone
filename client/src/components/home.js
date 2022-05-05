@@ -9,9 +9,8 @@ function Home () {
   const [fliers, setFliers] = React.useState(ACInfo)
   return(
     <Box>
-      <AirCraftCard aircraft={fliers}/>
-    </Box>
+     <AirCraftCard aircraft={fliers}/>
+   </Box>
   )
 }
 export default Home;
-

@@ -33,7 +33,7 @@ function AirCraftCard({ aircraft }) {
         padding: "1vh",
         textAlign: "center",
         borderRadius: "5px",
-        minWidth: "15vw"
+        minWidth: "15vw",
       }} >
         <Grid container spacing={1} columns={10} rowSpacing={1}>
           <Grid item xs={2}>

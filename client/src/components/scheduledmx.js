@@ -2,8 +2,9 @@ import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { TextField } from '@mui/material';
+import { Container, TextField } from '@mui/material';
 import Divider from '@mui/material/Divider';
+import { aircraft } from '../constants';
 
 const style = {
   width: 'auto',
@@ -12,6 +13,7 @@ const style = {
 
 export default function ScheduledMx() {
   return (
+    <Container>
     <List sx={style} component="nav" aria-label="mailbox folders">
       <ListItem button>
       <ListItemText primary="Tail Number" />
@@ -28,10 +30,11 @@ export default function ScheduledMx() {
         <ListItemText primary="Tail Number" />
       </ListItem>
     </List>
+    </Container>
   );
 }
 
-
+//This is a form for the scheduled mx
 {/* <Box
       component="form"
       sx={{

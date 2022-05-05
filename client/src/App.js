@@ -26,6 +26,7 @@ import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import RedBall from './components/redball';
 import ScheduledMx from './components/scheduledmx';
+import AircraftStatus from './components/aircraftstatus';
 
 const drawerWidth = 240;
 
@@ -77,7 +78,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const icons = [<AirlinesIcon />, <EngineeringIcon />, <ConnectingAirportsIcon />, <CalendarViewMonthIcon />, <NotificationImportantIcon /> ]
+  const icons = [
+    <AirlinesIcon color='primary'/>, 
+    <EngineeringIcon color='primary'/>, 
+    <ConnectingAirportsIcon color='primary'/>, 
+    <CalendarViewMonthIcon color='primary'/>, 
+    <NotificationImportantIcon color='primary'/> ]
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -87,10 +93,10 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#242423', height: '100%' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{backgroundColor: '#3b3a38', borderLeft: '1px solid', borderColor: '#242423'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -112,29 +118,29 @@ export default function PersistentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            borderColor: '#3b3a38'
           },
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+        <DrawerHeader sx={{backgroundColor: '#3b3a38'}}>
+          <Typography variant='h5' sx={{paddingRight: '25%', color: 'white', fontFamily: 'cursive'}}>SALT</Typography>
+          <IconButton onClick={handleDrawerClose} sx={{color: 'white'}}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        <List>
+        <List sx={{backgroundColor: '#3b3a38', height: '100%'}}>
           {['Fliers', 'Scheduled Mx', 'Fleet Status', 'Flying Schedule', 'New Red Ball'].map((text, index) => (
             <ListItem button component={Link} to={`/${text}`} key={text}>
               <ListItemIcon>
                 {icons[index]}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} sx={{color: 'white'}} />
             </ListItem>
           ))}
         </List>
-        <Divider />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

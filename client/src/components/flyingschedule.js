@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Box, Card, Paper, Stack, Divider} from '@mui/material';
+import { Box, Card, Paper, Stack, Divider, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { ACInfo } from '../constants';
+import { add, format } from 'date-fns'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -11,28 +12,46 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const planes = ACInfo
-console.log(planes[0].call_sign)
+const dates = [
+  {id: '1', day: Date()},
+  {id: '2', day: add(new Date(), {days: 1})},
+  {id: '3', day: add(new Date(), {days: 2})},
+  {id: '4', day: add(new Date(), {days: 3})},
+  {id: '5', day: add(new Date(), {days: 4})},
+]
 
 function FlyingSchedule () {
+  const [sorties, setSorties] = React.useState(ACInfo)
+
   return(
-    <Box>
-      <Card sx={{textAlign: 'center'}}>
-        <h1>Mon, 2 May 2022</h1>
-        <Stack 
-            direction="row"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-            justifyContent='center'
-        >          
-          <Item> {planes[0].call_sign} <br/> 0700-0945 <br/> 59-0001</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 85-0080</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
-        </Stack>  
-      </Card>
-    </Box>
+    <div>
+      {dates.map(date => ( 
+        <Card sx={{
+          textAlign: 'center', 
+          margin: '10px', 
+          paddingBottom: '10px', 
+          paddingLeft: '10px',
+          backgroundColor: 'lightgray'}}
+        >  
+          <h3>{format(new Date(date.day), 'PPPP')}</h3>  
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{justifyContent:"center"}}
+            >
+              {sorties.map(schedules => (
+                format(new Date(schedules.projected_launch), 'P') === format(new Date(date.day), 'P') ?       
+                    <Card sx={{textAlign:"center",padding: '5px'}}><br/>
+                      {schedules.call_sign}<br/>
+                      {format(new Date(schedules.projected_launch), 'km')} - {format(new Date(schedules.projected_land), 'km')}<br/>
+                      {schedules.tail_number}
+                    </Card> 
+                  :null
+              ))}
+            </Stack>
+        </Card>
+      ))}
+    </div>  
   )
 }
 

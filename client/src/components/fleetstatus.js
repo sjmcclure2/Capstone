@@ -1,91 +1,49 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { aircraft } from '../constants';
+import FiveDayForecast from './fivedayforecast';
+import { Avatar, Card } from '@mui/material';
+import { format } from 'date-fns';
 
 export default function ControlledAccordions() {
-  const [expanded, setExpanded] = React.useState(false);
-
+  const [expanded, setExpanded] = useState(false);
+  const [acft, setAcft] = useState(aircraft);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
   return (
-    <div>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            General settings
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
-          <Typography sx={{ color: 'text.secondary' }}>
-            You are currently not an owner
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
-            varius pulvinar diam eros in elit. Pellentesque convallis laoreet
-            laoreet.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            Advanced settings
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>
-            Filtering has been entirely disabled for whole web server
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-            amet egestas eros, vitae egestas augue. Duis vel est augue.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel4bh-content"
-          id="panel4bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>Personal data</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-            amet egestas eros, vitae egestas augue. Duis vel est augue.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+    <div style={{backgroundColor: '3b3a38'}}>
+      {acft.map(tail => (
+        <div style={{marginBottom: '5px'}}>
+        <Accordion expanded={expanded === tail.tailNumber} onChange={handleChange(tail.tailNumber)} sx={{backgroundColor: 'lightgray', paddingRight: '10px'}}> 
+          <AccordionSummary
+            // expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <Avatar alt={tail.tailNumber} src={tail.noseart} sx={{marginRight: '10px', height: '56px', width: '56px'}}/>
+            <Card elevation={0} sx={{ width: '25%', flexShrink: 0, backgroundColor: 'lightgray'}}>
+              <b>{tail.tailNumber}</b> <br></br> {tail.status} <br></br> <small>{tail.wuc}</small>
+            </Card> 
+            <Typography sx={{ width: '65%', flexShrink: 0 }}>
+              Fuel: {tail.fuel_quantity}k  <br></br>  Parking: {tail.location} <br></br> <small>{tail.discrepancy}</small>
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography><b>ETIC:</b> {tail.mx_etic}</Typography>
+            <Typography><b>Last Fly:</b> {format(new Date(tail.last_flight), 'Pp')}</Typography>
+            <Typography><b>Next Fly:</b> {format(new Date(tail.next_flight), 'Pp')}</Typography>
+            <Typography><b>Airframe Hours:</b> {tail.airframe_hrs}</Typography>
+            <FiveDayForecast/>
+          </AccordionDetails>
+        </Accordion>
+        </div>
+      ))}
     </div>
   );
 }
