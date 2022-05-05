@@ -159,7 +159,8 @@ export const ACInfo = [
     "taxi": "2022-05-04T11:45:00.000Z",
     "req_fuel": 160,
     "launch_location": "D 9",
-    "parking_location": "D 12"
+    "parking_location": "D 12",
+    "is_quickturn" : true
   },
   {
     "tail_number": 850397,
@@ -177,7 +178,8 @@ export const ACInfo = [
     "taxi": null,
     "req_fuel": 220,
     "launch_location": "D 6",
-    "parking_location": "D 9"
+    "parking_location": "D 9",
+    "is_quickturn" : false
   }
 
 ]

@@ -71,7 +71,7 @@ function AirCraftCard() {
         <AircraftModal/>
       </Container>
     )
-  })
+    })
 
   return (
     <>

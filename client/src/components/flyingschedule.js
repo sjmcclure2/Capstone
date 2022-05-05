@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Box, Card, Container, Paper, Stack, Divider, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { ACInfo } from '../constants';
-import { add, format } from 'date-fns'
+import { add, format } from 'date-fns';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 const dates = [
   {id: '1', day: Date()},
@@ -14,6 +15,15 @@ const dates = [
 
 function FlyingSchedule () {
   const [sorties, setSorties] = React.useState(ACInfo)
+  const [tails, setTails] = React.useState([]);
+
+
+      /*  
+      1. Sort through the sorties array to match sorties with dates. 
+      2. Identify any duplicate tail numbers for that day of flying.
+      3. Rearrange the array so the quick turn is directly after its first flight.
+      4. Use that array to map the output. 
+      */
 
   return(
     <Container>
@@ -30,26 +40,16 @@ function FlyingSchedule () {
               spacing={2}
               sx={{justifyContent:"center"}}
             >
-              {sorties.map(schedules => (
-                format(new Date(schedules.projected_launch), 'P') === format(new Date(date.day), 'P') ? 
-                  <div> 
+              {sorties.map(sortie => (               
+                format(new Date(sortie.projected_launch), 'P') === format(new Date(date.day), 'P') ? 
                     <div>    
                       <Card sx={{textAlign:"center", padding: '5px', backgroundColor: '#FDFD96'}}>
-                        {schedules.call_sign}<br/>
-                        {format(new Date(schedules.projected_launch), 'km')}-{format(new Date(schedules.projected_land), 'km')}<br/>
-                        {schedules.tail_number}
+                        {sortie.call_sign}<br/>
+                        {format(new Date(sortie.projected_launch), 'km')}-{format(new Date(sortie.projected_land), 'km')}<br/>
+                        {sortie.tail_number}
                       </Card> 
-                    </div>
-                    {sorties.indexOf(schedules.tail_number) > 1 ? 
-                      <div>
-                        <Card sx={{textAlign:"center", marginTop: '5px', padding: '5px', backgroundColor: '#F2CE3E'}}>
-                          New Card
-                        </Card>
-                      </div>
-                    : null
-                    }
-                  </div> 
-                :null
+                  </div>
+                : null
               ))}
             </Stack>
         </Card>

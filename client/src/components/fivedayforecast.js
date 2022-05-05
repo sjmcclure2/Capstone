@@ -50,7 +50,6 @@ export default function FiveDayForecast() {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      {console.log(dates)}
       <TableContainer sx={{ maxHeight: 440}}>
         <Table stickyHeader aria-label="sticky table" sx={{backgroundColor: 'lightgray'}}>
           <TableHead>
