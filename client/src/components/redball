@@ -11,4 +11,4 @@ function ScheduledMx () {
   )
 }
 
-export default ScheduledMx;
+export default ScheduledMx; 

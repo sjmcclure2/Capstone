@@ -310,6 +310,7 @@ export const aircraft = [
     status:'NMCMC',
     mx_etic: '12 May @ 1330',
     symbol: '/',
+    jcn: 220120044,
     discrepancy: '#3 MLG tire worn beyond limits',
     wuc: '13BAG',
     shop: '',

@@ -27,6 +27,7 @@ import Flyingschedule from './components/flyingschedule';
 import RedBall from './components/redball';
 import ScheduledMx from './components/scheduledmx';
 import image from './preview.jpeg';
+import TodaySorties from './components/todaysorties';
 
 const drawerWidth = 240;
 
@@ -93,20 +94,39 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex', height: '100%', width: '100%', backgroundImage: `url(${image})`}}>
+    <Box 
+      sx={{ 
+        display: 'flex', 
+        height: '100%', 
+        width: '100%', 
+        backgroundImage: `url(${image})`}}
+    >
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar sx={{backgroundColor: '#1A2930', borderLeft: '1px solid', borderColor: '#242423'}}>
+      <AppBar 
+        position="fixed" 
+        open={open}
+      >
+        <Toolbar 
+          sx={{
+            backgroundColor: '#1A2930', 
+            borderLeft: '1px solid', 
+            borderColor: '#242423'}}
+          >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{ 
+              mr: 2, 
+              ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography 
+            variant="h6" 
+            noWrap component="div"
+          >
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
         </Toolbar>
@@ -125,19 +145,47 @@ export default function PersistentDrawerLeft() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader sx={{backgroundColor: '#1A2930'}}>
-          <Typography variant='h5' sx={{paddingRight: '25%', color: 'white', fontFamily: 'cursive'}}>SALT</Typography>
-          <IconButton onClick={handleDrawerClose} sx={{color: 'white'}}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        <DrawerHeader 
+          sx={{
+            backgroundColor: '#1A2930'}}
+          >
+          <Typography 
+            variant='h5' 
+            sx={{
+              paddingRight: '25%', 
+              color: 'white', 
+              fontFamily: 'cursive'}}
+          >
+            SALT
+          </Typography>
+          <IconButton 
+            onClick={handleDrawerClose} 
+            sx={{
+              color: 'white'}}
+            >
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <List sx={{backgroundColor: '#1A2930', height: '100%'}}>
-          {['Fliers', 'Scheduled Mx', 'Fleet Status', 'Flying Schedule', 'New Red Ball'].map((text, index) => (
-            <ListItem button component={Link} to={`/${text}`} key={text}>
+        <List 
+          sx={{
+            backgroundColor: '#1A2930', 
+            height: '100%'}}
+        >
+          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule', 'Scheduled Mx', 'New Red Ball'].map((text, index) => (
+            <ListItem 
+              button 
+              component={Link} 
+              to={`/${text}`} 
+              key={text}
+            >
               <ListItemIcon>
                 {icons[index]}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{color: 'white'}} />
+              <ListItemText 
+                primary={text} 
+                sx={{
+                  color: 'white'}} 
+              />
             </ListItem>
           ))}
         </List>
@@ -146,11 +194,11 @@ export default function PersistentDrawerLeft() {
         <DrawerHeader />
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='Fliers' element={<Home/>}/>
-          <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
-          <Route path='Flying%20Schedule' element={<Flyingschedule/>}/>
-          <Route path='New%20Red%20Ball' element={<RedBall/>}/>
+          <Route path="Today's%20Flying" element={<TodaySorties/>}/>
           <Route path='Fleet%20Status' element={<FleetStatus/>}/>
+          <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule/>}/>
+          <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
+          <Route path='New%20Red%20Ball' element={<RedBall/>}/>
         </Routes>
       </Main>
     </Box>

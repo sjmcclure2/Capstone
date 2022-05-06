@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import EditIcon from '@mui/icons-material/Edit';
 
 const style = {
   position: 'absolute',
@@ -32,8 +33,8 @@ function AircraftModal() {
 
   return (
     <div>
-      <Button sx={{marginTop:1}}variant="contained" size="small" onClick={handleOpen}>
-        Click to Edit
+      <Button sx={{marginTop:1}} variant="contained" size="small" onClick={handleOpen} startIcon={<EditIcon />}>
+        Edit
       </Button>
       <Modal
         open={open}
