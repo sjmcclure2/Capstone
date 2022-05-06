@@ -15,7 +15,7 @@ function locationFinder(plane) {
   }
 }
 
-function AirCraftCard() {
+function TodaySorties() {
   const[aircraft, setAircracft] = useState(ACInfo);
   const[sorties, setSorties] = useState();
   
@@ -81,4 +81,4 @@ function AirCraftCard() {
   )
 }
 
-export default AirCraftCard
+export default TodaySorties

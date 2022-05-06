@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { add, format } from 'date-fns';
+import { imds } from '../constants';
 
 const dates = [
   {id: '1', day: Date()},
@@ -18,35 +19,30 @@ const dates = [
 
 
 const columns = [
-  { id: 'name', label: 'Mon', minWidth: 5 },
-  { id: 'code', label: 'Tues', minWidth: 5 },
-  {
-    id: 'population',
-    label: 'Wed',
-    minWidth: 5
-  },
-  {
-    id: 'size',
-    label: 'Thurs',
-    minWidth: 5
-  },
-  {
-    id: 'density',
-    label: 'Fri',
-    minWidth: 5
-  },
+  {id: 'd1', label: 'Mon'},
+  {id: 'd2', label: 'Tues'},
+  {id: 'd3', label: 'Wed'},
+  {id: 'd4', label: 'Thurs'},
+  {id: 'd5', label: 'Fri'},
 ];
 
-
-function createData(name, code, population, size, density) {
-  return { name, code, population, size, density };
+// Takes in the mx state and maps through using switch statement to 
+// return the coloumns 
+function createData(data) {
+  let d1 = data;
+  return { d1 };
 }
 
-const rows = [
-  createData('Phase', 'Phase', 'Phase', '', 'Fly'),
-];
+export default function FiveDayForecast(props) {
+  const tail = props.tail;
+  const [mx, setMx] = useState([]);
 
-export default function FiveDayForecast() {
+  // Fetch request to scheduled insp/mx for any records matching tail number
+  // store that in the state
+
+  const rows = [
+    createData('Wash'),
+  ];
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -68,7 +64,7 @@ export default function FiveDayForecast() {
           <TableBody>
             {rows.map((row) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                <TableRow tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (

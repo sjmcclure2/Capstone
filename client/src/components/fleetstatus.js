@@ -6,8 +6,9 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { aircraft } from '../constants';
 import FiveDayForecast from './fivedayforecast';
-import { Avatar, Card } from '@mui/material';
+import { Avatar, Button, Card } from '@mui/material'; 
 import { format } from 'date-fns';
+
 
 export default function ControlledAccordions() {
   const [expanded, setExpanded] = useState(false);
@@ -39,10 +40,10 @@ export default function ControlledAccordions() {
             <Typography><b>Last Fly:</b> {format(new Date(tail.last_flight), 'Pp')}</Typography>
             <Typography><b>Next Fly:</b> {format(new Date(tail.next_flight), 'Pp')}</Typography>
             <Typography><b>Airframe Hours:</b> {tail.airframe_hrs}</Typography>
-            <FiveDayForecast/>
+            <FiveDayForecast tail={tail}/>
           </AccordionDetails>
         </Accordion>
-        </div>
+        </div> 
       ))}
     </div>
   );

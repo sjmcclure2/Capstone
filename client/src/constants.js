@@ -321,3 +321,11 @@ export const aircraft = [
     noseart: 'https://www.aerotoons.com/blog/images/B-29_Bockscar_NoseArt_with_caption.jpg'
   },
 ];
+
+export const imds = [
+  {
+    jcn: 220120044,
+    acft_id: 850080,
+    discrepancy: '180 day wash due'
+  }
+]

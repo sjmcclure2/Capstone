@@ -26,6 +26,7 @@ import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import RedBall from './components/redball';
 import ScheduledMx from './components/scheduledmx';
+import image from './preview.jpeg';
 
 const drawerWidth = 240;
 
@@ -78,11 +79,11 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const icons = [
-    <AirlinesIcon color='primary'/>, 
-    <EngineeringIcon color='primary'/>, 
-    <ConnectingAirportsIcon color='primary'/>, 
-    <CalendarViewMonthIcon color='primary'/>, 
-    <NotificationImportantIcon color='primary'/> ]
+    <AirlinesIcon sx={{color: "#FDFD96"}}/>, 
+    <EngineeringIcon sx={{color: "#FDFD96"}}/>, 
+    <ConnectingAirportsIcon sx={{color: "#FDFD96"}}/>, 
+    <CalendarViewMonthIcon sx={{color: "#FDFD96"}}/>, 
+    <NotificationImportantIcon sx={{color: "#FDFD96"}}/> ]
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -92,10 +93,10 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex', height: '100%', width: '100%', backgroundColor: '#C5C1C0'}}>
+    <Box sx={{ display: 'flex', height: '100%', width: '100%', backgroundImage: `url(${image})`}}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar sx={{backgroundColor: '#3b3a38', borderLeft: '1px solid', borderColor: '#242423'}}>
+        <Toolbar sx={{backgroundColor: '#1A2930', borderLeft: '1px solid', borderColor: '#242423'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -117,20 +118,20 @@ export default function PersistentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            borderColor: '#3b3a38'
+            borderColor: '#1A2930'
           },
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader sx={{backgroundColor: '#3b3a38'}}>
+        <DrawerHeader sx={{backgroundColor: '#1A2930'}}>
           <Typography variant='h5' sx={{paddingRight: '25%', color: 'white', fontFamily: 'cursive'}}>SALT</Typography>
           <IconButton onClick={handleDrawerClose} sx={{color: 'white'}}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <List sx={{backgroundColor: '#3b3a38', height: '100%'}}>
+        <List sx={{backgroundColor: '#1A2930', height: '100%'}}>
           {['Fliers', 'Scheduled Mx', 'Fleet Status', 'Flying Schedule', 'New Red Ball'].map((text, index) => (
             <ListItem button component={Link} to={`/${text}`} key={text}>
               <ListItemIcon>
