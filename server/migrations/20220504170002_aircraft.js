@@ -5,9 +5,11 @@
 exports.up = function(knex) {
   return knex.schema.createTable('aircraft', table => {
     table.increments('id');
+    table.string('tail_number').notNullable().unique();
     table.string('status');
     table.integer('fuel_quant');
     table.integer('operating_hrs');
+    table.integer('location');
     table.foreign('location').references('locations.id');
   });  
 };

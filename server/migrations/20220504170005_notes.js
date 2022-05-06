@@ -5,7 +5,8 @@
 exports.up = function(knex) {
   return knex.schema.createTable('notes', table => {
     table.increments('id');
-    table.foreign('jcn').references('IMDS.jcn');
+    table.integer('jcn');
+    table.foreign('jcn').references('imds.jcn');
     table.text('note');
     table.timestamps(true, true, false);
     table.boolean('is_active');

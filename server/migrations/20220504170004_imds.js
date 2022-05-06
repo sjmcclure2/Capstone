@@ -3,9 +3,10 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-  return knex.schema.createTable('IMDS', table => {
+  return knex.schema.createTable('imds', table => {
     table.increments('jcn');
-    table.foreign('tail_number').references('aircraft.id');
+    table.string('tail_number');
+    table.foreign('tail_number').references('aircraft.tail_number');
     table.datetime('mx_etic_start');
     table.datetime('mx_etic');
     table.integer('etic_update');
@@ -25,9 +26,9 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.alterTable('IMDS', table => {
+  return knex.schema.alterTable('imds', table => {
     table.dropForeign('tail_number');
   }).then(() => knex.schema
-    .dropTableIfExists('IMDS')
+    .dropTableIfExists('imds')
   );
 };
