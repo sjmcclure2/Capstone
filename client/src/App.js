@@ -24,10 +24,12 @@ import Home from './components/home';
 import { Route, Routes, Link } from 'react-router-dom';
 import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
-import RedBall from './components/redball';
 import ScheduledMx from './components/scheduledmx';
 import image from './preview.jpeg';
 import TodaySorties from './components/todaysorties';
+import { format } from 'date-fns';
+import AircraftInfoCard from './components/aircraftinfocard';
+
 
 const drawerWidth = 240;
 
@@ -97,9 +99,10 @@ export default function PersistentDrawerLeft() {
     <Box 
       sx={{ 
         display: 'flex', 
-        height: '100%', 
-        width: '100%', 
-        backgroundImage: `url(${image})`}}
+        height: '100vh',
+        width: '100vw', 
+        backgroundImage: `url(${image})`
+      }}
     >
       <CssBaseline />
       <AppBar 
@@ -126,9 +129,13 @@ export default function PersistentDrawerLeft() {
           <Typography 
             variant="h6" 
             noWrap component="div"
+            sx={{
+              marginRight: '75%'
+            }}
           >
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
+          <Typography><b>Julian: </b>{format(new Date(), 'yyDDD')}</Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -171,7 +178,7 @@ export default function PersistentDrawerLeft() {
             backgroundColor: '#1A2930', 
             height: '100%'}}
         >
-          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule', 'Scheduled Mx', 'New Red Ball'].map((text, index) => (
+          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule', 'Scheduled Mx'].map((text, index) => (
             <ListItem 
               button 
               component={Link} 
@@ -198,7 +205,7 @@ export default function PersistentDrawerLeft() {
           <Route path='Fleet%20Status' element={<FleetStatus/>}/>
           <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule/>}/>
           <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
-          <Route path='New%20Red%20Ball' element={<RedBall/>}/>
+          <Route path='aircraftinfocard' element={<AircraftInfoCard/>}></Route>
         </Routes>
       </Main>
     </Box>

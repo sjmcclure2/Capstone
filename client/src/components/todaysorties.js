@@ -1,84 +1,77 @@
 import React, {useState, useEffect } from 'react';
-import { Card, Grid, Container } from '@mui/material';
+import { Card, Grid, Container, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import AircraftModal from './aircraftmodal';
-import { ACInfo } from '../constants';
+import { aircraft, sorties } from '../mockData';
+import { add, format } from 'date-fns';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 
-
-function locationFinder(plane) {
-  if(plane.actual_launch == null) {
-    return (`Location: ${plane.launch_location}`)
-  } else if(plane.actual_land == null) {
-    return (`Location: Flying`)
-  } else {
-    return (`Location: ${plane.parking_location}`)
-  }
-}
+const dates = [
+  {id: '1', day: Date()},
+]
 
 function TodaySorties() {
-  const[aircraft, setAircracft] = useState(ACInfo);
-  const[sorties, setSorties] = useState();
-  
-  const results = aircraft.map((plane)=>{
-    if(plane.eng_start != null && plane.eng_start.length > 8) {
-      plane.eng_start = plane.eng_start.slice(11,19)
-      console.log(plane.eng_start)
-    }
-    return(
-      <Container style={{
-        minHeight: "10vh",
-        backgroundColor: "#1A2930",
-        pageBreakAfter: "auto",
-        fontSize: "1.4vh",
-        marginTop: "1vh",
-        padding: "1vh",
-        textAlign: "center",
-        borderRadius: "5px",
-        minWidth: "15vw",
-      }} >
-        <Grid container spacing={1} columns={10} rowSpacing={1}>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>AC: {plane.tail_number}</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>{plane.actual_launch != null ? `Actual TO: ${plane.actual_launch.slice(11,16)}` : `Sched TO: ${plane.projected_launch.slice(11,16)}`}</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}> {plane.crew_show != null ? `Crew Show: ${plane.crew_show.slice(11,16)}` : `Crew Rdy: ${plane.crew_ready.slice(11,16)}` }</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>{plane.crew_show != null ? `Eng Start: ${plane.eng_start}`: `Crew Show: ${plane.crew_show}`}</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>Fuel: {plane.fuel_quantity}k</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>{plane.call_sign}</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>{plane.actual_land != null ? `Actual Land: ${plane.actual_land.slice(11,16)}` : `Sched Land: ${plane.projected_land.slice(11,16)}`}</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>Sortie: {plane.sortie_id}</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>{locationFinder(plane)}</Card>
-          </Grid>
-          <Grid item xs={2}>
-            <Card sx={{backgroundColor: '#FDFD96'}}>Target: {plane.req_fuel}k</Card>
-          </Grid>
-        </Grid>
-        <AircraftModal/>
-      </Container>
-    )
-    })
+
+  const [todaysSorties, setTodaysSorties] = useState(sorties);
+  const [todaysAircraft, setTodaysAircraft] = useState(aircraft);
 
   return (
-    <>
-    {results}
-    </>
-  
-  )
-}
+  <Container>  
+    {dates.map(date => (
+      <Card sx={{
+        textAlign: 'center', 
+        margin: '10px', 
+        padding: '10px',
+        backgroundColor: '#1A2930'}}
+      >  
+        <h3 style={{color:'white'}}>{format(new Date(date.day), 'PPPP')}</h3>  
+          {todaysSorties.map(todaysSorties => (
+            format(new Date(todaysSorties.projected_launch), 'P') === format(new Date(date.day), 'P') ?
+              <div>
+                <Card sx={{marginBottom:1, backgroundColor: "#FDFD96"}}>
+                  <h1>{todaysSorties.id} | {todaysSorties.callsign}</h1>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid item xs={3}>
+                      <Typography>Aircraft: {todaysSorties.tail_number}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Call Sign: {todaysSorties.callsign}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Launch Location: {todaysSorties.launch_location}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Projected Launch: {todaysSorties.projected_launch.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' })}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography> Hrs. Sched: {todaysSorties.hours_scheduled}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Req. Fuel: {todaysSorties.req_fuel}K</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Crew Show: {todaysSorties.crew_show}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Crew Ready: {todaysSorties.crew_ready}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Eng. Start: {todaysSorties.eng_start}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography>Taxi: {todaysSorties.taxi}</Typography>
+                    </Grid>
+                  </Grid>
+                  <AircraftModal todaysSorties={todaysSorties}/>
+                </Card>
+              </div>
+            : null
+          ))}
+        </Card>
+      ))}
+  </Container>
+   )
+ }
 
-export default TodaySorties
+export default TodaySorties;

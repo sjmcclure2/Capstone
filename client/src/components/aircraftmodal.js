@@ -20,10 +20,11 @@ const style = {
   p: 4,
 };
 
-function AircraftModal() {
+function AircraftModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const todaysSorties = props.todaysSorties;
 
   //need API for axios put request to update the fliers
   // useEffect(() => {
@@ -33,8 +34,7 @@ function AircraftModal() {
 
   return (
     <div>
-      <Button sx={{marginTop:1}} variant="contained" size="small" onClick={handleOpen} startIcon={<EditIcon />}>
-        Edit
+      <Button sx={{marginTop:1}} size="small" onClick={handleOpen} startIcon={<EditIcon />}>
       </Button>
       <Modal
         open={open}
@@ -55,6 +55,7 @@ function AircraftModal() {
              <TextField
                 id="outlined"
                 label="Aircraft"
+                defaultValue={todaysSorties.tail_number}
                 type="number"
                 InputLabelProps={{
                   shrink: true,
@@ -63,22 +64,43 @@ function AircraftModal() {
               <TextField
                 id="outlined"
                 label="Call Sign"
+                defaultValue={todaysSorties.callsign}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
               <TextField
                 id="outlined"
-                label="Actual T.O."
-                type="time"
+                label="Launch Location"
+                defaultValue={todaysSorties.launch_location}
+                type="number"
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
               <TextField
                 id="outlined-number"
-                label="Sched Land"
+                label="Projected Launch"
+                defaultValue={todaysSorties.projected_launch.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' })}
                 type="time"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                id="outlined"
+                label="Hrs. Sched"
+                defaultValue={todaysSorties.hours_scheduled}
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                id="outlined-number"
+                label="Req. Fuel"
+                defaultValue={todaysSorties.req_fuel}
+                type="number"
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -86,6 +108,7 @@ function AircraftModal() {
               <TextField
                 id="outlined"
                 label="Crew Show"
+                defaultValue={todaysSorties.crew_show}
                 type="time"
                 InputLabelProps={{
                   shrink: true,
@@ -93,39 +116,27 @@ function AircraftModal() {
               />
               <TextField
                 id="outlined-number"
-                label="Sortie"
-                type="number"
+                label="Crew ready"
+                defaultValue={todaysSorties.crew_ready}
+                type="time"
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-              <TextField
+               <TextField
                 id="outlined"
                 label="Eng. Start"
+                defaultValue={todaysSorties.eng_start}
                 type="time"
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-              <TextField
-                id="outlined-number"
-                label="Location"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-               <TextField
-                id="outlined"
-                label="Fuel"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
                <TextField
                 id="outlined-number"
-                label="Target"
-                type="number"
+                label="Taxi"
+                defaultValue={todaysSorties.taxi}
+                type="time"
                 InputLabelProps={{
                   shrink: true,
                 }}

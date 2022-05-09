@@ -327,6 +327,16 @@ export const imds = [
   {
     jcn: 220120044,
     acft_id: 850080,
-    discrepancy: '180 day wash due'
+    mx_etic_start: Date(),
+    mx_etic: '',
+    etic_update: 0,
+    discrepancy: '#2 windscreen crazing, reqs insp.',
+    corrective_action: '',
+    symbol: '-',
+    wuc: '13BAF',
+    shop: 'APG',
+    prd: true,
+    is_complete: false,
+    is_sched_insp: false
   }
 ]
