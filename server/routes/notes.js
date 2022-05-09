@@ -1,19 +1,22 @@
-var express = require('express');
-var router = express.Router();
-const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV]);
+const express = require('express');
+const router = express.Router();
+const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV])
 
-// SELECT * FROM aircraft;
+//tail_number to notes
+
 router.get('/', (req, res) => {
   knex('aircraft')
-    // .limit(1)
+  .where('tail_number', req.query.tail_number)
     .then(async data => {
       return await data.map(async plane => {
-
         const jobs = await knex('imds')
         .where('imds.tail_number', plane.tail_number)
         .where('imds.is_complete', false)
         .then(async data => {
-          return await data.map((job) => {
+          return await data.map(async (job) => {
+            // const notes = await knex('notes')
+            // .where('notes.jcn', job.jcn)
+            console.log(job)
             if(job.symbol === 'X'){
               job.priority = 1;
             } else if(job.symbol === '/') {
@@ -21,6 +24,7 @@ router.get('/', (req, res) => {
             } else {
               job.priority = 3
             }
+            // job.notes = notes
             return job;
           })
         })
@@ -34,6 +38,10 @@ router.get('/', (req, res) => {
       Promise.all(data).then(data => res.json(data))
     })
     .catch(err => console.error(err));
+});
+
+router.all('/', (req, res) => {
+  res.sendStatus(405);
 });
 
 module.exports = router;
