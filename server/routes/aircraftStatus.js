@@ -16,7 +16,7 @@ const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV])
 router.get('/', async (req, res) => {
   knex('aircraft')
   .join('locations', 'aircraft.location', 'locations.id')
-  .select('*', 'aircraft.id')
+  .select('aircraft.*', 'locations.name as location_name')
   .then(async data => {  //next sortie #, last sortie # 
     const airplanes = await data.map(async plane => { 
 
@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
         .catch(err => {
           console.error(err)
         })
-      plane.lastSortie =  lastSortie ?? null;
+      plane.last_sortie =  lastSortie ?? null;
 
 
       const nextSortie = await knex('sorties')
@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
         .catch(err => {
           console.error(err)
         })
-      plane.nextSortie =  nextSortie ?? null;
+      plane.next_sortie =  nextSortie ?? null;
 
       const jobs = await knex('imds')
       .where('imds.tail_number', plane.tail_number)
