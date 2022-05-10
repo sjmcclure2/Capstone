@@ -1,16 +1,19 @@
 import { Card, Box, Typography, IconButton, Tooltip } from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import { notes } from '../mockData';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AddNote from './modals/addnote';
+import EditNote from './modals/editnote';
 
 export default function Notes(props) {
   const tail = props.tail;
-  const [notess, setNotes] = useState(notes);
-  const [jobs, setJobs] = useState();  
+  //const [notes, setNotes] = useState([]);
+  //const BASE_URL = 'http://localhost:8080/api/';
 
-  // Fetch request to get notes and jcn's associated with them
+  // useEffect(() => {
+  //   fetch(`${BASE_URL}/notes/?tail_number=${tail.tail_number}`)
+  //   .then(res => res.json())
+  //   .then(data => setNotes(data))
+  // }, [])
 
   return (
     <Box>
@@ -23,36 +26,32 @@ export default function Notes(props) {
           borderBottomStyle: 'groove'
         }}
       >
-        {notess.map(note => (
-          note.jcn === tail.driver_jcn.jcn ? 
+        {tail.driver.notes.map(note => ( 
           <Box>
             <Typography
               color='secondary'
             >
-              <i><small>{format(new Date(), 'P, p')}</small></i>
+              <i><small>{format(new Date(note.updated_at), 'P, p')}</small></i>
             </Typography>
             <Typography
               sx={{
-                paddingBottom: '5px'
+                paddingBottom: '2px'
               }}
             >
               {note.note} 
               <IconButton>
-                <EditOutlinedIcon
-                  fontSize='small'
-                />
+                <EditNote tail={tail} note={note}/>
               </IconButton>
             </Typography>
-          </Box>
-        : null  
+          </Box> 
       ))}
           <Tooltip title="Add">
             <IconButton>
-              <AddOutlinedIcon/>
+              <AddNote tail={tail}/>
             </IconButton>
           </Tooltip>
       </Card>
-      <Typography
+      {/* <Typography
         variant='h5'
       >
         Open JCNs/Notes
@@ -88,7 +87,7 @@ export default function Notes(props) {
               <AddOutlinedIcon/>
             </IconButton>
           </Tooltip>
-      </Card>
+      </Card> */}
     </Box>
   )
 }

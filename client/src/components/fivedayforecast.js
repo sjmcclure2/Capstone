@@ -7,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { add, format } from 'date-fns';
-import { imds } from '../constants';
 
 const dates = [
   {id: '1', day: Date()},

@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { Card, Container, Paper, Stack } from '@mui/material';
-import { ACInfo } from '../constants';
+import { Card, Container, Stack } from '@mui/material';
 import { add, format } from 'date-fns';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 const dates = [
   {id: '1', day: Date()},
@@ -13,33 +11,19 @@ const dates = [
 ]
 
 function FlyingSchedule () {
-  const [sorties, setSorties] = React.useState(ACInfo)
-  const [daily, setDaily] = React.useState([]);
+  const [sorties, setSorties] = React.useState([])
+  const BASE_URL = 'http://localhost:8080/api/';
 
-      /*  
-      1. Sort through the sorties array to match sorties with dates. 
-      2. Identify any duplicate tail numbers for that day of flying.
-      3. Rearrange the array so the quick turn is directly after its first flight.
-      4. Use that array to map the output. 
+  React.useEffect(() => {
+    fetch(`${BASE_URL}flying_schedule`)
+    .then(res => res.json())
+    .then(data => setSorties(data))
+  }, [])
 
-      * Multi-dimensional array...
-        1. Run through the sorties state for each day
-        2. 
-      */
-  // const dailyFlying = (date, sortie) => {
-  //   let tempState = [];
-  //   dates.map(date => {
-  //     sorties.map(sortie => {
-  //       if(format(new Date(sortie.projected_launch), 'P') === format(new Date(date.day), 'P')) {
-  //         tempState.push[sortie.tail_number]
-          
-  //       }
-  //     })
-  //   })
-  //   console.log(tempState)
-  //   return tempState;
-  // }
-  
+  const formatDate = (dateToFormat) => {
+    return format(new Date(dateToFormat), 'P')
+  }
+
   return(
     <Container>
       {dates.map(date => ( 
@@ -55,14 +39,13 @@ function FlyingSchedule () {
               spacing={2}
               sx={{justifyContent:"center"}}
             >
-              {sorties.map(sortie => ( 
-                
-                  format(new Date(sortie.projected_launch), 'P') === format(new Date(date.day), 'P') ? 
+              {sorties.map(sortie => (
+                  formatDate(sortie.projected_launch) === formatDate(date.day) ? 
                     <div>    
                       <Card sx={{textAlign:"center", padding: '5px', backgroundColor: '#FDFD96'}}>
-                        {sortie.call_sign}<br/>
-                        {format(new Date(sortie.projected_launch), 'km')}-{format(new Date(sortie.projected_land), 'km')}<br/>
-                        {sortie.tail_number}
+                        {sortie.callsign}<br/>
+                        {sortie.tail_number}<br/>
+                        {format(new Date(sortie.projected_launch), 'KK:mm')} - {format(new Date(sortie.projected_land), 'KK:mm')}
                       </Card> 
                   </div>
                 : null

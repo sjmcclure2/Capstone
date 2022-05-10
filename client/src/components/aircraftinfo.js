@@ -2,46 +2,54 @@ import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { format } from 'date-fns';
 import Notes from './notes';
+import UpdateStatusDriver from './modals/updatestatusdriver';
 
 export default function AircraftInfo(props) {
   const tail = props.tail;
 
   const renderEticUpdate = (param) => {
     switch(param) {
-      case 0:
+      case null:
         return null;
       case 1:
-        return <i><small>(updated {tail.driver_jcn.etic_update} time)</small></i>;
+        return <i><small>(updated {tail.driver.etic_update} time)</small></i>;
       default:
-        return <i><small>(updated {tail.driver_jcn.etic_update} times)</small></i>;
+        return <i><small>(updated {tail.driver.etic_update} times)</small></i>;
     }
+  }
+
+  const formatDate = (dateToFormat) => {
+    return format(new Date(dateToFormat), 'kk:mm, P')
   }
 
   return(
     <Box>
       <Grid container spacing={1}>
-        <Grid item xs={4}>
-          <Typography><b>JCN:</b> {tail.driver_jcn.jcn} </Typography>
+        <Grid item xs={3}>
+          <Typography><b>JCN:</b> {tail.driver.jcn} </Typography>
         </Grid>
-        <Grid item xs={4}> 
+        <Grid item xs={3}> 
           <Typography>
-            <b>ETIC:</b> {format(new Date(tail.driver_jcn.mx_etic), 'kkmm, P')}  {renderEticUpdate(tail.driver_jcn.etic_update)}
+            <b>ETIC:</b> {formatDate(tail.driver.mx_etic)}  {renderEticUpdate(tail.driver.etic_update)}
           </Typography>
         </Grid>
-        <Grid item xs={4}>
-          <Typography><b>Mx Start:</b> {format(new Date(tail.driver_jcn.mx_etic_start), 'kkmm, P')}</Typography>
+        <Grid item xs={3}>
+          <Typography><b>Mx Start:</b> {formatDate(tail.driver.mx_etic_start)}</Typography>
         </Grid>
-        <Grid item xs={4}>
-          <Typography><b>Symbol: <span style={{color: 'red'}}>{tail.driver_jcn.symbol}</span></b></Typography>
+        <Grid item xs={3} sx={{textAlign: 'right'}}>
+          <UpdateStatusDriver tail={tail}/>
         </Grid>
-        <Grid item xs={4}>
-          <Typography><b>WUC:</b> {tail.driver_jcn.wuc}</Typography>
+        <Grid item xs={3}>
+          <Typography><b>Symbol: <span style={{color: 'red'}}>{tail.driver.symbol}</span></b></Typography>
         </Grid>
-        <Grid item xs={4}>
-          <Typography><b>Shop:</b> {tail.driver_jcn.shop}</Typography>
+        <Grid item xs={3}>
+          <Typography><b>WUC:</b> {tail.driver.wuc}</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography><b>Shop:</b> {tail.driver.shop}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography><b>Descrepancy:</b> {tail.driver_jcn.discrepancy}</Typography>
+          <Typography><b>Descrepancy:</b> {tail.driver.discrepancy}</Typography>
         </Grid>
         <Grid item 
           xs={12}

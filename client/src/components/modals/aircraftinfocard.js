@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Avatar, Grid, Card } from '@mui/material';
-import Notes from './notes';
+import Notes from '../notes';
 import { format } from 'date-fns';
 
 const style = {
@@ -38,7 +38,13 @@ export default function AircraftInfoCard(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button 
+        onClick={handleOpen}
+      >
+        <Typography>
+          {tail.id}
+        </Typography>
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -52,36 +58,58 @@ export default function AircraftInfoCard(props) {
               width: '100%', 
               flexShrink: 0, 
               backgroundColor: '#1A2930', 
-              color: 'white'}}
+              color: 'white',
+              padding: '15px',
+              marginBottom: '15px'
+            }}
           >
-            <Grid container spacint={1}>
-              <Grid item xs={3}>
+            <Grid container spacing={1}>
+              <Grid item xs={2}>
                 <Avatar 
                 alt={tail.id} 
                 src={tail.noseart} 
                 sx={{
                   marginRight: '10px', 
                   height: '56px', 
-                  width: '56px'}}
+                  width: '56px',
+                }}
               />
               </Grid>
-              <Grid xs={3}>
-                <Typography>
+              <Grid xs={6}>
+                <Typography
+                  sx={{
+                    paddingTop: '15px',
+                    textAlign: 'center'
+                  }}
+                >
                   <b>{tail.id}</b> <br></br> {tail.status} <br></br> <small>{tail.wuc}</small>
                 </Typography>
               </Grid>
-              <Grid xs={3}>
+              <Grid xs={4}>
                 <Typography 
                   sx={{ 
                     width: '65%', 
-                    flexShrink: 0 }}
+                    flexShrink: 0,
+                    paddingTop: '15px',
+                    textAlign: 'center'
+                  }}
                 >
                   Fuel: {tail.fuel_quant}k  <br></br>  Parking: {tail.location} <br></br> <small>{tail.discrepancy}</small>
                 </Typography>
               </Grid>
             </Grid>
           </Card>
-          <Grid container spacing={1}>
+          <Typography 
+            variant='h4'
+            sx={{
+              textAlign: 'center'
+            }}
+          >
+            Status Driver
+          </Typography>
+          <Grid container 
+            spacing={1}
+          >
             <Grid item xs={4}>
               <Typography><b>JCN:</b> {tail.driver_jcn.jcn} </Typography>
             </Grid>

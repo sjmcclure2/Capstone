@@ -4,8 +4,8 @@ export const aircraft = [
     status: 'NMCMC',
     fuel_quant: 180,
     operating_hrs: 120124,
-    location: 'Bravo 1',
-    driver_jcn: {
+    location: 'B1',
+    driver: {
       jcn: 22123001,
       acft_id: 850080,
       mx_etic_start: new Date(),
@@ -30,7 +30,7 @@ export const aircraft = [
     fuel_quant: 165,
     operating_hrs: 100424,
     location: '2BN',
-    driver_jcn: {
+    driver: {
       jcn: 22123004,
       acft_id: 860140,
       mx_etic_start: new Date(),
@@ -55,7 +55,7 @@ export const aircraft = [
     fuel_quant: 195,
     operating_hrs: 100122,
     location: 'Dock 2',
-    driver_jcn: {
+    driver: {
       jcn: 22123006,
       acft_id: 850077,
       mx_etic_start: new Date(),
@@ -241,7 +241,7 @@ export const notes = [
   },
   {
     id: 3,
-    jcn: 22123004,
+    jcn: 22123001,
     note: "On hold for down time.",
     created_at: new Date('May 9, 2022 08:45:00'),
     updated_ad: null,
@@ -249,7 +249,7 @@ export const notes = [
   },
   {
     id: 4,
-    jcn: 22123006,
+    jcn: 22123001,
     note: "While troubleshooting IFC found multiple bad cannon plugs with loose connections.",
     created_at: new Date('May 9, 2022 08:45:00'),
     updated_ad: new Date('May 9, 2022 10:12:00'),
@@ -257,7 +257,7 @@ export const notes = [
   },
   {
     id: 5,
-    jcn: 221230006,
+    jcn: 221230001,
     note: 'IFC cannot duplicate. ETIC updated.',
     created_at: new Date('May 9, 2022 08:45:00'),
     updated_at: null,

@@ -7,7 +7,6 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -25,10 +24,9 @@ import { Route, Routes, Link } from 'react-router-dom';
 import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import ScheduledMx from './components/scheduledmx';
-import image from './preview.jpeg';
 import TodaySorties from './components/todaysorties';
 import { format } from 'date-fns';
-import AircraftInfoCard from './components/aircraftinfocard';
+import AircraftInfoCard from './components/modals/aircraftinfocard';
 
 
 const drawerWidth = 240;
@@ -96,12 +94,11 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box 
-      sx={{ 
+    <Box
+      style={{ 
         display: 'flex', 
         height: '100vh',
-        width: '100vw', 
-        backgroundImage: `url(${image})`
+        width: '100vw'
       }}
     >
       <CssBaseline />
@@ -135,7 +132,10 @@ export default function PersistentDrawerLeft() {
           >
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
-          <Typography><b>Julian: </b>{format(new Date(), 'yyDDD')}</Typography>
+          <Typography>
+            {format(new Date(), 'HH:mm:ss')}<br />
+            {format(new Date(), 'yyyy-MM-dd')} (Julian: {format(new Date(), 'yyDDD')})
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -178,7 +178,7 @@ export default function PersistentDrawerLeft() {
             backgroundColor: '#1A2930', 
             height: '100%'}}
         >
-          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule', 'Scheduled Mx'].map((text, index) => (
+          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule'].map((text, index) => (
             <ListItem 
               button 
               component={Link} 
