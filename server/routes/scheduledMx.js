@@ -12,7 +12,12 @@ var router = express.Router();
 //scheduled_land, sortie_number, callsign, req_fuel WHERE (sortie projected launch is withing 7 days)
 
 router.get('/', (req, res, next) => {
-  res.send(200);
+  res.sendStatus(200);
+});
+
+
+router.all('/', (req, res) => {
+  res.sendStatus(405);
 });
 
 module.exports = router;
