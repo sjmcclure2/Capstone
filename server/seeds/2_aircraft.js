@@ -18,8 +18,7 @@ exports.seed = async function(knex) {
 
     const status = faker.helpers.arrayElement([ "FMC", "PMCM", "NMCM", "PMCB",
       "PMCS", "NMCA", "NMCB", "NMCBA", "NMCBS", "MNCBU", "NMCBSA", "NMCBUA",
-      "NMCMA", "NMCMS", "NMCMU", "NMCMSA", "NMCMUA", "NMCS", "NMCSA", "TNMC",
-      "TNMCF", "TNMCS", "TNMCM", "TPMCS", "TPMCM" ]
+      "NMCMA", "NMCMS", "NMCMU", "NMCMSA", "NMCMUA", "NMCS", "NMCSA" ]
     );
 
     const fuel_quant = faker.datatype.number(300);
