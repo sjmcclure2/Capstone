@@ -2,7 +2,6 @@ const express = require('express');
 
 const { BASE_URL } = require('../index')
 const aircraftStatus = require('./aircraftStatus');
-const fleetStatus = require('./fleetStatus');
 const flyingSchedule = require('./flyingSchedule');
 const notes = require('./notes');
 const scheduledMx = require('./scheduledMx');
@@ -25,7 +24,6 @@ router.all('/', (req, res) => {
 });
 
 router.use('/aircraft_status', aircraftStatus);
-router.use('/fleet_status', fleetStatus);
 router.use('/flying_schedule', flyingSchedule);
 router.use('/notes', notes);
 router.use('/scheduled_mx', scheduledMx);
