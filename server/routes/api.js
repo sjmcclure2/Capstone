@@ -12,7 +12,6 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   res.json({
     aircraft_status: `${BASE_URL}/aircraft_status`,
-    fleet_status: `${BASE_URL}/fleet_status`,
     flying_schedule: `${BASE_URL}/flying_schedule`,
     notes: `${BASE_URL}/notes`,
     scheduled_mx: `${BASE_URL}/scheduled_mx`
