@@ -1,3 +1,9 @@
+export const noseArt = [
+    'http://3.bp.blogspot.com/-VZydzMuu2RI/VoVxfgZ551I/AAAAAAAAtMg/T7S1Lpp7DiM/s640/Sentimental%2BJourney%2Bwith%2BBetty%2BGrable.jpg',
+    'https://c8.alamy.com/comp/CTDK5E/miss-pick-up-nose-art-on-a-canadian-vickers-pvb-1a-canso-flying-boat-CTDK5E.jpg',
+    'https://thumbs.dreamstime.com/z/flying-tiger-world-war-ii-american-fighter-airplane-painted-nose-art-painted-aluminum-flying-tiger-warbird-noseart-173758345.jpg'
+
+]
 export const aircraft = [
   {
     id: 850080,
@@ -22,7 +28,6 @@ export const aircraft = [
     },
     last_flight: new Date(),
     next_flight: new Date(),
-    noseart: 'http://3.bp.blogspot.com/-VZydzMuu2RI/VoVxfgZ551I/AAAAAAAAtMg/T7S1Lpp7DiM/s640/Sentimental%2BJourney%2Bwith%2BBetty%2BGrable.jpg'
   },
   {
     id: 860140,
@@ -47,7 +52,7 @@ export const aircraft = [
     },
     last_flight: new Date(),
     next_flight: new Date(),
-    noseart: 'https://c8.alamy.com/comp/CTDK5E/miss-pick-up-nose-art-on-a-canadian-vickers-pvb-1a-canso-flying-boat-CTDK5E.jpg'
+
   },
   {
     id: 850077,
@@ -72,7 +77,7 @@ export const aircraft = [
     },
     last_flight: new Date(),
     next_flight: new Date(),
-    noseart: 'https://thumbs.dreamstime.com/z/flying-tiger-world-war-ii-american-fighter-airplane-painted-nose-art-painted-aluminum-flying-tiger-warbird-noseart-173758345.jpg'
+    
   },
 ]
 

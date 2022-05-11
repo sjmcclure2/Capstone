@@ -19,7 +19,7 @@ export default function AircraftInfo(props) {
   }
 
   const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'kk:mm, P')
+    return format(new Date(dateToFormat), 'd MMM @ kk:mm')
   }
 
   return(

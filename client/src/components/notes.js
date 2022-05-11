@@ -1,19 +1,12 @@
 import { Card, Box, Typography, IconButton, Tooltip } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { format } from 'date-fns';
 import AddNote from './modals/addnote';
 import EditNote from './modals/editnote';
+import axios from 'axios';
 
 export default function Notes(props) {
   const tail = props.tail;
-  //const [notes, setNotes] = useState([]);
-  //const BASE_URL = 'http://localhost:8080/api/';
-
-  // useEffect(() => {
-  //   fetch(`${BASE_URL}/notes/?tail_number=${tail.tail_number}`)
-  //   .then(res => res.json())
-  //   .then(data => setNotes(data))
-  // }, [])
 
   return (
     <Box>
@@ -27,7 +20,9 @@ export default function Notes(props) {
         }}
       >
         {tail.driver.notes.map(note => ( 
-          <Box>
+          <Box
+            key={note.id}
+          >
             <Typography
               color='secondary'
             >

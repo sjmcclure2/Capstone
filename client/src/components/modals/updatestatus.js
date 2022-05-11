@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -8,7 +8,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
+import { TextField } from '@mui/material';
+import axios from 'axios';
+import { BASE_URL } from '../../App';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -49,38 +51,79 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function UpdateStatus(props) {
-  const [open, setOpen] = React.useState(false);
-  const status = props.status;
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState();
+  const [data, setData] = useState();
+  const prop = Object.keys(props)
+  const propKey = prop[0];
 
-  const handleClickOpen = () => {
+   useEffect(() => {
+    switch (propKey) {
+      case 'status':
+        setType(props.status)
+        break;
+      case 'fuel':
+        setType(props.fuel)
+        break;
+      case 'location':
+        setType(props.location)
+        break;
+    } 
+  }, [])
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setData(e.target.value)
+  }
+  const handleClickOpen = (e) => {
+    e.stopPropagation();
     setOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation();
+    axios.put(`${BASE_URL}`)
     setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="text" onClick={handleClickOpen}>
-        {status}
+      <Button 
+        variant="text" 
+        onClick={e => {handleClickOpen(e)}}
+        sx={{
+          padding: '0px', 
+          margin: '0px',
+          fontSize: '16px',
+          color: 'white'
+        }}  
+      >
+        {propKey == 'status' ? <b>{type}</b> : <span><b>{propKey}:</b> {type}</span>}
       </Button>
       <BootstrapDialog
-        onClose={handleClose}
+        onClose={e => {handleClose(e)}}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={e => {handleClose(e)}}>
+          Edit {propKey}
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          Here is your fucking status update
+          <TextField
+            onClick={e => {e.stopPropagation()}}
+            onChange={e => {handleChange(e)}}
+            id={propKey}
+            defaultValue={type}
+          />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
+          <Button autoFocus onClick={e => {handleClose(e)}}>
+            Update
           </Button>
         </DialogActions>
       </BootstrapDialog>
     </div>
   );
 }
+
+
+// PATCH to aircraft_status

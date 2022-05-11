@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -10,6 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { TextField } from '@mui/material';
+import axios from 'axios';
+import { BASE_URL } from '../../App';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -50,15 +52,29 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function EditNote(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [newNote, setNewNote] = useState();
   const tail = props.tail;
   const note = props.note;
 
+  const handleChange = (e) => {
+    e.preventDefault();
+    setNewNote(e.target.value)
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const submitChange = () => {
+    axios.patch(`${BASE_URL}/notes/${note.id}`, 
+      {
+        jcn: tail.driver.jcn,
+        note: newNote
+      }
+    )
+    .then((res) => console.log(res))
+    handleClose()
+  }
   const handleClose = () => {
-    // POST request here
     setOpen(false);
   };
 
@@ -87,6 +103,7 @@ export default function EditNote(props) {
               }}
             /><br/>
             <TextField
+              onChange={(e) => {handleChange(e)}}
               id="note"
               label="Note"
               defaultValue={note.note}
@@ -95,7 +112,7 @@ export default function EditNote(props) {
             />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={submitChange}>
             Save changes
           </Button>
         </DialogActions>

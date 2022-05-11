@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -10,6 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { TextField } from '@mui/material';
+import { BASE_URL } from '../../App';
+import axios from 'axios';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -50,14 +52,24 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function AddNote(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [newNote, setNewNote] = useState();
   const tail = props.tail;
 
+  const handleChange = (e) => {
+    e.preventDefault();
+    setNewNote(e.target.value)
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
-    // POST request here
+    axios.post(`${BASE_URL}/notes`,
+      {
+        jcn: tail.driver.jcn,
+        note: newNote
+      }
+    )
     setOpen(false);
   };
 
@@ -86,6 +98,7 @@ export default function AddNote(props) {
               }}
             /><br/>
             <TextField
+              onChange={(e) => {handleChange(e)}}
               id="note"
               label="Note"
               type='text' 

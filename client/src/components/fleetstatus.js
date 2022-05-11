@@ -4,14 +4,13 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Avatar, Card } from '@mui/material'; 
+import { Avatar, Card, Stack } from '@mui/material'; 
 import { format } from 'date-fns';
 import AircraftInfo from './aircraftinfo';
-import axios from 'axios';
 import UpdateStatus from './modals/updatestatus';
+import { BASE_URL } from '../App'
 
 export default function FleetStatus() {
-  const BASE_URL = 'http://localhost:8080/api/';
   const [expanded, setExpanded] = useState(false);
   const [acft, setAcft] = useState([]);
   const handleChange = (panel) => (event, isExpanded) => {
@@ -19,14 +18,14 @@ export default function FleetStatus() {
   };
 
   useEffect(() => {
-    fetch(`${BASE_URL}aircraft_status`)
+    fetch(`${BASE_URL}/aircraft_status`)
     .then(res => res.json())
     .then(data => setAcft(data))
     }, [])
   
 
   const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'kk:mm, P')
+    return format(new Date(dateToFormat), 'iii, d MMM')
   }
 
   return (
@@ -36,6 +35,7 @@ export default function FleetStatus() {
     > 
       {acft.map(tail => (
         <div 
+          key={tail.id}
           style={{
             marginBottom: '5px'}}
         >
@@ -45,7 +45,8 @@ export default function FleetStatus() {
             sx={{
               backgroundColor: '#1A2930', 
               color: 'white', 
-              paddingRight: '10px'
+              paddingRight: '10px', 
+              paddingTop: '10px'
             }}
           > 
             <AccordionSummary
@@ -54,10 +55,10 @@ export default function FleetStatus() {
               id="panel1bh-header"
             >
               <Avatar 
-                alt={tail.id} 
-                src={tail.noseart} 
+                alt={tail.tail_number} 
+                // src={tail.noseart} 
                 sx={{
-                  marginRight: '10px', 
+                  marginRight: '15px',
                   height: '56px', 
                   width: '56px'}}
               />
@@ -71,18 +72,41 @@ export default function FleetStatus() {
               >
                 <b>{tail.tail_number}</b> <br/> <b><UpdateStatus status={tail.status}/></b> <br/> <small>{tail.wuc}</small>
               </Card> 
-              <Typography 
+              <Card 
+                elevation={0} 
                 sx={{ 
-                  width: '65%', 
-                  flexShrink: 0 }}
+                  width: '25%', 
+                  flexShrink: 0, 
+                  backgroundColor: '#1A2930', 
+                  color: 'white'}}
               >
-                Fuel: {tail.fuel_quant}k  <br></br>  Parking: {tail.location} <br></br> <small>{tail.discrepancy}</small>
-              </Typography>
+                <Stack 
+                  direction="row"
+                  alignItems='center'
+                >
+                  <UpdateStatus fuel={tail.fuel_quant}/>k
+                </Stack>
+                <Stack 
+                  direction="row"
+                  alignItems='center'
+                >
+                  <UpdateStatus location={tail.location}/>
+                </Stack>
+              </Card>
+              <Card 
+                elevation={0} 
+                sx={{ 
+                  width: '25%', 
+                  flexShrink: 0, 
+                  backgroundColor: '#1A2930', 
+                  color: 'white'}}
+              >
+                {tail.last_sortie ? <Typography><b>Last Fly:</b> {formatDate(tail.last_sortie.actual_land)}</Typography> : null}
+                {tail.next_sortie ? <Typography><b>Next Fly:</b> {formatDate(tail.next_sortie.projected_launch)}</Typography> : null}
+                <Typography><b>Airframe Hours:</b> {tail.operating_hrs}</Typography><br/>
+              </Card>
             </AccordionSummary>
               <AccordionDetails> 
-              {tail.last_sortie ? <Typography><b>Last Fly:</b> {formatDate(tail.last_sortie.actual_land)}</Typography> : null}
-              {tail.next_sortie ? <Typography><b>Next Fly:</b> {formatDate(tail.next_sortie.projected_launch)}</Typography> : null}
-              <Typography><b>Airframe Hours:</b> {tail.operating_hrs}</Typography><br/>
               <Typography 
                 variant='h5'
                 sx={{

@@ -2,9 +2,8 @@ import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Container, TextField } from '@mui/material';
+import { Container } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import { aircraft } from '../constants';
 
 const style = {
   width: 'auto',

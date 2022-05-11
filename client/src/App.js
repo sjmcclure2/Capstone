@@ -25,9 +25,13 @@ import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import ScheduledMx from './components/scheduledmx';
 import TodaySorties from './components/todaysorties';
-import { format } from 'date-fns';
+import { format, formatISO9075 } from 'date-fns';
 import AircraftInfoCard from './components/modals/aircraftinfocard';
 
+export const BASE_URL = {
+  development: 'http://localhost:8080/api',
+  // production: 'https://APP-NAME.herokuapp.com/api'
+}[process.env.NODE_ENV];
 
 const drawerWidth = 240;
 
@@ -133,8 +137,7 @@ export default function PersistentDrawerLeft() {
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
           <Typography>
-            {format(new Date(), 'HH:mm:ss')}<br />
-            {format(new Date(), 'yyyy-MM-dd')} (Julian: {format(new Date(), 'yyDDD')})
+            {formatISO9075(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})
           </Typography>
         </Toolbar>
       </AppBar>
