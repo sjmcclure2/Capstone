@@ -11,7 +11,7 @@ exports.seed = async function(knex) {
 
   const locations = await knex('locations').select('id');
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 20; i++) {
     const yr = faker.datatype.number(99).toString().padStart(2, '0');
     const ser = faker.datatype.number(9999).toString().padStart(4, '0');
     const tail_number = `${yr}-${ser}`;

@@ -46,6 +46,29 @@ router.post('/', (req, res) => {
   });
 })
 
+router.patch('/:id', (req, res) => {
+  knex('notes')
+  .where('id', req.params.id)
+  .update(req.body, ['*'])
+  .then(data => res.status(200).json(data))
+  .catch(err => {
+    console.error(err);
+    res.sendStatus(400);
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  knex('notes')
+  .where('id', req.params.id)
+  .del()
+  .then(data => res.status(200)
+    .send(`Note ${req.params.id} deleted.`))
+  .catch(err => {
+    console.error(err);
+    res.sendStatus(400);
+  });
+});
+
 router.all('/', (req, res) => {
   res.sendStatus(405);
 });

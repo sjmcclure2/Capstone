@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
     console.error(err);
     res.sendStatus(400);
   });
-})
+});
 
 router.patch('/:id', (req, res) => {
   knex('imds')

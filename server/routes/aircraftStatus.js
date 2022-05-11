@@ -13,6 +13,8 @@ const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV])
 //SELECT location where aircraft.location
 //FROM locations 
 
+
+//PATCH request from updateStatus modal for aircraft: status, fuel_quan, locatio
 router.get('/', async (req, res) => {
   knex('aircraft')
   .join('locations', 'aircraft.location', 'locations.id')
