@@ -54,18 +54,22 @@ export default function UpdateStatus(props) {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState();
   const [data, setData] = useState();
+  const [key, setKey] = useState();
   const prop = Object.keys(props)
-  const propKey = prop[0];
+  var propKey = prop[0];
 
    useEffect(() => {
     switch (propKey) {
       case 'status':
+        setKey('status');
         setType(props.status)
         break;
       case 'fuel':
         setType(props.fuel)
+        setKey('fuel_quant')
         break;
       case 'location':
+        setKey('location')
         setType(props.location)
         break;
     } 
@@ -79,9 +83,16 @@ export default function UpdateStatus(props) {
     e.stopPropagation();
     setOpen(true);
   };
+  const handleUpdate = (e) => {
+    axios.patch(`${BASE_URL}/aircraft_status/${props.id}`,
+    {
+      [key]: data
+    }
+  )
+    handleClose(e)
+  }
   const handleClose = (e) => {
     e.stopPropagation();
-    axios.put(`${BASE_URL}`)
     setOpen(false);
   };
 
@@ -93,8 +104,8 @@ export default function UpdateStatus(props) {
         sx={{
           padding: '0px', 
           margin: '0px',
-          fontSize: '16px',
-          color: 'white'
+          color: 'white',
+          fontSize: '16px'
         }}  
       >
         {propKey == 'status' ? <b>{type}</b> : <span><b>{propKey}:</b> {type}</span>}
@@ -116,7 +127,7 @@ export default function UpdateStatus(props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={e => {handleClose(e)}}>
+          <Button autoFocus onClick={e => {handleUpdate(e)}}>
             Update
           </Button>
         </DialogActions>

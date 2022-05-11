@@ -25,8 +25,7 @@ import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import ScheduledMx from './components/scheduledmx';
 import TodaySorties from './components/todaysorties';
-import { format, formatISO9075 } from 'date-fns';
-import AircraftInfoCard from './components/modals/aircraftinfocard';
+import { format, formatISO, formatISO9075 } from 'date-fns';
 
 export const BASE_URL = {
   development: 'http://localhost:8080/api',
@@ -131,12 +130,13 @@ export default function PersistentDrawerLeft() {
             variant="h6" 
             noWrap component="div"
             sx={{
-              marginRight: '75%'
+              marginRight: '50%'
             }}
           >
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
           <Typography>
+            {formatISO(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})<br />
             {formatISO9075(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})
           </Typography>
         </Toolbar>
@@ -208,7 +208,7 @@ export default function PersistentDrawerLeft() {
           <Route path='Fleet%20Status' element={<FleetStatus/>}/>
           <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule/>}/>
           <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
-          <Route path='aircraftinfocard' element={<AircraftInfoCard/>}></Route>
+         
         </Routes>
       </Main>
     </Box>
