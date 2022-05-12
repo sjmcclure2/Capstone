@@ -7,7 +7,6 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -24,8 +23,14 @@ import Home from './components/home';
 import { Route, Routes, Link } from 'react-router-dom';
 import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
-import RedBall from './components/redball';
 import ScheduledMx from './components/scheduledmx';
+import TodaySorties from './components/todaysorties';
+import { format, formatISO, formatISO9075 } from 'date-fns';
+
+export const BASE_URL = {
+  development: 'http://localhost:8080/api',
+  // production: 'https://APP-NAME.herokuapp.com/api'
+}[process.env.NODE_ENV];
 
 const drawerWidth = 240;
 
@@ -43,7 +48,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
+      marginLeft: 0
     }),
   }),
 );
@@ -77,7 +82,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const icons = [<AirlinesIcon />, <EngineeringIcon />, <ConnectingAirportsIcon />, <CalendarViewMonthIcon />, <NotificationImportantIcon /> ]
+  const icons = [
+    <AirlinesIcon sx={{color: "#FDFD96"}}/>, 
+    <EngineeringIcon sx={{color: "#FDFD96"}}/>, 
+    <ConnectingAirportsIcon sx={{color: "#FDFD96"}}/>, 
+    <CalendarViewMonthIcon sx={{color: "#FDFD96"}}/>, 
+    <NotificationImportantIcon sx={{color: "#FDFD96"}}/> ]
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -87,21 +97,47 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box
+      style={{ 
+        display: 'flex', 
+        height: '100vh',
+        width: '100vw'
+      }}
+    >
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <AppBar 
+        position="fixed" 
+        open={open}
+      >
+        <Toolbar 
+          sx={{
+            backgroundColor: '#1A2930', 
+            borderLeft: '1px solid', 
+            borderColor: '#242423'}}
+          >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{ 
+              mr: 2, 
+              ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography 
+            variant="h6" 
+            noWrap component="div"
+            sx={{
+              marginRight: '50%'
+            }}
+          >
             {decodeURI(window.location.pathname.slice(1))}
+          </Typography>
+          <Typography>
+            {formatISO(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})<br />
+            {formatISO9075(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})
           </Typography>
         </Toolbar>
       </AppBar>
@@ -112,39 +148,67 @@ export default function PersistentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            borderColor: '#1A2930'
           },
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        <DrawerHeader 
+          sx={{
+            backgroundColor: '#1A2930'}}
+          >
+          <Typography 
+            variant='h5' 
+            sx={{
+              paddingRight: '25%', 
+              color: 'white', 
+              fontFamily: 'cursive'}}
+          >
+            SALT
+          </Typography>
+          <IconButton 
+            onClick={handleDrawerClose} 
+            sx={{
+              color: 'white'}}
+            >
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        <List>
-          {['Fliers', 'Scheduled Mx', 'Fleet Status', 'Flying Schedule', 'New Red Ball'].map((text, index) => (
-            <ListItem button component={Link} to={`/${text}`} key={text}>
+        <List 
+          sx={{
+            backgroundColor: '#1A2930', 
+            height: '100%'}}
+        >
+          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule'].map((text, index) => (
+            <ListItem 
+              button 
+              component={Link} 
+              to={`/${text}`} 
+              key={text}
+            >
               <ListItemIcon>
                 {icons[index]}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText 
+                primary={text} 
+                sx={{
+                  color: 'white'}} 
+              />
             </ListItem>
           ))}
         </List>
-        <Divider />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='Fliers' element={<Home/>}/>
-          <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
-          <Route path='Flying%20Schedule' element={<Flyingschedule/>}/>
-          <Route path='New%20Red%20Ball' element={<RedBall/>}/>
+          <Route path="Today's%20Flying" element={<TodaySorties/>}/>
           <Route path='Fleet%20Status' element={<FleetStatus/>}/>
+          <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule/>}/>
+          <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
+         
         </Routes>
       </Main>
     </Box>

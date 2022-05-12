@@ -2,23 +2,38 @@ import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { Container } from '@mui/material';
+import Divider from '@mui/material/Divider';
+
+const style = {
+  width: 'auto',
+  bgcolor: 'background.paper',
+};
 
 export default function ScheduledMx() {
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {[1, 2, 3].map((value) => (
-        <ListItem
-          key={value}
-          disableGutters
-        >
-          <ListItemText primary={`Line item ${value}`} />
-        </ListItem>
-      ))}
+    <Container>
+    <List sx={style} component="nav" aria-label="mailbox folders">
+      <ListItem button>
+      <ListItemText primary="Tail Number" />
+      </ListItem>
+      <Divider />
+      <ListItem button divider>
+        <ListItemText primary="Tail Number" />
+      </ListItem>
+      <ListItem button>
+        <ListItemText primary="Tail Number" />
+      </ListItem>
+      <Divider />
+      <ListItem button>
+        <ListItemText primary="Tail Number" />
+      </ListItem>
     </List>
+    </Container>
   );
 }
 
-
+//This is a form for the scheduled mx
 {/* <Box
       component="form"
       sx={{

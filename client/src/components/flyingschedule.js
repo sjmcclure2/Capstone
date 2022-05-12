@@ -1,34 +1,51 @@
 import * as React from 'react';
-import { Box, Card, Paper, Stack, Divider} from '@mui/material';
-import { experimentalStyled as styled } from '@mui/material/styles';
+import { Card, Container, Stack, Typography } from '@mui/material';
+import { add, format } from 'date-fns';
+import CachedIcon from '@mui/icons-material/Cached';
+import { BASE_URL } from '../App';
+import SortieCard from './sortieCard'
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+const dates = [
+  {id: '1', day: Date()},
+  {id: '2', day: add(new Date(), {days: 1})},
+  {id: '3', day: add(new Date(), {days: 2})},
+  {id: '4', day: add(new Date(), {days: 3})},
+  {id: '5', day: add(new Date(), {days: 4})},
+]
 
 function FlyingSchedule () {
-  return(
-    <Box>
-      <Card sx={{textAlign: 'center'}}>
-        <h1>Mon, 2 May 2022</h1>
-        <Stack 
-            direction="row"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-            justifyContent='center'
-        >          
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 85-0080</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
-          <Item>Reaper - 130 <br/> 0700-0945 <br/> 59-0001</Item>
-        </Stack>  
-      </Card>
-    </Box>
+  const [sorties, setSorties] = React.useState([])
+
+  React.useEffect(() => {
+    fetch(`${BASE_URL}/flying_schedule`)
+    .then(res => res.json())
+    .then(data => setSorties(data))
+  }, [])
+
+  const formatDate = (dateToFormat) => {
+    return format(new Date(dateToFormat), 'P')
+  }
+
+return(
+  <Container>
+    {dates.map(date => ( 
+      <Card sx={{
+        textAlign: 'center', 
+        margin: '10px', 
+        padding: '10px',
+        backgroundColor: '#1A2930'}}
+      >  
+        <h3 style={{color:'white'}}>{format(new Date(date.day), 'PPPP')}</h3>  
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{justifyContent:"center"}}
+        >
+          {sorties.map(sortie => <SortieCard cursortie={sortie} curdate={date} />)}
+          </Stack>
+        </Card>
+      ))}
+    </Container>
   )
 }
 
