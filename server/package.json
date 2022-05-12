@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js",
-    "knex": "knex init"
+    "postinstall": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -15,10 +15,10 @@
     "jade": "~1.11.0",
     "knex": "^2.0.0",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.16"
-  }
- 
+    "nodemon": "^2.0.16",
+    "pg": "^8.7.3"
+  },
   "devDependencies": {
-    "cors": "^2.8.5"
+    "@faker-js/faker": "^6.3.1"
   }
 }
