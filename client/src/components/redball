@@ -1,0 +1,14 @@
+import * as React from 'react';
+import { Box, Card } from '@mui/material';
+
+function ScheduledMx () {
+  return(
+    <Box>
+      <Card sx={{textAlign: 'center' }}>
+        <h1>Maint Pg</h1>
+      </Card>
+    </Box>
+  )
+}
+
+export default ScheduledMx;
