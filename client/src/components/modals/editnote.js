@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, styled } from '@mui/material';
+import { Close as CloseIcon, EditOutlined as EditOutlinedIcon } from '@mui/icons-material';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 import { BASE_URL } from '../../App';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -60,10 +53,12 @@ export default function EditNote(props) {
   const handleChange = (e) => {
     e.preventDefault();
     setNewNote(e.target.value)
-  }
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const submitChange = () => {
     axios.patch(`${BASE_URL}/notes/${note.id}`, 
       {
@@ -71,18 +66,18 @@ export default function EditNote(props) {
         note: newNote
       }
     )
-    .then((res) => console.log(res))
     handleClose()
-  }
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>
-        <EditOutlinedIcon/>
-      </IconButton>
+      <>
+        <EditOutlinedIcon onClick={handleClickOpen}/>
+      </>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"

@@ -1,14 +1,48 @@
 import * as React from 'react';
-import { Card, Grid, Container, Typography, Checkbox, FormControlLabel } from '@mui/material';
-import { format, formatISO9075 } from 'date-fns';
+import { Card, Grid, Typography } from '@mui/material';
+import { format } from 'date-fns';
+import  axios from 'axios';
+import { BASE_URL } from '../App';
+import EditUpdateLineAction from './modals/editupdatelineactions';
+
 
 
 export default function TodayFlyerCard ({flyer, curDate}) {
-  const [todaysSortie, setTodaysSortie] = React.useState(flyer)
-  const [date, setDate] = React.useState(curDate)
+  const [ todaysSortie ] = React.useState(flyer)
+  const [ crew_show, setCrew_show ] = React.useState(flyer.crew_show != null ? format(new Date(flyer.crew_show), "HH:mm"): "")
+  const [ crew_ready, setCrew_ready ] = React.useState(flyer.crew_ready != null ? format(new Date(flyer.crew_ready), "HH:mm") : "")
+  const [ eng_start, setEng_start ] = React.useState(flyer.eng_start != null ? format(new Date(flyer.eng_start), "HH:mm") : "")
+  const [ taxi, setTaxi ] = React.useState(flyer.taxi != null ? format(new Date(flyer.taxi), "HH:mm") : "")
+
+  const csonClick = () => {
+    let now = new Date()
+    let aValue = now.toISOString()
+    setCrew_show(format(new Date(now), "HH:mm"))
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'crew_show': `${aValue}`}).then(res => console.log(res))
+  };
+
+  const cronClick = () => {
+    let now = new Date()
+    let aValue = now.toISOString()
+    setCrew_ready(format(new Date(now), "HH:mm"))
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'crew_ready': `${aValue}`}).then(res => console.log(res))
+  };
+
+  const esonClick = () => {
+    let now = new Date()
+    let aValue = now.toISOString()
+    setEng_start(format(new Date(now), "HH:mm"))
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'eng_start': `${aValue}`}).then(res => console.log(res))
+  };
+
+  const tonClick = () => {
+    let now = new Date()
+    let aValue = now.toISOString()
+    setTaxi(format(new Date(now), "HH:mm"))
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'taxi': `${aValue}`}).then(res => console.log(res))
+  };
 
   return (
-    format(new Date(todaysSortie.projected_launch), 'P') === format(new Date(date.day), 'P') ?
       <div>
         <Card sx={{marginBottom:1, backgroundColor: "#FDFD96", padding: '7px'}}>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -18,7 +52,7 @@ export default function TodayFlyerCard ({flyer, curDate}) {
                   {todaysSortie.aircraft_id} | {todaysSortie.callsign}
                 </Typography>
                 <Typography>
-                  {format(new Date(todaysSortie.projected_launch), 'KK:mm')} - {format(new Date(todaysSortie.projected_land), 'KK:mm')}
+                  {format(new Date(todaysSortie.projected_launch), 'HH:mm')} - {format(new Date(todaysSortie.projected_land), 'HH:mm')}
                 </Typography>
                 <Typography>
                   {todaysSortie.req_fuel}K | HSABS
@@ -40,19 +74,30 @@ export default function TodayFlyerCard ({flyer, curDate}) {
             </Grid>
             <Grid item xs={7}>
               <Card sx={{display: 'flex', flexDirection: 'column'}}>
-                  {/* <FormControlLabel control={<Checkbox/>} label="Crew Show" onClick={() => setCurrentDate(`${formatISO9075(Date.now())}`)}/> {currentDate} 
-                  <FormControlLabel control={<Checkbox/>} label="Crew Ready"/>
-                  <FormControlLabel control={<Checkbox/>} label="Eng. Start"/>
-                  <FormControlLabel control={<Checkbox/>} label="Taxi"/> */}
-                <div>Crew Show: <input type="time" value={format(new Date(todaysSortie.crew_show), 'KK:mm')}/></div>
-                <div>Crew Ready: <input type="time" value={format(new Date(todaysSortie.crew_ready), 'KK:mm')}/></div>
-                <div>Eng. Start: <input type="time" value={format(new Date(todaysSortie.eng_start), 'KK:mm')}/></div>
-                <div>Taxi: <input type="time" value={format(new Date(todaysSortie.taxi), 'KK:mm')}/></div>
+                <div>
+                  <> Crew Show: </>
+                    {crew_show.length > 0 ? <> {crew_show} </> : <input type='button' value={'Set'} onClick={csonClick} />}
+                </div>
+                <div>
+                  <>Crew Ready: </> 
+                  {crew_ready.length > 0 ? <> {crew_ready} </> : <input type='button' value={'Set'} onClick={cronClick} />}
+                </div>
+                <div>
+                  <>Engine Start:</>
+                  {eng_start.length > 0 ? <> {eng_start} </> : <input type='button' value={'Set'} onClick={esonClick} />}
+                </div>
+                <div>
+                  <>Taxi:</>
+                {taxi.length > 0 ? <> {taxi} </> : <input type='button' value={'Set'} onClick={tonClick} />}
+                </div>
+                  <EditUpdateLineAction flyer={todaysSortie}/>
               </Card>  
             </Grid>
           </Grid>
         </Card>
       </div>
-    : null
   );
-}
+};
+
+//Need to implement a patch request for the input times to update in the database
+//Create update buttons/icons for the patch requests?

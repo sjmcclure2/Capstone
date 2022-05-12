@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Card, CardHeader, Grid, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Card, Grid, Stack, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import UpdateStatus from './modals/updatestatus';
 
 export default function AircraftStatus(props) {
   const [tail, setTail] = useState(props.tail);
+
+  const updateStatus = (key, data) => {
+    let tempTail = {...tail};
+    tempTail[key] = data;
+    setTail(tempTail); 
+  }
 
   const formatDate = (dateToFormat) => {
     return format(new Date(dateToFormat), 'iii, d MMM')
@@ -18,8 +24,8 @@ export default function AircraftStatus(props) {
         alignItems: 'center'
       }}
     >
-      <Grid container sx={{alignItems: 'center', justifyContent: 'center'}}>
-        <Grid item xs={1}>
+      <Grid container sx={{alignItems: 'left', justifyContent: 'center'}}>
+        <Grid item xs={1} sx={{marginRight: '15px'}}>
           <Avatar 
             alt={tail.tail_number} 
             // src={tail.noseart} 
@@ -42,7 +48,7 @@ export default function AircraftStatus(props) {
             }}
           >        
             <h2 style={{margin: 0, padding: 0}}>{tail.tail_number}</h2>
-            <h2 style={{margin: 0, padding: 0}}>{<UpdateStatus status={tail.status} id={tail.id}/>}</h2>
+            <h2 style={{margin: 0, padding: 0}}>{<UpdateStatus status={tail.status.toUpperCase()} id={tail.id} update={updateStatus}/>}</h2>
           </Card> 
         </Grid>
         <Grid 
@@ -61,13 +67,13 @@ export default function AircraftStatus(props) {
               direction="row"
               alignItems='center'
             >
-              <UpdateStatus fuel={tail.fuel_quant} id={tail.id}/>k
+              <UpdateStatus fuel={tail.fuel_quant} id={tail.id} update={updateStatus}/>k
             </Stack>
             <Stack 
               direction="row"
               alignItems='center'
             >
-              <UpdateStatus location={tail.location} id={tail.id}/>
+              <UpdateStatus location={tail.location_name} id={tail.id} update={updateStatus}/>
             </Stack>
           </Card>
         </Grid>

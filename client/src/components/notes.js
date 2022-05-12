@@ -1,9 +1,9 @@
-import { Card, Box, Typography, IconButton, Tooltip } from '@mui/material';
 import React from 'react';
+import {  Box, Card, IconButton, Tooltip, Typography } from '@mui/material';
 import { format } from 'date-fns';
+
 import AddNote from './modals/addnote';
 import EditNote from './modals/editnote';
-import axios from 'axios';
 
 export default function Notes(props) {
   const tail = props.tail;
@@ -46,43 +46,6 @@ export default function Notes(props) {
             </IconButton>
           </Tooltip>
       </Card>
-      {/* <Typography
-        variant='h5'
-      >
-        Open JCNs/Notes
-      </Typography>
-      <Card
-        elevation={0}
-        sx={{
-          padding: '10px',
-          backgroundColor: '#ded9cc'
-        }}
-      >
-        <Typography
-          color='secondary'
-        >
-          <i><small>{format(new Date(), 'P, p')}</small></i>
-        </Typography>
-        <Typography
-          sx={{
-            paddingBottom: '5px'
-          }}
-        >
-          Notes loop here 
-          <Tooltip title="Edit">
-          <IconButton>
-            <EditOutlinedIcon
-              fontSize='small'
-            />
-          </IconButton>
-          </Tooltip>
-        </Typography>
-        <Tooltip title="Add">
-            <IconButton>
-              <AddOutlinedIcon/>
-            </IconButton>
-          </Tooltip>
-      </Card> */}
     </Box>
   )
 }

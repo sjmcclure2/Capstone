@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, styled, Select, MenuItem } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { TextField } from '@mui/material';
 import axios from 'axios';
 import { BASE_URL } from '../../App';
 
@@ -19,7 +12,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
-}));
+})); 
 
 const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
@@ -52,7 +45,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function UpdateStatus(props) {
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState();
+  const [type, setType] = useState('');
   const [data, setData] = useState();
   const [key, setKey] = useState();
   const prop = Object.keys(props)
@@ -72,33 +65,83 @@ export default function UpdateStatus(props) {
         setKey('location')
         setType(props.location)
         break;
+      default:
+        break;
     } 
-  }, [])
+  }, [props])
 
   const handleChange = (e) => {
     e.preventDefault();
     setData(e.target.value)
-  }
+  };
+
   const handleClickOpen = (e) => {
     e.stopPropagation();
     setOpen(true);
   };
+
   const handleUpdate = (e) => {
     axios.patch(`${BASE_URL}/aircraft_status/${props.id}`,
-    {
-      [key]: data
-    }
-  )
-    handleClose(e)
-  }
+      {[key]: data}
+    )
+    props.update(key, data)
+    handleClose(e);
+  };
+
   const handleClose = (e) => {
     e.stopPropagation();
     setOpen(false);
   };
 
+  const statusColor = (status) => { 
+    if(status.includes('FMC')) {
+      return <span style={{color:'green'}}><b>{status}</b></span>
+    } else if (status.includes('PMC')) {
+        return <span style={{color:'yellow'}}><b>{status}</b></span>
+    } else if (status.includes('NMC')) {
+        return <span style={{color:'red'}}><b>{status}</b></span>
+    } else  
+        return <span style={{color:'black'}}><b>{status}</b></span>
+  }
+
+  const statusList = [
+    'FMC', 'PMC', 'PMCSH', 'PMCMG', 'PMCBF', 'NMC', 'NMCMC', 'NMCMM', 'NMCBA', 'NMCSE', 'NMCMD', 'NMCSH'
+    ]
+
+  const selectList = (key, item) => {
+    if(key === 'status') {
+      return ( 
+        <Select 
+          labelId={item} 
+          id={item} 
+          value={type} 
+          label={item} 
+          onClick={e => {e.stopPropagation()}}
+          onChange={e => {handleChange(e)}}
+          sx={{width: '25vw'}}
+        >
+          {statusList.map(itm => 
+            <MenuItem value={itm}>{itm}</MenuItem>
+          )}
+        </Select>
+      )
+    }
+    else 
+      return (
+        <TextField
+          onClick={e => {e.stopPropagation()}}
+          onChange={e => {handleChange(e)}}
+          id={propKey}
+          defaultValue={type}
+        />
+      )
+    }
+  
+
   return (
     <div>
       <Button 
+
         variant="text" 
         onClick={e => {handleClickOpen(e)}}
         sx={{
@@ -108,7 +151,7 @@ export default function UpdateStatus(props) {
           fontSize: '16px'
         }}  
       >
-        {propKey == 'status' ? <b>{type}</b> : <span><b>{propKey}:</b> {type}</span>}
+        {propKey === 'status' ? statusColor(type) : <span><b>{propKey}:</b> {type}</span>}
       </Button>
       <BootstrapDialog
         onClose={e => {handleClose(e)}}
@@ -119,12 +162,7 @@ export default function UpdateStatus(props) {
           Edit {propKey}
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <TextField
-            onClick={e => {e.stopPropagation()}}
-            onChange={e => {handleChange(e)}}
-            id={propKey}
-            defaultValue={type}
-          />
+          {selectList(key, type)}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={e => {handleUpdate(e)}}>

@@ -1,6 +1,7 @@
-import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 import { format } from 'date-fns';
+
 import Notes from './notes';
 import UpdateStatusDriver from './modals/updatestatusdriver';
 
@@ -19,7 +20,7 @@ export default function StatusDriver(props) {
   }
 
   const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'd MMM @ kk:mm')
+    return format(new Date(dateToFormat), 'd MMM @ HH:mm')
   }
 
   return(
@@ -58,7 +59,7 @@ export default function StatusDriver(props) {
           }}  
         >
           <h4>Notes</h4>
-          <Notes tail={tail}/> //Displays the notes for acft status driver
+          <Notes tail={tail} />
         </Grid>
       </Grid>
     </Box>

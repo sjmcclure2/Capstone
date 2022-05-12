@@ -1,18 +1,13 @@
 import React, {useState } from 'react';
-import { Card, Grid, Container, Typography, Checkbox, FormControlLabel } from '@mui/material';
-import { format, formatISO9075 } from 'date-fns';
-import TodayFlyerCard from './todayFlyerCard';
-import { BASE_URL } from '../App';
-import axios from 'axios';
+import { Card, Container } from '@mui/material';
+import { format } from 'date-fns';
 
-const dates = [
-  {id: '1', day: Date()},
-]
+import { BASE_URL } from '../App';
+import TodayFlyerCard from './todayFlyerCard';
 
 function TodaySorties() {
 
-  const [todaysSorties, setTodaysSorties] = useState([]);
-  // const [currentDate, setCurrentDate] = useState(``);
+  const [ todaysSorties, setTodaysSorties ] = useState([]);
   
   React.useEffect(() => {
     fetch(`${BASE_URL}/flying_schedule`)
@@ -20,22 +15,18 @@ function TodaySorties() {
       .then(data => setTodaysSorties(data))
   }, [])
 
+  const date = Date();
 
   return (
   <Container>  
-    {dates.map(date => (
-      <Card sx={{
-        textAlign: 'center', 
-        margin: '10px', 
-        padding: '10px',
-        backgroundColor: '#1A2930'}}
-      >  
-        <h3 style={{color:'white'}}>{format(new Date(date.day), 'PPPP')}</h3>  
-          {todaysSorties.map(todaysSortie => ( 
-          <TodayFlyerCard flyer={todaysSortie} curDate={date} />
-          ))}
-        </Card>
-      ))}
+    <Card sx={{textAlign: 'center', margin: '10px', padding: '10px',backgroundColor: '#1A2930'}}>  
+      <h3 style={{color:'white'}}>{format(new Date(date), 'PPPP')}</h3>  
+      {todaysSorties
+      .filter(sortie => format(new Date(sortie.projected_launch), 'P') === format(new Date(date), 'P'))
+      .map(sortie =>  
+      <TodayFlyerCard key={sortie.id} flyer={sortie} curDate={date} />
+      )}
+    </Card>
   </Container>
    )
  }

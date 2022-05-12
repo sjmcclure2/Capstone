@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
+import { Accordion, AccordionDetails, AccordionSummary, Card, Typography } from '@mui/material'; 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Card } from '@mui/material'; 
-import { format } from 'date-fns';
-import StatusDriver from './statusdriver';
+
 import { BASE_URL } from '../App'
 import AircraftStatus from './aircraftstatus';
+import StatusDriver from './statusdriver';
 
 export default function FleetStatus() {
   const [expanded, setExpanded] = useState(false);
@@ -22,11 +18,6 @@ export default function FleetStatus() {
     .then(res => res.json())
     .then(data => setAcft(data))
     }, [])
-  
-
-  const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'iii, d MMM')
-  }
 
   return (
     <div 
@@ -51,7 +42,7 @@ export default function FleetStatus() {
               aria-controls="panel1bh-content"
               id="panel1bh-header"
             >
-              <AircraftStatus tail={tail}/> //Displays individual acft status info
+              <AircraftStatus tail={tail}/> 
             </AccordionSummary>
               <AccordionDetails> 
               <Typography 
@@ -73,7 +64,7 @@ export default function FleetStatus() {
                   padding: '5px',
                 }}
               >
-                <StatusDriver tail={tail}/> //Displays the status driver info
+                <StatusDriver tail={tail}/> 
               </Card>
             </AccordionDetails>
           </Accordion>

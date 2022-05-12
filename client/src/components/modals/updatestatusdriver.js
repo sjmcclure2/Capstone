@@ -54,7 +54,7 @@ export default function UpdateStatusDriver(props) {
   const tail = props.tail;
 
   const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'kk:mm, P')
+    return format(new Date(dateToFormat), 'HH:mm, P')
   }
   const handleClickOpen = () => {
     setOpen(true);

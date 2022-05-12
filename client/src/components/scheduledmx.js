@@ -34,35 +34,35 @@ export default function ScheduledMx() {
 }
 
 //This is a form for the scheduled mx
-{/* <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        <TextField
-          id="outlined"
-          label="Job Control Number"
-        />
-        <TextField
-          id="outlined"
-          label="Maintenance Event"
-          multiline
-        />
-        <TextField
-          id="outlined"
-          label="Due"
-        />
-        <TextField
-          id="outlined-number"
-          label="Flight Hours"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </div>
-    </Box> */}
+// <Box
+//       component="form"
+//       sx={{
+//         '& .MuiTextField-root': { m: 1, width: '25ch' },
+//       }}
+//       noValidate
+//       autoComplete="off"
+//     >
+//       <div>
+//         <TextField
+//           id="outlined"
+//           label="Job Control Number"
+//         />
+//         <TextField
+//           id="outlined"
+//           label="Maintenance Event"
+//           multiline
+//         />
+//         <TextField
+//           id="outlined"
+//           label="Due"
+//         />
+//         <TextField
+//           id="outlined-number"
+//           label="Flight Hours"
+//           type="number"
+//           InputLabelProps={{
+//             shrink: true,
+//           }}
+//         />
+//       </div>
+//     </Box>
