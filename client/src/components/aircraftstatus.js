@@ -3,7 +3,7 @@ import { Avatar, Box, Card, CardHeader, Grid, Stack, Typography } from '@mui/mat
 import { format } from 'date-fns';
 import UpdateStatus from './modals/updatestatus';
 
-export default function AircraftInfoCard(props) {
+export default function AircraftStatus(props) {
   const [tail, setTail] = useState(props.tail);
 
   const formatDate = (dateToFormat) => {

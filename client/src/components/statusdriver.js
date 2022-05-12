@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import Notes from './notes';
 import UpdateStatusDriver from './modals/updatestatusdriver';
 
-export default function AircraftInfo(props) {
+export default function StatusDriver(props) {
   const tail = props.tail;
 
   const renderEticUpdate = (param) => {
@@ -58,7 +58,7 @@ export default function AircraftInfo(props) {
           }}  
         >
           <h4>Notes</h4>
-          <Notes tail={tail}/>
+          <Notes tail={tail}/> //Displays the notes for acft status driver
         </Grid>
       </Grid>
     </Box>

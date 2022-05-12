@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Card } from '@mui/material'; 
 import { format } from 'date-fns';
-import AircraftInfo from './aircraftinfo';
+import StatusDriver from './statusdriver';
 import { BASE_URL } from '../App'
-import AircraftInfoCard from './aircraftinfocard';
+import AircraftStatus from './aircraftstatus';
 
 export default function FleetStatus() {
   const [expanded, setExpanded] = useState(false);
@@ -51,9 +51,7 @@ export default function FleetStatus() {
               aria-controls="panel1bh-content"
               id="panel1bh-header"
             >
-
-              <AircraftInfoCard tail={tail}/>
-
+              <AircraftStatus tail={tail}/> //Displays individual acft status info
             </AccordionSummary>
               <AccordionDetails> 
               <Typography 
@@ -75,7 +73,7 @@ export default function FleetStatus() {
                   padding: '5px',
                 }}
               >
-                <AircraftInfo tail={tail}/>
+                <StatusDriver tail={tail}/> //Displays the status driver info
               </Card>
             </AccordionDetails>
           </Accordion>
