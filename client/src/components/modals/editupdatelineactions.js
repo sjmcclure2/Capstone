@@ -4,6 +4,7 @@ import { Close as CloseIcon } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { BASE_URL } from '../../App';
 import { format } from 'date-fns';
+import  axios from 'axios';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -43,9 +44,18 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditUpdateLineAction(flyer) {
+export default function EditUpdateLineAction({flyer}) {
   const [tail, setTail] = useState(flyer)
   const [open, setOpen] = useState(false)
+  useEffect(()=>{},[open])
+
+  const formatDate = (time) => {
+    if(time === null) {
+      return time;
+    }
+    return format(new Date(time), 'HH:mm');
+  }
+ 
 
   const handleOpen = () => {
     setOpen(true);
@@ -55,9 +65,15 @@ export default function EditUpdateLineAction(flyer) {
     setOpen(false)
   };
 
-  const handleChange = () => {
-
-  };
+  // const handleChange = () => {
+  //   axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`,
+  //     {'crew_show': `${}`},
+  //     {'crew_ready': `${}`},
+  //     {'eng_start': `${}`},
+  //     {'taxi': `${}`}
+  //   ).then(res => console.log(res));
+  //   setOpen(false);
+  // };
 
   return <>
     <div>
@@ -72,11 +88,11 @@ export default function EditUpdateLineAction(flyer) {
         <BootstrapDialogTitle id="customized-dialog-title" onClose={e => {handleClose(e)}}>
           Line Actions
         </BootstrapDialogTitle>
-        <DialogContent dividers >
-          Crew Show: <input type='time' defaultValue={tail.crew_show}/>
-          Crew Ready: <input type='time' defaultValue={tail.crew_ready}/>
-          {/* <input type='date' />
-          <input type='date' /> */}
+        <DialogContent dividers sx={{display: 'flex'}}>
+          <div>Crew Show: <input type='time' defaultValue={formatDate(tail.crew_show)}/></div>
+          <div>Crew Ready: <input type='time' defaultValue={formatDate(tail.crew_ready)}/></div>
+          <div>Engine Start: <input type='time' defaultValue={formatDate(tail.eng_start)}/></div>
+          <div>Taxi: <input type='time' defaultValue={formatDate(tail.taxi)}/></div>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={e => {handleClose(e)}}>

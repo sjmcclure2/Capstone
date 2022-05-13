@@ -1,12 +1,11 @@
 import React from 'react';
-import { Card, Typography } from '@mui/material';
+import { Card, Typography, Grid } from '@mui/material';
 import CachedIcon from '@mui/icons-material/Cached';
 import { format } from 'date-fns';
 
 export default function SortieCard ({ sortie }) {
-
   return <>
-    <Card sx={{textAlign:"center", padding: '10px', backgroundColor: '#FDFD96'}}>
+    <Grid item sx={{textAlign:"center", padding: '10px', backgroundColor: '#FDFD96'}}>
       {sortie.is_quickturn ?
         <>
           <CachedIcon />
@@ -22,7 +21,7 @@ export default function SortieCard ({ sortie }) {
       <Typography sx={{color: 'green', fontWeight:'bold'}}>
         {format(new Date(sortie.projected_launch), 'HH:mm')} - {format(new Date(sortie.projected_land), 'HH:mm')}
       </Typography>
-    </Card>
+    </Grid>
   </>;
 };
 

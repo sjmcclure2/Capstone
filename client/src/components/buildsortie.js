@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Card, Checkbox, FormControlLabel, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, Checkbox, FormControlLabel, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography, FormControl } from '@mui/material';
 import axios from 'axios';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+
 import { BASE_URL } from '../App';
 
 // PASS IN THE {AIRCRAFT.ID} IN LIEU OF SENDING THE TAIL NUMBER
@@ -13,16 +15,17 @@ export default function BuildSortie() {
   const [callsign, setCallsign] = useState();
   const [reqFuel, setReqFuel] = useState();
   const [isQuickTurn, setIsQuickTurn] = useState(false);
-  const sorties = [];
+  const [sorties, setSorties] = useState([]);
+  const [val, setVal] = useState('');
 
   useEffect(() => {
     fetch(`${BASE_URL}/aircraft_status`)
     .then(res => res.json())
     .then(data => setAircraft(data))
-    }, [])
+    }, [sorties])
 
   const postSortie = () => {
-    axios.post(`${BASE_URL}/flying_schedule`,
+    let tempSortie = 
       {
         'projected_launch': launch,
         'projected_land': land,
@@ -30,15 +33,11 @@ export default function BuildSortie() {
         'req_fuel': reqFuel,
         'tail_number': tailNumber,
         'is_quickturn': isQuickTurn
-      }
-    )
-    sorties.push({
-      'projected_launch': launch,
-      'projected_land': land,
-      'callsign': callsign,
-      'req_fuel': reqFuel,
-      'tail_number': tailNumber
-    })
+      };
+    axios.post(`${BASE_URL}/flying_schedule`, tempSortie);
+    
+    setSorties([...sorties, tempSortie])
+    setVal(' ')
   }
 
   const updateLaunch = (e) => {
@@ -62,7 +61,6 @@ export default function BuildSortie() {
   };
 
   const updateAircraft = (e) => {
-    console.log(e.target.value)
     setTailNumber(e.target.value)
   }
 
@@ -72,17 +70,24 @@ export default function BuildSortie() {
         sx={{
           margin: '15px',
           padding: '20px',
-          height: '15vh'
+          height: '25%',
+          textAlign: 'center',
+          backgroundColor: '#c9cdd4'
         }}
       >
+        <h3> New </h3>
+        <hr style={{marginBottom: '15px'}}></hr>
           <TextField
             label='Take-Off'
             id='projected_launch'
             name='projected_launch'
             type='datetime-local'
-            variant='standard'
+            variant='outlined'
+            color='warning'
+            InputLabelProps={{ shrink: true }}
+            onChange={(e) => {updateLaunch(e)}}
             sx={{
-              margin:'10px'
+              margin:'10px',
             }}
           />
           <TextField
@@ -90,9 +95,12 @@ export default function BuildSortie() {
             id='projected_land'
             name='projected_land'
             type='datetime-local'
-            variant='standard'
+            variant='outlined'
+            color='warning'
+            InputLabelProps={{ shrink: true }}
+            onChange={(e) => {updateLand(e)}}
             sx={{
-              margin:'10px'
+              margin:'10px',
             }}
           />
           <TextField
@@ -100,39 +108,45 @@ export default function BuildSortie() {
             id='callsign'
             name='callsign'
             type='callsign'
-            variant='standard'
+            variant='outlined'
+            color='warning'
+            onChange={(e) => {updateCallsign(e)}}
             sx={{
-              margin:'10px'
+              margin:'10px', 
             }}
           />
           <TextField
             label='Fuel Load'
+            type='number'
             id='req_fule'
             name='req_fuel'
-            variant='standard'
+            variant='outlined'
+            color='warning'
+            onChange={(e) => {updateReqFuel(e)}}
             sx={{
-              margin:'10px'
-            }}
+              margin:'10px',
+            }} 
           />
-           <Select
-            labelId='tail_number'
-            id={aircraft.id}
-            value={aircraft.id}
-            label='Aircraft'
-            onChange={(e) => {updateAircraft(e)}}
-            sx={{
-              margin:'10px'
-            }}
-          >
-            {aircraft.map(acft => 
-              <MenuItem value={acft.tail_number}>{acft.tail_number}</MenuItem>
-            )}
-          </Select>
+          <FormControl sx={{minWidth: 160}}>
+            <TextField
+              select
+              label='Aircraft'
+              id={aircraft.id}
+              value={aircraft.id}
+              onChange={(e) => {updateAircraft(e)}}
+              sx={{
+                margin:'10px',
+              }}
+              >
+              {aircraft.map(acft =><MenuItem value={acft.tail_number}>{acft.tail_number}</MenuItem>)}
+             
+            </TextField>
+          </FormControl>
           <FormControlLabel
             label='Quickturn'
             sx={{
               paddingBottom: '20px', 
-              margin: '15px'
+              margin: '15px',
             }}
             control={
               <Checkbox
@@ -144,18 +158,43 @@ export default function BuildSortie() {
           />
           <Button 
             variant='text'
+            size='large'
             onClick={postSortie}
-            >Add Sortie</Button>
+            color='success'
+            sx={{
+              marginLeft: '20px',
+              paddingBottom: ' 20px'
+            }}  
+          >
+              Add Sortie
+          </Button>
       </Paper>
       <Card
         sx={{
           margin: '15px',
           padding: '15px',
-          height: '50vh'
+          height: '50vh',
+          backgroundColor: '#c9cdd4',
+          textAlign: 'center'
         }}
       >
+        <h2>Sorties Added to Schedule</h2>
+        <hr style={{marginBottom: '15px'}}></hr>
         {sorties.map(sortie => 
-          <Typography>{sortie.projected_land}</Typography>  
+          <Card
+           sx={{
+             backgroundColor: '#FDFD96',
+             textAlign: 'center',
+             margin: '15px'
+           }} 
+          >
+            <Typography>Aircraft: {sortie.tail_number}</Typography>
+            <Typography>Launch: {sortie.projected_launch}</Typography>
+            <Typography>Land: {sortie.projected_land}</Typography>
+            <Typography>Callsign: {sortie.callsign}</Typography>
+            <Typography>Fuel Load: {sortie.req_fuel}</Typography>
+            {sortie.is_quickturn ? <Typography>Quickturn</Typography> : null}
+          </Card>
         )}
       </Card>
     </Box>

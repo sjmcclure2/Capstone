@@ -4,15 +4,22 @@ import { format } from 'date-fns';
 import  axios from 'axios';
 import { BASE_URL } from '../App';
 import EditUpdateLineAction from './modals/editupdatelineactions';
+import ArrowUpwardSharpIcon from '@mui/icons-material/ArrowUpwardSharp';
+import ArrowDownwardSharpIcon from '@mui/icons-material/ArrowDownwardSharp';
+import { green, red } from '@mui/material/colors';
 
 
 
 export default function TodayFlyerCard ({flyer, curDate}) {
-  const [ todaysSortie ] = React.useState(flyer)
+  const [ todaysSortie, setTodaysSortie ] = React.useState(flyer)
   const [ crew_show, setCrew_show ] = React.useState(flyer.crew_show != null ? format(new Date(flyer.crew_show), "HH:mm"): "")
   const [ crew_ready, setCrew_ready ] = React.useState(flyer.crew_ready != null ? format(new Date(flyer.crew_ready), "HH:mm") : "")
   const [ eng_start, setEng_start ] = React.useState(flyer.eng_start != null ? format(new Date(flyer.eng_start), "HH:mm") : "")
   const [ taxi, setTaxi ] = React.useState(flyer.taxi != null ? format(new Date(flyer.taxi), "HH:mm") : "")
+  
+  React.useEffect(() => {
+    setTodaysSortie({ ...todaysSortie, crew_show, crew_ready, eng_start, taxi });
+  }, [ crew_show, crew_ready, eng_start, taxi ]);
 
   const csonClick = () => {
     let now = new Date()
@@ -49,10 +56,13 @@ export default function TodayFlyerCard ({flyer, curDate}) {
             <Grid item xs={12}>
               <Card>
                 <Typography>
-                  {todaysSortie.aircraft_id} | {todaysSortie.callsign}
+                  <b>{todaysSortie.id} | {todaysSortie.callsign}</b>
                 </Typography>
                 <Typography>
-                  {format(new Date(todaysSortie.projected_launch), 'HH:mm')} - {format(new Date(todaysSortie.projected_land), 'HH:mm')}
+                  <ArrowUpwardSharpIcon fontSize='small' sx={{color: green[500]}}/>
+                  {format(new Date(todaysSortie.projected_launch), 'HH:mm')} <>&nbsp;</>
+                   <ArrowDownwardSharpIcon fontSize='small' sx={{color: red[500]}}/> 
+                  {format(new Date(todaysSortie.projected_land), 'HH:mm')}
                 </Typography>
                 <Typography>
                   {todaysSortie.req_fuel}K | HSABS
@@ -62,7 +72,7 @@ export default function TodayFlyerCard ({flyer, curDate}) {
             <Grid item xs={5}>
               <Card>  
                 <Typography>
-                  {todaysSortie.tail_number}
+                  <b>{todaysSortie.tail_number}</b>
                 </Typography>
                 <Typography sx={{color: 'green', fontWeight: 'bold'}}>
                   FMC | {todaysSortie.req_fuel}K
