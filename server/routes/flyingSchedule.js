@@ -30,6 +30,16 @@ router.get('/', (req, res) => {
   });
 });
 
+router.post('/', (req, res) => {
+  knex('sorties')
+  .insert(req.body, ['*'])
+  .then(data => res.status(201).json(data))
+  .catch(err => {
+    console.error(err);
+    res.sendStatus(400);
+  });
+});
+
 router.patch('/:id', (req, res) => {
   knex('sorties')
   .where('id', req.params.id)
