@@ -9,7 +9,7 @@ exports.up = function(knex) {
     table.foreign('parking_location').references('locations.id');
     table.integer('launch_location')
     table.foreign('launch_location').references('locations.id');
-    table.string('tail_number');
+    table.string('tail_number').notNullable();
     table.foreign('tail_number').references('aircraft.tail_number');
     table.string('callsign').notNullable();
     table.datetime('projected_launch').notNullable();
