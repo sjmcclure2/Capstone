@@ -8,6 +8,7 @@ import { Airlines as AirlinesIcon, CalendarViewMonth as CalendarViewMonthIcon,
   ConnectingAirports as ConnectingAirportsIcon, Engineering as EngineeringIcon,
   Menu as MenuIcon, NotificationImportant as NotificationImportantIcon } from '@mui/icons-material';
 import { format, formatISO, formatISO9075 } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 import Home from './components/home';
 import FleetStatus from './components/fleetstatus';
@@ -125,6 +126,7 @@ export default function PersistentDrawerLeft() {
           </Typography>
           <Typography>
             {/* {zonedTimeToUtc(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})<br /> */}
+            {Date()}<br />
             {formatISO(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})<br />
             {formatISO9075(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})
           </Typography>

@@ -98,6 +98,3 @@ export default function TodayFlyerCard ({flyer, curDate}) {
       </div>
   );
 };
-
-//Need to implement a patch request for the input times to update in the database
-//Create update buttons/icons for the patch requests?

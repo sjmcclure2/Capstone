@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Container } from '@mui/material';
 import { format } from 'date-fns';
 
@@ -7,9 +7,10 @@ import TodayFlyerCard from './todayFlyerCard';
 
 function TodaySorties() {
 
-  const [ todaysSorties, setTodaysSorties ] = useState([]);
+  const [todaysSorties, setTodaysSorties ] = useState([]);
+
   
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(`${BASE_URL}/flying_schedule`)
       .then(res => res.json())
       .then(data => setTodaysSorties(data))
@@ -30,5 +31,8 @@ function TodaySorties() {
   </Container>
    )
  }
+
+ //lift todaysSorties state into sortiepagination.js
+
 
 export default TodaySorties;

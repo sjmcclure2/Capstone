@@ -3,6 +3,7 @@ import { Input, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconB
 import { Close as CloseIcon } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { BASE_URL } from '../../App';
+import { format } from 'date-fns';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -71,14 +72,11 @@ export default function EditUpdateLineAction(flyer) {
         <BootstrapDialogTitle id="customized-dialog-title" onClose={e => {handleClose(e)}}>
           Line Actions
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <input type='date' defaultValue={tail.crew_ready} placeholder={tail.crew_ready} />
-          <TextField
-          type="text" id={tail.id} value={tail.crew_ready} defaultValue={tail.crew_ready}>
-            </TextField>
-          <input type='date' defaultValue={tail.crew_show} placeholder={tail.crew_show} />
-          <input type='date' />
-          <input type='date' />
+        <DialogContent dividers >
+          Crew Show: <input type='time' defaultValue={tail.crew_show}/>
+          Crew Ready: <input type='time' defaultValue={tail.crew_ready}/>
+          {/* <input type='date' />
+          <input type='date' /> */}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={e => {handleClose(e)}}>

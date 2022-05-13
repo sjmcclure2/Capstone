@@ -30,14 +30,14 @@ export default function SortieCard ({ sortie }) {
 // import { Card, Typography, Pagination } from '@mui/material';
 // import CachedIcon from '@mui/icons-material/Cached';
 // import { format } from 'date-fns';
-// import usePagination from './sortiepagination';
+// import UsePagination from './sortiepagination';
 
 // export default function SortieCard ({ sortie }) {
 //   let [page, setPage] = useState(1);
 //   const PER_PAGE = 5;
   
 //   const count = Math.ceil(sortie.length / PER_PAGE);
-//   const _DATA = usePagination(sortie, PER_PAGE);
+//   const _DATA = usePagination(todaysSorties, PER_PAGE);
 
 //   const handleChange = (e, p) => {
 //     setPage(p);
