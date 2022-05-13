@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import { AppBar as MuiAppBar, Box, CssBaseline, Drawer, IconButton, List, ListItem,
   ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
@@ -7,10 +7,9 @@ import { Airlines as AirlinesIcon, CalendarViewMonth as CalendarViewMonthIcon,
   ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon,
   ConnectingAirports as ConnectingAirportsIcon, Engineering as EngineeringIcon,
   Menu as MenuIcon, NotificationImportant as NotificationImportantIcon } from '@mui/icons-material';
-import { format, formatISO, formatISO9075 } from 'date-fns';
-import { zonedTimeToUtc } from 'date-fns-tz';
-
+  
 import Home from './components/home';
+import Clock from './components/Clock';
 import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import ScheduledMx from './components/scheduledmx';
@@ -125,12 +124,7 @@ export default function PersistentDrawerLeft() {
           >
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
-          <Typography>
-            {/* {zonedTimeToUtc(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})<br /> */}
-            {Date()}<br />
-            {formatISO(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})<br />
-            {formatISO9075(Date.now())} (Julian: {format(Date.now(), 'yyDDD')})
-          </Typography>
+          <Clock />
         </Toolbar>
       </AppBar>
       <Drawer
