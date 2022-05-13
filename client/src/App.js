@@ -7,8 +7,7 @@ import { Airlines as AirlinesIcon, CalendarViewMonth as CalendarViewMonthIcon,
   ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon,
   ConnectingAirports as ConnectingAirportsIcon, Engineering as EngineeringIcon,
   Menu as MenuIcon, NotificationImportant as NotificationImportantIcon } from '@mui/icons-material';
-  
-import Home from './components/home';
+
 import Clock from './components/Clock';
 import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
@@ -172,7 +171,8 @@ export default function PersistentDrawerLeft() {
               button 
               component={Link} 
               to={`/${text}`} 
-              key={text}
+              key={text}             
+              onClick={handleDrawerClose}
             >
               <ListItemIcon>
                 {icons[index]}
@@ -189,12 +189,12 @@ export default function PersistentDrawerLeft() {
       <Main open={open}>
         <DrawerHeader />
         <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path="Today's%20Flying" element={<TodaySorties/>}/>
-          <Route path='Fleet%20Status' element={<FleetStatus/>}/>
-          <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule/>}/>
-          <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
-          <Route path='New%20Sortie' element={<BuildSortie/>}/>
+          <Route path='/' element={<FleetStatus />} />
+          <Route path='Fleet%20Status' element={<FleetStatus />} />
+          <Route path='New%20Sortie' element={<BuildSortie />} />
+          <Route path='Scheduled%20Mx' element={<ScheduledMx />} />
+          <Route path="Today's%20Flying" element={<TodaySorties />} />
+          <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule />} />
          
         </Routes>
       </Main>
