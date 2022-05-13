@@ -30,7 +30,6 @@ exports.seed = async function(knex) {
       var eng_start = faker.date.recent(0.05, taxi);
       var crew_show = faker.date.recent(0.05, eng_start);
       var crew_ready = faker.date.recent(0.1, crew_show)
-      var hours_flown = Math.round((actual_land - actual_launch) / 3600000);
       var landing_status = faker.datatype.number({min: 1, max: 3});
     } else {
       // sortie is scheduled for future
@@ -42,11 +41,9 @@ exports.seed = async function(knex) {
       var eng_start = null;
       var actual_launch = null;
       var actual_land = null;
-      var hours_flown = null;
       var landing_status = null;
     }
     const deviations = 'none';
-    const hours_scheduled = Math.round((projected_land - projected_launch) / 3600000);
     const req_fuel = faker.datatype.number({ min: 130, max: 260 });
     const is_quickturn =  faker.datatype.boolean();
 
