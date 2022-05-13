@@ -15,6 +15,7 @@ import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import ScheduledMx from './components/scheduledmx';
 import TodaySorties from './components/todaysorties';
+import BuildSortie from './components/buildsortie';
 
 export const BASE_URL = {
   development: 'http://localhost:8080/api',
@@ -172,7 +173,7 @@ export default function PersistentDrawerLeft() {
             backgroundColor: '#1A2930', 
             height: '100%'}}
         >
-          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule'].map((text, index) => (
+          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule', 'New Sortie'].map((text, index) => (
             <ListItem 
               button 
               component={Link} 
@@ -199,6 +200,7 @@ export default function PersistentDrawerLeft() {
           <Route path='Fleet%20Status' element={<FleetStatus/>}/>
           <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule/>}/>
           <Route path='Scheduled%20Mx' element={<ScheduledMx/>}/>
+          <Route path='New%20Sortie' element={<BuildSortie/>}/>
          
         </Routes>
       </Main>

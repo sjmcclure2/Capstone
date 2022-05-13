@@ -8,9 +8,26 @@ import SortieCard from './sortieCard';
 
 export default function FlyingSchedule () {
 
-  const [ numDays ] = useState(7);
-  const [ days, setDays ] = useState([ Date() ]);
-  const [ sorties, setSorties ] = useState([]);
+  const [numDays ] = useState(7);
+  const [days, setDays ] = useState([ Date() ]);
+  const [sorties, setSorties ] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+
+  function next() {
+    setPage(page => Math.min(page + 1, limit));
+  }
+
+  function prev() {
+    setPage(page => Math.max(page - 1, 1));
+  }
+
+  function jump(page) {
+    const pageNumber = Math.max(1, page);
+    setPage(page => Math.min(pageNumber, limit));
+  }
+
+  const count = Math.ceil(sorties.length / limit)
 
   useEffect(() => {
     const days = [];
