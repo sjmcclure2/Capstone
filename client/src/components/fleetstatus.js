@@ -28,8 +28,10 @@ export default function FleetStatus() {
         <div 
           key={tail.id}
           style={{
-            marginBottom: '5px'}}
+            marginBottom: '5px'
+          }}
         >
+          <AircraftStatus tail={tail}/> 
           <Accordion 
             expanded={expanded === tail.id} 
             onChange={handleChange(tail.id)} 
@@ -41,19 +43,19 @@ export default function FleetStatus() {
               expandIcon={<ExpandMoreIcon style={{color: 'white'}}/>}
               aria-controls="panel1bh-content"
               id="panel1bh-header"
+              sx={{paddingLeft: '45%'}}
             >
-              <AircraftStatus tail={tail}/> 
-            </AccordionSummary>
-              <AccordionDetails> 
-              <Typography 
+              <Typography
                 variant='h5'
                 sx={{
-                  textAlign: 'center',
-                  color: 'white'
+                  color: 'white',
+                  textAlign: 'center'        
                 }}
               >
-                <b>Status Driver</b>
+                Status Driver
               </Typography>
+            </AccordionSummary>
+              <AccordionDetails> 
               <Card 
                 elevation={20} 
                 sx={{ 

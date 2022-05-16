@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {  Box, Card, IconButton, Tooltip, Typography } from '@mui/material';
 import { format } from 'date-fns';
 
@@ -7,6 +7,14 @@ import EditNote from './modals/editnote';
 
 export default function Notes(props) {
   const tail = props.tail;
+  const [notes, setNotes] = useState(props.tail.driver.notes)
+
+  useEffect(() => {}, [notes])
+
+  const addNote = (newNote) => {
+    console.log(newNote)
+    setNotes([...notes, newNote]);
+  }
 
   return (
     <Box>
@@ -19,7 +27,7 @@ export default function Notes(props) {
           borderBottomStyle: 'groove'
         }}
       >
-        {tail.driver.notes.map(note => ( 
+        {notes.map(note => ( 
           <Box
             key={note.id}
           >
@@ -42,7 +50,7 @@ export default function Notes(props) {
       ))}
           <Tooltip title="Add">
             <IconButton>
-              <AddNote tail={tail}/>
+              <AddNote tail={tail} addNote={addNote}/>
             </IconButton>
           </Tooltip>
       </Card>

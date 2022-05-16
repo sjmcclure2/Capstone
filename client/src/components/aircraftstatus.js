@@ -21,7 +21,8 @@ export default function AircraftStatus(props) {
       sx={{
         backgroundColor: '#1A2930',
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: '15px'
       }}
     >
       <Grid container sx={{alignItems: 'left', justifyContent: 'center'}}>

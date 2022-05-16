@@ -66,6 +66,12 @@ export default function AddNote(props) {
         note: newNote
       }
     )
+    props.addNote(
+      {
+        note: newNote,
+        updated_at: new Date()
+      }
+    );
     handleClose();
   }
 
