@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, styled } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, styled } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import PropTypes from 'prop-types';
-import { BASE_URL } from '../../App';
 import { format } from 'date-fns';
-import  axios from 'axios';
+import { BASE_URL } from '../../App';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -45,8 +44,8 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function EditUpdateLineAction({flyer}) {
-  const [tail, setTail] = useState(flyer)
-  const [open, setOpen] = useState(false)
+  const [ tail ] = useState(flyer)
+  const [ open, setOpen ] = useState(false)
   useEffect(()=>{},[open])
 
   const formatDate = (time) => {
@@ -57,6 +56,7 @@ export default function EditUpdateLineAction({flyer}) {
   }
  
 
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -65,20 +65,20 @@ export default function EditUpdateLineAction({flyer}) {
     setOpen(false)
   };
 
-  // const handleChange = () => {
-  //   axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`,
-  //     {'crew_show': `${}`},
-  //     {'crew_ready': `${}`},
-  //     {'eng_start': `${}`},
-  //     {'taxi': `${}`}
-  //   ).then(res => console.log(res));
-  //   setOpen(false);
-  // };
+  const handleChange = () => {
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`,
+      {'crew_show': `${}`},
+      {'crew_ready': `${}`},
+      {'eng_start': `${}`},
+      {'taxi': `${}`}
+    ).then(res => console.log(res));
+    setOpen(false);
+  };
 
   return <>
     <div>
-      <div>Edit your Updates</div>
-      <button onClick={handleOpen}> Edit </button>
+      {/* <div>Edit your Updates</div> */}
+      <Button onClick={handleOpen}> Edit </Button>
     </div>
     <BootstrapDialog
         onClose={e => {handleClose(e)}}
@@ -88,17 +88,17 @@ export default function EditUpdateLineAction({flyer}) {
         <BootstrapDialogTitle id="customized-dialog-title" onClose={e => {handleClose(e)}}>
           Line Actions
         </BootstrapDialogTitle>
-        <DialogContent dividers sx={{display: 'flex'}}>
+        <DialogContent>
+        <form action={`${BASE_URL}/Today's%20Flying/${flyer.id}`} method="patch" sx={{display: 'flex'}}>
           <div>Crew Show: <input type='time' defaultValue={formatDate(tail.crew_show)}/></div>
           <div>Crew Ready: <input type='time' defaultValue={formatDate(tail.crew_ready)}/></div>
           <div>Engine Start: <input type='time' defaultValue={formatDate(tail.eng_start)}/></div>
           <div>Taxi: <input type='time' defaultValue={formatDate(tail.taxi)}/></div>
-        </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={e => {handleClose(e)}}>
-            Update
-          </Button>
+          <input autoFocus type="submit" value="Update" onClick={e => {handleClose(e)}}/>
         </DialogActions>
+        </form>
+        </DialogContent>
       </BootstrapDialog>
   </>;
 };

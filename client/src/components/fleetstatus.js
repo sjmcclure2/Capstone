@@ -20,52 +20,25 @@ export default function FleetStatus() {
     }, [])
 
   return (
-    <div 
-      style={{
-        backgroundColor: '3b3a38'}}
-    > 
-      {acft.map(tail => (
-        <div 
-          key={tail.id}
-          style={{
-            marginBottom: '5px'
-          }}
-        >
-          <AircraftStatus tail={tail}/> 
+    <div style={{backgroundColor: '3b3a38'}}> 
+      {acft.map((tail, index) => (
+        <div key={tail.id} style={{marginBottom: '5px'}}>
+          <AircraftStatus tail={tail} index={index}/> 
           <Accordion 
             expanded={expanded === tail.id} 
             onChange={handleChange(tail.id)} 
-            sx={{
-              backgroundColor: '#1A2930', 
-            }}
-          > 
+            sx={{backgroundColor: '#1A2930'}}> 
             <AccordionSummary
               expandIcon={<ExpandMoreIcon style={{color: 'white'}}/>}
               aria-controls="panel1bh-content"
               id="panel1bh-header"
-              sx={{paddingLeft: '45%'}}
-            >
-              <Typography
-                variant='h5'
-                sx={{
-                  color: 'white',
-                  textAlign: 'center'        
-                }}
-              >
-                Status Driver
+              sx={{paddingLeft: '45%'}}>
+              <Typography variant='h6' sx={{color: 'orange', textAlign: 'center'}}>
+                <b>Status Driver</b>
               </Typography>
             </AccordionSummary>
               <AccordionDetails> 
-              <Card 
-                elevation={20} 
-                sx={{ 
-                  width: '100%', 
-                  flexShrink: 0, 
-                  backgroundColor: '#FDFD96', 
-                  color: 'black',
-                  padding: '5px',
-                }}
-              >
+              <Card elevation={20} sx={{width: '100%', flexShrink: 0, backgroundColor: '#FDFD96', color: 'black', padding: '5px'}}>
                 <StatusDriver tail={tail}/> 
               </Card>
             </AccordionDetails>

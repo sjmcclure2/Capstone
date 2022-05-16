@@ -45,14 +45,13 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function EditNote(props) {
-  const [open, setOpen] = useState(false);
-  const [newNote, setNewNote] = useState();
-  const tail = props.tail;
+  const [ open, setOpen ] = useState(false);
+  const [ newText, setNewText ] = useState();
   const note = props.note;
 
   const handleChange = (e) => {
     e.preventDefault();
-    setNewNote(e.target.value)
+    setNewText(e.target.value)
   };
 
   const handleClickOpen = () => {
@@ -62,16 +61,14 @@ export default function EditNote(props) {
   const submitChange = () => {
     axios.patch(`${BASE_URL}/notes/${note.id}`, 
       {
-        jcn: tail.driver.jcn,
-        note: newNote
+        jcn: note.jcn,
+        note: newText,
+        updated_at: new Date()
       }
-    )
-    props.updateNote({
-      jcn: tail.driver.jcn,
-      note: note,
-      updated_at: new Date()
-    })
-    handleClose()
+    );
+    const updatedNote = { ...note, 'note': newText };
+    props.updateNote(note.id, updatedNote); 
+    handleClose();
   };
 
   const handleClose = () => {
@@ -95,7 +92,7 @@ export default function EditNote(props) {
             <TextField
               id='jcn'
               label="JCN"
-              defaultValue={tail.driver.jcn}
+              defaultValue={note.jcn}
               type='tel'
               sx={{
                 paddingBottom: '20px',

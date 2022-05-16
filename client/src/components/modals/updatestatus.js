@@ -45,9 +45,9 @@ BootstrapDialogTitle.propTypes = {
 
 export default function UpdateStatus(props) {
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState('');
-  const [data, setData] = useState();
+  const [fieldToUpdate, setFieldToUpdate] = useState('');
   const [key, setKey] = useState();
+  const [value, setValue] = useState();
   const prop = Object.keys(props)
   var propKey = prop[0];
 
@@ -55,15 +55,15 @@ export default function UpdateStatus(props) {
     switch (propKey) {
       case 'status':
         setKey('status');
-        setType(props.status)
+        setFieldToUpdate(props.status)
         break;
       case 'fuel':
-        setType(props.fuel)
+        setFieldToUpdate(props.fuel)
         setKey('fuel_quant')
         break;
       case 'location':
         setKey('location')
-        setType(props.location)
+        setFieldToUpdate(props.location)
         break;
       default:
         break;
@@ -72,7 +72,7 @@ export default function UpdateStatus(props) {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setData(e.target.value)
+    setValue(e.target.value)
   };
 
   const handleClickOpen = (e) => {
@@ -82,9 +82,9 @@ export default function UpdateStatus(props) {
 
   const handleUpdate = (e) => {
     axios.patch(`${BASE_URL}/aircraft_status/${props.id}`,
-      {[key]: data}
+      {[key]: value}
     )
-    props.update(key, data)
+    props.update(key, value)
     handleClose(e);
   };
 
@@ -114,14 +114,15 @@ export default function UpdateStatus(props) {
         <Select 
           labelId={item} 
           id={item} 
-          value={type} 
+          value={value} 
           label={item} 
+          defaultValue={item}
           onClick={e => {e.stopPropagation()}}
           onChange={e => {handleChange(e)}}
           sx={{width: '25vw'}}
         >
           {statusList.map(itm => 
-            <MenuItem value={itm}>{itm}</MenuItem>
+            <MenuItem key={itm} value={itm}>{itm}</MenuItem>
           )}
         </Select>
       )
@@ -132,7 +133,7 @@ export default function UpdateStatus(props) {
           onClick={e => {e.stopPropagation()}}
           onChange={e => {handleChange(e)}}
           id={propKey}
-          defaultValue={type}
+          defaultValue={fieldToUpdate}
         />
       )
     }
@@ -151,7 +152,7 @@ export default function UpdateStatus(props) {
           fontSize: '16px'
         }}  
       >
-        {propKey === 'status' ? statusColor(type) : <span><b>{propKey}:</b> {type}</span>}
+        {propKey === 'status' ? statusColor(fieldToUpdate) : <span><b>{propKey}:</b> {fieldToUpdate}</span>}
       </Button>
       <BootstrapDialog
         onClose={e => {handleClose(e)}}
@@ -162,7 +163,7 @@ export default function UpdateStatus(props) {
           Edit {propKey}
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          {selectList(key, type)}
+          {selectList(key, fieldToUpdate)}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={e => {handleUpdate(e)}}>

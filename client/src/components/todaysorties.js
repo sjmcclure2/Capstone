@@ -32,7 +32,4 @@ function TodaySorties() {
    )
  }
 
- //lift todaysSorties state into sortiepagination.js
-
-
 export default TodaySorties;

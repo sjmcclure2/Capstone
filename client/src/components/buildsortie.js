@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Card, Checkbox, FormControlLabel, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography, FormControl } from '@mui/material';
+import { Box, Button, Card, Checkbox, FormControlLabel, MenuItem, Paper, TextField, Typography, FormControl } from '@mui/material';
 import axios from 'axios';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+// import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 import { BASE_URL } from '../App';
 
@@ -16,7 +16,6 @@ export default function BuildSortie() {
   const [reqFuel, setReqFuel] = useState();
   const [isQuickTurn, setIsQuickTurn] = useState(false);
   const [sorties, setSorties] = useState([]);
-  const [val, setVal] = useState('');
 
   useEffect(() => {
     fetch(`${BASE_URL}/aircraft_status`)
@@ -37,7 +36,6 @@ export default function BuildSortie() {
     axios.post(`${BASE_URL}/flying_schedule`, tempSortie);
     
     setSorties([...sorties, tempSortie])
-    setVal(' ')
   }
 
   const updateLaunch = (e) => {
@@ -66,15 +64,7 @@ export default function BuildSortie() {
 
   return (
     <Box>
-      <Paper
-        sx={{
-          margin: '15px',
-          padding: '20px',
-          height: '25%',
-          textAlign: 'center',
-          backgroundColor: '#c9cdd4'
-        }}
-      >
+      <Paper sx={{margin: '15px', padding: '20px', height: '25%', textAlign: 'center', backgroundColor: '#c9cdd4'}}>
         <h3> New </h3>
         <hr style={{marginBottom: '15px'}}></hr>
           <TextField
@@ -86,9 +76,7 @@ export default function BuildSortie() {
             color='warning'
             InputLabelProps={{ shrink: true }}
             onChange={(e) => {updateLaunch(e)}}
-            sx={{
-              margin:'10px',
-            }}
+            sx={{margin:'10px'}}
           />
           <TextField
             label='Land'
@@ -99,9 +87,7 @@ export default function BuildSortie() {
             color='warning'
             InputLabelProps={{ shrink: true }}
             onChange={(e) => {updateLand(e)}}
-            sx={{
-              margin:'10px',
-            }}
+            sx={{margin:'10px'}}
           />
           <TextField
             label='Callsign'
@@ -111,9 +97,7 @@ export default function BuildSortie() {
             variant='outlined'
             color='warning'
             onChange={(e) => {updateCallsign(e)}}
-            sx={{
-              margin:'10px', 
-            }}
+            sx={{margin:'10px'}}
           />
           <TextField
             label='Fuel Load'
@@ -123,9 +107,7 @@ export default function BuildSortie() {
             variant='outlined'
             color='warning'
             onChange={(e) => {updateReqFuel(e)}}
-            sx={{
-              margin:'10px',
-            }} 
+            sx={{margin:'10px'}} 
           />
           <FormControl sx={{minWidth: 160}}>
             <TextField
@@ -134,20 +116,15 @@ export default function BuildSortie() {
               id={aircraft.id}
               value={aircraft.id}
               onChange={(e) => {updateAircraft(e)}}
-              sx={{
-                margin:'10px',
-              }}
-              >
+              sx={{margin:'10px'}}
+            >
               {aircraft.map(acft =><MenuItem value={acft.tail_number}>{acft.tail_number}</MenuItem>)}
              
             </TextField>
           </FormControl>
           <FormControlLabel
             label='Quickturn'
-            sx={{
-              paddingBottom: '20px', 
-              margin: '15px',
-            }}
+            sx={{paddingBottom: '20px', margin: '15px'}}
             control={
               <Checkbox
                 id='quickturn'
@@ -161,10 +138,7 @@ export default function BuildSortie() {
             size='large'
             onClick={postSortie}
             color='success'
-            sx={{
-              marginLeft: '20px',
-              paddingBottom: ' 20px'
-            }}  
+            sx={{marginLeft: '20px', paddingBottom: ' 20px'}}  
           >
               Add Sortie
           </Button>
@@ -182,11 +156,7 @@ export default function BuildSortie() {
         <hr style={{marginBottom: '15px'}}></hr>
         {sorties.map(sortie => 
           <Card
-           sx={{
-             backgroundColor: '#FDFD96',
-             textAlign: 'center',
-             margin: '15px'
-           }} 
+           sx={{backgroundColor: '#FDFD96', textAlign: 'center', margin: '15px'}} 
           >
             <Typography>Aircraft: {sortie.tail_number}</Typography>
             <Typography>Launch: {sortie.projected_launch}</Typography>

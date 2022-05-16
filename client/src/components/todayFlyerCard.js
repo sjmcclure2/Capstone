@@ -21,18 +21,18 @@ export default function TodayFlyerCard ({flyer, curDate}) {
     setTodaysSortie({ ...todaysSortie, crew_show, crew_ready, eng_start, taxi });
   }, [ crew_show, crew_ready, eng_start, taxi ]);
 
-  const csonClick = () => {
-    let now = new Date()
-    let aValue = now.toISOString()
-    setCrew_show(format(new Date(now), "HH:mm"))
-    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'crew_show': `${aValue}`}).then(res => console.log(res))
-  };
-
   const cronClick = () => {
     let now = new Date()
     let aValue = now.toISOString()
     setCrew_ready(format(new Date(now), "HH:mm"))
     axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'crew_ready': `${aValue}`}).then(res => console.log(res))
+  };
+
+  const csonClick = () => { //crew show
+    let now = new Date()
+    let aValue = now.toISOString()
+    setCrew_show(format(new Date(now), "HH:mm"))
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'crew_show': `${aValue}`}).then(res => console.log(res))
   };
 
   const esonClick = () => {
@@ -48,6 +48,17 @@ export default function TodayFlyerCard ({flyer, curDate}) {
     setTaxi(format(new Date(now), "HH:mm"))
     axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, {'taxi': `${aValue}`}).then(res => console.log(res))
   };
+
+  const statusColor = (status) => { 
+    if(status.includes('FMC')) {
+      return <span style={{color:'green'}}><b>{status}</b></span>
+    } else if (status.includes('PMC')) {
+        return <span style={{fontWeight:'bold', color:'yellow', WebkitTextStroke:'.5px grey'}}><b>{status}</b></span>
+    } else if (status.includes('NMC')) {
+        return <span style={{color:'red'}}><b>{status}</b></span>
+    } else  
+        return <span style={{color:'black'}}><b>{status}</b></span>
+  }
 
   return (
       <div>
@@ -74,8 +85,8 @@ export default function TodayFlyerCard ({flyer, curDate}) {
                 <Typography>
                   <b>{todaysSortie.tail_number}</b>
                 </Typography>
-                <Typography sx={{color: 'green', fontWeight: 'bold'}}>
-                  FMC | {todaysSortie.req_fuel}K
+                <Typography sx={{fontWeight: 'bold'}}>
+                  {statusColor(todaysSortie.status)} | {todaysSortie.req_fuel}K
                 </Typography>
                 <Typography>
                   Launch Location: {todaysSortie.launch_location}
@@ -85,12 +96,12 @@ export default function TodayFlyerCard ({flyer, curDate}) {
             <Grid item xs={7}>
               <Card sx={{display: 'flex', flexDirection: 'column'}}>
                 <div>
-                  <> Crew Show: </>
-                    {crew_show.length > 0 ? <> {crew_show} </> : <input type='button' value={'Set'} onClick={csonClick} />}
-                </div>
-                <div>
                   <>Crew Ready: </> 
                   {crew_ready.length > 0 ? <> {crew_ready} </> : <input type='button' value={'Set'} onClick={cronClick} />}
+                </div>
+                <div>
+                  <> Crew Show: </>
+                    {crew_show.length > 0 ? <> {crew_show} </> : <input type='button' value={'Set'} onClick={csonClick} />}
                 </div>
                 <div>
                   <>Engine Start:</>

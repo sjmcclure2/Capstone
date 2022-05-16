@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Avatar, Box, Card, Grid, Stack, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import UpdateStatus from './modals/updatestatus';
+import { noseArt } from '../noseArt'
 
 export default function AircraftStatus(props) {
   const [tail, setTail] = useState(props.tail);
@@ -29,7 +30,7 @@ export default function AircraftStatus(props) {
         <Grid item xs={1} sx={{marginRight: '15px'}}>
           <Avatar 
             alt={tail.tail_number} 
-            // src={tail.noseart} 
+            src={noseArt[props.index]} 
             sx={{
               marginRight: '15px',
               height: '56px', 
