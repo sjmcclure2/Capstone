@@ -12,8 +12,11 @@ export default function Notes(props) {
   useEffect(() => {}, [notes])
 
   const addNote = (newNote) => {
-    console.log(newNote)
     setNotes([...notes, newNote]);
+  }
+
+  const updateNote = (edits) => {
+    console.log(edits);
   }
 
   return (
@@ -43,7 +46,7 @@ export default function Notes(props) {
             >
               {note.note} 
               <IconButton>
-                <EditNote tail={tail} note={note}/>
+                <EditNote tail={tail} note={note} updateNote={updateNote}/>
               </IconButton>
             </Typography>
           </Box> 

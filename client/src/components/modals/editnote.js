@@ -66,6 +66,11 @@ export default function EditNote(props) {
         note: newNote
       }
     )
+    props.updateNote({
+      jcn: tail.driver.jcn,
+      note: note,
+      updated_at: new Date()
+    })
     handleClose()
   };
 
