@@ -3,7 +3,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, 
 import { Close as CloseIcon } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import { BASE_URL } from '../../App';
+
+// import { BASE_URL } from '../../App';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -59,9 +60,9 @@ export default function EditUpdateLineAction({flyer}) {
     return format(new Date(time), 'HH:mm');
   }
  
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [])
+  // }, [])
 
   const handleOpen = () => {
     setOpen(true);

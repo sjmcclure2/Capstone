@@ -52,8 +52,6 @@ exports.seed = async function(knex) {
         callsign,
         parking_location,
         launch_location,
-        hours_scheduled,
-        hours_flown,
         projected_launch,
         actual_launch,
         projected_land,

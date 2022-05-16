@@ -8,7 +8,7 @@ import { Airlines as AirlinesIcon, CalendarViewMonth as CalendarViewMonthIcon,
   ConnectingAirports as ConnectingAirportsIcon, Engineering as EngineeringIcon,
   Menu as MenuIcon, NotificationImportant as NotificationImportantIcon } from '@mui/icons-material';
 
-import Clock from './components/Clock';
+// import Clock from './components/Clock';
 import FleetStatus from './components/fleetstatus';
 import Flyingschedule from './components/flyingschedule';
 import ScheduledMx from './components/scheduledmx';
@@ -17,7 +17,7 @@ import BuildSortie from './components/buildsortie';
 
 export const BASE_URL = {
   development: 'http://localhost:8080/api',
-  // production: 'https://APP-NAME.herokuapp.com/api'
+  production: 'https://af-salt-api.herokuapp.com/api'
 }[process.env.NODE_ENV];
 
 const drawerWidth = 240;
@@ -123,7 +123,7 @@ export default function PersistentDrawerLeft() {
           >
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
-          <Clock />
+          {/* <Clock /> */}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -200,4 +200,4 @@ export default function PersistentDrawerLeft() {
       </Main>
     </Box>
   );
-}
+};

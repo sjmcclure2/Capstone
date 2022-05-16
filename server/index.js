@@ -3,10 +3,11 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 
-const PROTOCOL = process.env.PROTOCOL || 'http';
-const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
-const BASE_URL = `${PROTOCOL}://${HOST}:${PORT}/api`;
+const BASE_URL = {
+  development: `http://localhost:${PORT}/api`,
+  production: `https://${process.env.HOST}/api`
+}[process.env.NODE_ENV];
 module.exports.BASE_URL = BASE_URL;
 
 const api = require('./routes/api');
