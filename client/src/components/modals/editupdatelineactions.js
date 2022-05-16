@@ -44,8 +44,12 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function EditUpdateLineAction({flyer}) {
-  const [ tail ] = useState(flyer)
-  const [ open, setOpen ] = useState(false)
+  const [ tail ] = useState(flyer);
+  const [ open, setOpen ] = useState(false);
+  // const [key, setKey] = useState();
+  // const [value, setValue] = useState();
+
+
   useEffect(()=>{},[open])
 
   const formatDate = (time) => {
@@ -55,7 +59,9 @@ export default function EditUpdateLineAction({flyer}) {
     return format(new Date(time), 'HH:mm');
   }
  
+  useEffect(() => {
 
+  }, [])
 
   const handleOpen = () => {
     setOpen(true);
@@ -65,19 +71,15 @@ export default function EditUpdateLineAction({flyer}) {
     setOpen(false)
   };
 
-  const handleChange = () => {
-    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`,
-      {'crew_show': `${}`},
-      {'crew_ready': `${}`},
-      {'eng_start': `${}`},
-      {'taxi': `${}`}
-    ).then(res => console.log(res));
-    setOpen(false);
-  };
+  // const handleChange = () => {
+  //   axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`,
+  //     {[key]: value}
+  //   ).then(res => console.log(res));
+  //   handleClose(e);
+  // };
 
   return <>
     <div>
-      {/* <div>Edit your Updates</div> */}
       <Button onClick={handleOpen}> Edit </Button>
     </div>
     <BootstrapDialog
@@ -88,17 +90,17 @@ export default function EditUpdateLineAction({flyer}) {
         <BootstrapDialogTitle id="customized-dialog-title" onClose={e => {handleClose(e)}}>
           Line Actions
         </BootstrapDialogTitle>
-        <DialogContent>
-        <form action={`${BASE_URL}/Today's%20Flying/${flyer.id}`} method="patch" sx={{display: 'flex'}}>
+        <DialogContent dividers sx={{display: 'flex'}}>
           <div>Crew Show: <input type='time' defaultValue={formatDate(tail.crew_show)}/></div>
           <div>Crew Ready: <input type='time' defaultValue={formatDate(tail.crew_ready)}/></div>
           <div>Engine Start: <input type='time' defaultValue={formatDate(tail.eng_start)}/></div>
           <div>Taxi: <input type='time' defaultValue={formatDate(tail.taxi)}/></div>
-        <DialogActions>
-          <input autoFocus type="submit" value="Update" onClick={e => {handleClose(e)}}/>
-        </DialogActions>
-        </form>
         </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={e => {handleClose(e)}}>
+            Update
+          </Button>
+        </DialogActions>
       </BootstrapDialog>
   </>;
 };
