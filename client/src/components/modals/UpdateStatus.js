@@ -111,7 +111,7 @@ export default function UpdateStatus(props) {
   const selectList = (key, item) => {
     if(key === 'status') {
       return ( 
-        <Select 
+        <Select   
           labelId={item} 
           id={item} 
           value={value} 

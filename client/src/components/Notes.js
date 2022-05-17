@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {  Box, Card, IconButton, Tooltip, Typography } from '@mui/material';
 import { format } from 'date-fns';
 
-import AddNote from './modals/addnote';
-import EditNote from './modals/editnote';
+import AddNote from './modals/AddNote';
+import EditNote from './modals/EditNote';
 
 export default function Notes(props) {
   const tail = props.tail;

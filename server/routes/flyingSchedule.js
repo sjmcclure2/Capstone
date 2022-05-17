@@ -23,7 +23,19 @@ router.get('/', (req, res) => {
   .orderBy(req.query.sort ?? 'projected_launch', req.query.dir)
   .offset(req.query.offset)
   .limit(req.query.limit)
-  .then(data => {res.json(data)})
+  .then(data => res.json(data))
+  .catch(err => {
+    console.error(err);
+    res.sendStatus(400);
+  });
+});
+
+router.get('/:id', (req, res) => {
+  knex('sorties')
+  .where('sorties.id', req.params.id)
+  .join('aircraft', 'aircraft.tail_number', 'sorties.tail_number')
+  .select('*', 'aircraft.id as aircraft_id', 'sorties.id')
+  .then(data => res.json(data))
   .catch(err => {
     console.error(err);
     res.sendStatus(400);

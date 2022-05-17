@@ -8,14 +8,14 @@ import { BASE_URL } from '../App';
 // PASS IN THE {AIRCRAFT.ID} IN LIEU OF SENDING THE TAIL NUMBER
 
 export default function BuildSortie() {
-  const [aircraft, setAircraft] = useState([]);
-  const [tailNumber, setTailNumber] = useState();
-  const [launch, setLaunch] = useState();
-  const [land, setLand] = useState();
-  const [callsign, setCallsign] = useState();
-  const [reqFuel, setReqFuel] = useState();
-  const [isQuickTurn, setIsQuickTurn] = useState(false);
-  const [sorties, setSorties] = useState([]);
+  const [ aircraft, setAircraft ] = useState([]);
+  const [ tailNumber, setTailNumber ] = useState();
+  const [ launch, setLaunch ] = useState();
+  const [ land, setLand ] = useState();
+  const [ callsign, setCallsign ] = useState();
+  const [ reqFuel, setReqFuel ] = useState();
+  const [ isQuickTurn, setIsQuickTurn ] = useState(false);
+  const [ sorties, setSorties ] = useState([]);
 
   useEffect(() => {
     fetch(`${BASE_URL}/aircraft_status`)
@@ -76,7 +76,7 @@ export default function BuildSortie() {
             color='warning'
             InputLabelProps={{ shrink: true }}
             onChange={(e) => {updateLaunch(e)}}
-            sx={{margin:'10px'}}
+            sx={{margin:'10px', minWidth:'225px'}}
           />
           <TextField
             label='Land'
@@ -87,7 +87,7 @@ export default function BuildSortie() {
             color='warning'
             InputLabelProps={{ shrink: true }}
             onChange={(e) => {updateLand(e)}}
-            sx={{margin:'10px'}}
+            sx={{margin:'10px', minWidth: '225px'}}
           />
           <TextField
             label='Callsign'
@@ -118,7 +118,7 @@ export default function BuildSortie() {
               onChange={(e) => {updateAircraft(e)}}
               sx={{margin:'10px'}}
             >
-              {aircraft.map(acft =><MenuItem value={acft.tail_number}>{acft.tail_number}</MenuItem>)}
+              {aircraft.map(acft =><MenuItem id={acft.id} value={acft.tail_number}>{acft.tail_number}</MenuItem>)}
              
             </TextField>
           </FormControl>
@@ -156,7 +156,8 @@ export default function BuildSortie() {
         <hr style={{marginBottom: '15px'}}></hr>
         {sorties.map(sortie => 
           <Card
-           sx={{backgroundColor: '#FDFD96', textAlign: 'center', margin: '15px'}} 
+            id={sortie.id}
+            sx={{backgroundColor: '#FDFD96', textAlign: 'center', margin: '15px'}} 
           >
             <Typography>Aircraft: {sortie.tail_number}</Typography>
             <Typography>Launch: {sortie.projected_launch}</Typography>

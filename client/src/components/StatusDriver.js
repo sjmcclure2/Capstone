@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { format } from 'date-fns';
 
-import Notes from './notes';
-import UpdateStatusDriver from './modals/updatestatusdriver';
+import Notes from './Notes';
+import UpdateStatusDriver from './modals/UpdateStatusDriver';
 
 export default function StatusDriver(props) {
   const tail = props.tail;

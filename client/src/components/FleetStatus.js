@@ -3,8 +3,8 @@ import { Accordion, AccordionDetails, AccordionSummary, Card, Typography } from 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { BASE_URL } from '../App'
-import AircraftStatus from './aircraftstatus';
-import StatusDriver from './statusdriver';
+import AircraftStatus from './AircraftStatus';
+import StatusDriver from './StatusDriver';
 
 export default function FleetStatus() {
   const [expanded, setExpanded] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Box, Card, Grid, Stack, Typography } from '@mui/material';
 import { format } from 'date-fns';
-import UpdateStatus from './modals/updatestatus';
+import UpdateStatus from './modals/UpdateStatus';
 import { noseArt } from '../noseArt'
 
 export default function AircraftStatus(props) {

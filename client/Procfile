@@ -1,0 +1,2 @@
+release: npm i serve
+web: serve -s build

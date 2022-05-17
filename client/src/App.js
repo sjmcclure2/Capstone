@@ -8,12 +8,12 @@ import { Airlines as AirlinesIcon, CalendarViewMonth as CalendarViewMonthIcon,
   ConnectingAirports as ConnectingAirportsIcon, Engineering as EngineeringIcon,
   Menu as MenuIcon, NotificationImportant as NotificationImportantIcon } from '@mui/icons-material';
 
-// import Clock from './components/Clock';
-import FleetStatus from './components/fleetstatus';
-import Flyingschedule from './components/flyingschedule';
-import ScheduledMx from './components/scheduledmx';
-import TodaySorties from './components/todaysorties';
-import BuildSortie from './components/buildsortie';
+import Clock from './components/Clock';
+import FleetStatus from './components/FleetStatus';
+import Flyingschedule from './components/FlyingSchedule';
+import ScheduledMx from './components/ScheduledMx';
+import TodaySorties from './components/TodaySorties';
+import BuildSortie from './components/BuildSortie';
 
 export const BASE_URL = {
   development: 'http://localhost:8080/api',
@@ -123,7 +123,7 @@ export default function PersistentDrawerLeft() {
           >
             {decodeURI(window.location.pathname.slice(1))}
           </Typography>
-          {/* <Clock /> */}
+          <Clock />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -147,11 +147,14 @@ export default function PersistentDrawerLeft() {
           <Typography 
             variant='h5' 
             sx={{
-              paddingRight: '25%', 
+              padding: '25px',
               color: 'white', 
+              textAlign: 'center',
               fontFamily: 'cursive'}}
           >
-            SALT
+            {/* <span>SALT</span><br/> */}
+            <small><b>S</b>ynchronus <b>A</b>ircraft <b>L</b>ogistics <b>T</b>racker</small>
+            <hr style={{marginBottom: '15px'}}></hr>
           </Typography>
           <IconButton 
             onClick={handleDrawerClose} 
