@@ -18,79 +18,29 @@ export default function AircraftStatus(props) {
   }
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#1A2930',
-        width: '100%',
-        alignItems: 'center',
-        paddingTop: '15px'
-      }}
-    >
-      <Grid container sx={{alignItems: 'left', justifyContent: 'center'}}>
-        <Grid item xs={1} sx={{marginRight: '15px'}}>
-          <Avatar 
-            alt={tail.tail_number} 
-            src={noseArt[props.index]} 
-            sx={{
-              marginRight: '15px',
-              height: '56px', 
-              width: '56px'}}
-          />
+    <Box sx={{backgroundColor: '#1A2930',width: '100%',alignItems: 'center',paddingTop: '15px'}}>
+      <Grid container>
+        <Grid item xs={6} sx={{justifyContent: 'center'}}>
+          <Avatar alt={tail.tail_number} src={noseArt[props.index]} sx={{ height: '56px', width: '56px'}}/>
         </Grid>
-        <Grid 
-          item 
-          xs={2}
-        >
-          <Card
-            elevation={0}
-            sx={{
-              backgroundColor: '#1A2930',
-              color: 'white',
-              textAlign: 'left'
-            }}
-          >        
+        <Grid item xs={6} sx={{textAlign: 'center'}}>
+          <Card elevation={0}sx={{backgroundColor: '#1A2930',color: 'white'}}>        
             <h2 style={{margin: 0, padding: 0}}>{tail.tail_number}</h2>
             <h2 style={{margin: 0, padding: 0}}>{<UpdateStatus status={tail.status.toUpperCase()} id={tail.id} update={updateStatus}/>}</h2>
           </Card> 
         </Grid>
-        <Grid 
-          item 
-          xs={3} 
-        >
-          <Card 
-            elevation={0} 
-            sx={{ 
-              flexShrink: 0, 
-              backgroundColor: '#1A2930', 
-              color: 'white'
-            }}
-          >
-            <Stack 
-              direction="row"
-              alignItems='center'
-            >
+        <Grid item xs={6} sx={{textAlign: 'center'}}>
+          <Card elevation={0} sx={{ flexShrink: 0, backgroundColor: '#1A2930', color: 'white'}}>
+            <Stack direction="row" alignItems='center' sx={{justifyContent:'center'}}>
               <UpdateStatus fuel={tail.fuel_quant} id={tail.id} update={updateStatus}/>k
             </Stack>
-            <Stack 
-              direction="row"
-              alignItems='center'
-            >
+            <Stack direction="row"alignItems='center' sx={{justifyContent:'center'}}>
               <UpdateStatus location={tail.location_name} id={tail.id} update={updateStatus}/>
             </Stack>
           </Card>
         </Grid>
-        <Grid 
-          item 
-          xs={4}
-        >
-          <Card 
-            elevation={0} 
-            sx={{ 
-              flexShrink: 0, 
-              backgroundColor: '#1A2930', 
-              color: 'white'
-              }}
-          >
+        <Grid item xs={6} sx={{ textAlign: 'center'}}>
+          <Card elevation={0} sx={{ flexShrink: 0, backgroundColor: '#1A2930', color: 'white'}}>
             {tail.last_sortie ? <Typography><b>Last Fly:</b> {formatDate(tail.last_sortie.actual_land)}</Typography> : null}
             {tail.next_sortie ? <Typography><b>Next Fly:</b> {formatDate(tail.next_sortie.projected_launch)}</Typography> : null}
             <Typography><b>Airframe Hours:</b> {tail.operating_hrs}</Typography><br/>

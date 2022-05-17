@@ -1,2 +1,2 @@
 release: npm i serve
-web: serve -s build
+web: npx serve -s build

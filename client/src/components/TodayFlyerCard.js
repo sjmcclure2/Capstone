@@ -18,8 +18,8 @@ export default function TodayFlyerCard ({flyer, curDate}) {
   const setTime = (e) => {
     const now = new Date().toISOString();
     setTodaysSortie({ ...todaysSortie, [e.target.name]: now });
-    // axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, { [e.target.name]: now })
-    //   .then(res => console.log(res));
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`, { [e.target.name]: now })
+      .then(res => console.log(res));
   };
 
   const updateState = (crew_ready, crew_show, eng_start, taxi, actual_launch) => {

@@ -52,7 +52,7 @@ export default function EditUpdateLineAction({flyer, updateState} ) {
   const [ taxi, setTaxi ] = useState(flyer.taxi);
   const [ takeOff, setTakeoff ] = useState(flyer.actual_launch);
 
-  useEffect(()=>{},[open])
+  useEffect(() => {}, [ open ]);
 
   const formatDate = (time) => {
     if(time === null) return null;
@@ -90,15 +90,15 @@ export default function EditUpdateLineAction({flyer, updateState} ) {
   };
 
   const handleSubmit = () => {
-    // axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`,
-    //   {
-    //     'crew_ready': crewReady && new Date(crewReady).toISOString(),
-    //     'crew_show': crewShow && new Date(crewShow).toISOString(),
-    //     'eng_start': engStart && new Date(engStart).toISOString(),
-    //     'taxi': taxi && new Date(taxi).toISOString(),
-    //     'actual_launch': takeOff && new Date(takeOff).toISOString()
-    //   }
-    // ).then(res => console.log(res))
+    axios.patch(`${BASE_URL}/flying_schedule/${flyer.id}`,
+      {
+        'crew_ready': crewReady && new Date(crewReady).toISOString(),
+        'crew_show': crewShow && new Date(crewShow).toISOString(),
+        'eng_start': engStart && new Date(engStart).toISOString(),
+        'taxi': taxi && new Date(taxi).toISOString(),
+        'actual_launch': takeOff && new Date(takeOff).toISOString()
+      }
+    ).then(res => console.log(res))
 
     updateState(crewReady, crewShow, engStart, taxi, takeOff);
     
