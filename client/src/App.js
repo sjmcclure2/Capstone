@@ -69,13 +69,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [ open, setOpen ] = React.useState(false);
   const icons = [
     <AirlinesIcon sx={{color: "#FDFD96"}}/>, 
     <EngineeringIcon sx={{color: "#FDFD96"}}/>, 
     <ConnectingAirportsIcon sx={{color: "#FDFD96"}}/>, 
     <CalendarViewMonthIcon sx={{color: "#FDFD96"}}/>, 
-    <NotificationImportantIcon sx={{color: "#FDFD96"}}/> ]
+    <NotificationImportantIcon sx={{color: "#FDFD96"}}/>
+  ];
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -95,34 +96,33 @@ export default function PersistentDrawerLeft() {
       <CssBaseline />
       <AppBar 
         position="fixed" 
-        open={open}
+        open={false}
       >
-        <Toolbar 
+        <Toolbar
           sx={{
-            backgroundColor: '#1A2930', 
-            borderLeft: '1px solid', 
-            borderColor: '#242423'}}
-          >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ 
-              mr: 2, 
-              ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography 
-            variant="h6" 
-            noWrap component="div"
-            sx={{
-              marginRight: '50%'
-            }}
-          >
-            {decodeURI(window.location.pathname.slice(1))}
-          </Typography>
+            backgroundColor: '#1A2930',
+            justifyContent: 'space-between',
+            fontSize: 'min(2vmin, 1em)'
+          }}
+        >
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+            >
+              <MenuIcon />
+              <Typography 
+                component="div"
+                variant="h6" 
+                noWrap
+                sx={{
+                  margin: '0 0.5em'
+                }}
+                >
+                {decodeURI(window.location.pathname.slice(1))}
+              </Typography>
+            </IconButton>
           <Clock />
         </Toolbar>
       </AppBar>
@@ -189,7 +189,7 @@ export default function PersistentDrawerLeft() {
           ))}
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main open={false}>
         <DrawerHeader />
         <Routes>
           <Route path='/' element={<FleetStatus />} />
@@ -198,7 +198,6 @@ export default function PersistentDrawerLeft() {
           <Route path='Scheduled%20Mx' element={<ScheduledMx />} />
           <Route path="Today's%20Flying" element={<TodaySorties />} />
           <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule />} />
-         
         </Routes>
       </Main>
     </Box>

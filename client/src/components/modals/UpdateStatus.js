@@ -59,8 +59,8 @@ export default function UpdateStatus(props) {
         setFieldToUpdate(props.status)
         break;
       case 'fuel':
-        setFieldToUpdate(props.fuel)
         setKey('fuel_quant')
+        setFieldToUpdate(props.fuel)
         break;
       case 'location':
         setKey('location')
@@ -76,20 +76,24 @@ export default function UpdateStatus(props) {
     setValue(e.target.value)
   };
 
-  const handleLocChange = (e) => {
-    e.preventDefault();
-    setValue(locations[e.target.value].name)
-  };
-
   const handleClickOpen = (e) => {
     e.stopPropagation();
     setOpen(true);
   };
 
+  const findLocationName = (id) => {
+    return locations.find(x => x.id === id) 
+  }
+
   const handleUpdate = (e) => {
     axios.patch(`${BASE_URL}/aircraft_status/${props.id}`,
       {[key]: value}
     )
+    if(key === 'location') {
+      const locName = findLocationName(value)
+      props.update('location_name', locName.name);
+      handleClose(e);
+    } else 
     props.update(key, value)
     handleClose(e);
   };
@@ -125,7 +129,7 @@ export default function UpdateStatus(props) {
           defaultValue={item}
           onClick={e => {e.stopPropagation()}}
           onChange={e => {handleChange(e)}}
-          sx={{width: '25vw'}}
+          sx={{width: '50vw'}}
         >
           {statusList.map(itm => 
             <MenuItem key={itm} name={itm} value={itm}>{itm}</MenuItem>
@@ -137,13 +141,10 @@ export default function UpdateStatus(props) {
         <Select   
           labelId={item} 
           id={item} 
-          name={item}
-          value={value} 
           label={item} 
-          defaultValue={item}
           onClick={e => {e.stopPropagation()}}
-          onChange={e => {handleLocChange(e)}}
-          sx={{width: '25vw'}}
+          onChange={e => {handleChange(e)}}
+          sx={{width: '50vw'}}
         >
           {locations.map(location => 
             <MenuItem key={location.id} value={location.id}>{location.name}</MenuItem>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Grid, Typography } from '@mui/material';
 import { green, red } from '@mui/material/colors';
 import ArrowUpwardSharpIcon from '@mui/icons-material/ArrowUpwardSharp';
@@ -9,12 +9,20 @@ import  axios from 'axios';
 import { BASE_URL } from '../App';
 import EditUpdateLineAction from './modals/EditUpdateLineActions';
 
-export default function TodayFlyerCard ({ flyer }) {
-  const [ todaysSortie, setTodaysSortie ] = React.useState(flyer);
+export default function TodayFlyerCard ({ flyer, locations }) {
+  const [ todaysSortie, setTodaysSortie ] = useState(flyer);
+  const [ launchLocationName, setLaunchLocationName ] = useState('')
 
   // force re-render on state change
-  React.useEffect(() => {}, [ todaysSortie ]);
+  
+  useEffect(() => {
+    let locName = '';
+    locName = locations.find(x => x.id === todaysSortie.launch_location);
+    setLaunchLocationName(locName?.name)
+  }, [ todaysSortie, locations ]);
+  
 
+  
   const setTime = (e) => {
     const now = new Date().toISOString();
     setTodaysSortie({ ...todaysSortie, [e.target.name]: now });
@@ -25,11 +33,11 @@ export default function TodayFlyerCard ({ flyer }) {
   const updateState = (crew_ready, crew_show, eng_start, taxi, actual_launch) => {
     setTodaysSortie(
       { ...todaysSortie,
-        crew_ready,
+        crew_ready, 
         crew_show,
         eng_start,
         taxi,
-        actual_launch }
+        actual_launch } 
     )
   };
 
@@ -67,11 +75,12 @@ export default function TodayFlyerCard ({ flyer }) {
           <Typography>
             <b>{todaysSortie.tail_number}</b>
           </Typography>
+          
           <Typography sx={{fontWeight: 'bold'}}>
             {statusColor(todaysSortie.status)} | {todaysSortie.fuel_quant}K
           </Typography>
           <Typography>
-            Launch Location: {todaysSortie.launch_location}
+            Launch Location: {launchLocationName}
           </Typography>
         </Card>  
       </Grid>

@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
   knex('locations')
   .orderBy(req.query.sort ?? 'id', req.query.dir)
   .offset(req.query.offset)
-  .limit(req.query.limit ?? 100)
+  .limit(req.query.limit ?? 1000)
   .then(data => {res.json(data)})
   .catch(err => {
     console.error(err);

@@ -9,7 +9,6 @@ Logo: ![image](image url)
 - [Description](#Description)
 - [Getting Started](#Getting-Started)
 - [Road Map](#Road-Map)
-- [Contribtion](#Contributions)
 
 
 ## Introduction
@@ -28,7 +27,7 @@ With all the tools available to the Air Force, there has been a consistant fallb
 
 ## Description
 
-Our product is designed to give team members access to immediate and live updates on equipment. This ranges from general status as pulled from a Maintenance Database to Air vehicle consumable such as Fuel and oil. Team members will also have the ability to update and add information via a mobile interface. The extent of which is planned for future expansion. This will allow communication to be more accurate and concise between team members across a highly mobile work-area
+Our product is designed to give team members access to immediate and live updates on equipment. This ranges from general status as pulled from a Maintenance Database to Air vehicle consumables such as fuel and oil. Team members will also have the ability to update and add information via a mobile interface. The extent of which is planned for future expansion. This will allow communication to be more accurate and concise between team members across a highly mobile work-area
 
 ## Getting Started
 
@@ -44,6 +43,7 @@ Our product is designed to give team members access to immediate and live update
 
   ```sh
   cd server
+  export NODE_ENV="development"
   npm install
   npm run postinstall
   npm start
@@ -53,6 +53,7 @@ Our product is designed to give team members access to immediate and live update
   
   ```sh
   cd client
+  export NODE_ENV="development"
   npm install
   npm start
   ```
@@ -63,14 +64,3 @@ Our product is designed to give team members access to immediate and live update
 * Ability to input new Jobs with accurate descriptions
 * MOC overview interface for rapid status updating
 
-## Contributions
-
-
-
-
-
-
-[repo]: https://github.com/sjmcclure2/Capstone/
-[product-screenshot-1]: https:
-[product-screenshot-2]: https:
-[product-screenshot-3]: https:

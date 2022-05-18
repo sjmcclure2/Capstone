@@ -25,7 +25,7 @@ export default function FlyingSchedule () {
     .then(data => setSorties(data))
   }, []);
 
-  return <>
+  return <div style={{maxWidth: '87vw'}}>
       {days.map(day => ( 
       <Card key={day} sx={{textAlign: 'center', margin: '10px', padding: '10px',backgroundColor: '#1A2930'}}>  
         <h3 style={{color:'white'}}>{format(new Date(day), 'PPPP')}</h3>
@@ -35,5 +35,5 @@ export default function FlyingSchedule () {
         </Stack>
       </Card>
       ))}
-  </>;
+  </div>;
 };

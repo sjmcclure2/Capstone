@@ -9,7 +9,7 @@ import { BASE_URL } from '../App';
 
 export default function BuildSortie() {
   const [ aircraft, setAircraft ] = useState([]);
-  const [ tailNumber, setTailNumber ] = useState();
+  const [ tail, setTail ] = useState();
   const [ launch, setLaunch ] = useState();
   const [ land, setLand ] = useState();
   const [ callsign, setCallsign ] = useState();
@@ -26,11 +26,12 @@ export default function BuildSortie() {
   const postSortie = () => {
     let tempSortie = 
       {
-        'projected_launch': launch,
-        'projected_land': land,
+        'launch_location': tail.location,
+        'projected_launch': new Date(launch).toISOString(),
+        'projected_land': new Date(land).toISOString(),
         'callsign': callsign,
         'req_fuel': reqFuel,
-        'tail_number': tailNumber,
+        'tail_number': tail.tail_number,
         'is_quickturn': isQuickTurn
       };
     axios.post(`${BASE_URL}/flying_schedule`, tempSortie);
@@ -59,7 +60,7 @@ export default function BuildSortie() {
   };
 
   const updateAircraft = (e) => {
-    setTailNumber(e.target.value)
+    setTail(e.target.value)
   }
 
   return (
@@ -118,7 +119,7 @@ export default function BuildSortie() {
               onChange={(e) => {updateAircraft(e)}}
               sx={{margin:'10px'}}
             >
-              {aircraft.map(acft =><MenuItem id={acft.id} value={acft.tail_number}>{acft.tail_number}</MenuItem>)}
+              {aircraft.map(acft =><MenuItem id={acft.id} value={acft}>{acft.tail_number}</MenuItem>)}
              
             </TextField>
           </FormControl>
