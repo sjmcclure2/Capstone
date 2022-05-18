@@ -48,6 +48,7 @@ export default function UpdateStatus(props) {
   const [fieldToUpdate, setFieldToUpdate] = useState('');
   const [key, setKey] = useState();
   const [value, setValue] = useState();
+  const locations = props.locations;
   const prop = Object.keys(props)
   var propKey = prop[0];
 
@@ -73,6 +74,11 @@ export default function UpdateStatus(props) {
   const handleChange = (e) => {
     e.preventDefault();
     setValue(e.target.value)
+  };
+
+  const handleLocChange = (e) => {
+    e.preventDefault();
+    setValue(locations[e.target.value].name)
   };
 
   const handleClickOpen = (e) => {
@@ -122,7 +128,25 @@ export default function UpdateStatus(props) {
           sx={{width: '25vw'}}
         >
           {statusList.map(itm => 
-            <MenuItem key={itm} value={itm}>{itm}</MenuItem>
+            <MenuItem key={itm} name={itm} value={itm}>{itm}</MenuItem>
+          )}
+        </Select>
+      )
+    } else if(key === 'location') {
+      return ( 
+        <Select   
+          labelId={item} 
+          id={item} 
+          name={item}
+          value={value} 
+          label={item} 
+          defaultValue={item}
+          onClick={e => {e.stopPropagation()}}
+          onChange={e => {handleLocChange(e)}}
+          sx={{width: '25vw'}}
+        >
+          {locations.map(location => 
+            <MenuItem key={location.id} value={location.id}>{location.name}</MenuItem>
           )}
         </Select>
       )
@@ -132,6 +156,7 @@ export default function UpdateStatus(props) {
         <TextField
           onClick={e => {e.stopPropagation()}}
           onChange={e => {handleChange(e)}}
+          name={fieldToUpdate}
           id={propKey}
           defaultValue={fieldToUpdate}
         />
@@ -152,7 +177,7 @@ export default function UpdateStatus(props) {
           fontSize: '16px'
         }}  
       >
-        {propKey === 'status' ? statusColor(fieldToUpdate) : <span><b>{propKey}:</b> {fieldToUpdate}</span>}
+        {propKey === 'status' ? statusColor(fieldToUpdate) : <span><b>{propKey}:</b> {fieldToUpdate} </span>}
       </Button>
       <BootstrapDialog
         onClose={e => {handleClose(e)}}

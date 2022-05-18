@@ -22,7 +22,7 @@ export default function TodaySorties() {
     {todaysSorties
     .filter(sortie => isSameDay(new Date(sortie.projected_launch), today))
     .map(sortie =>  
-    <TodayFlyerCard key={sortie.id} flyer={sortie} curDate={today} />
+    <TodayFlyerCard key={sortie.id} flyer={sortie}/>
     )}
   </Card>
  };

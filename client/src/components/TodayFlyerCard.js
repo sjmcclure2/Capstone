@@ -9,7 +9,7 @@ import  axios from 'axios';
 import { BASE_URL } from '../App';
 import EditUpdateLineAction from './modals/EditUpdateLineActions';
 
-export default function TodayFlyerCard ({flyer, curDate}) {
+export default function TodayFlyerCard ({ flyer }) {
   const [ todaysSortie, setTodaysSortie ] = React.useState(flyer);
 
   // force re-render on state change
@@ -44,76 +44,84 @@ export default function TodayFlyerCard ({flyer, curDate}) {
         return <span style={{color:'black'}}><b>{status}</b></span>
   }
 
-  return (
-      <div>
-        <Card sx={{marginBottom:1, backgroundColor: "#FDFD96", padding: '7px'}}>
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            <Grid item xs={12}>
-              <Card>
-                <Typography>
-                  <b>{todaysSortie.id} | {todaysSortie.callsign}</b>
-                </Typography>
-                <Typography>
-                  <ArrowUpwardSharpIcon fontSize='small' sx={{color: green[500]}}/>
-                  {format(new Date(todaysSortie.projected_launch), 'HH:mm')} <>&nbsp;</>
-                   <ArrowDownwardSharpIcon fontSize='small' sx={{color: red[500]}}/> 
-                  {format(new Date(todaysSortie.projected_land), 'HH:mm')}
-                </Typography>
-                <Typography>
-                  {todaysSortie.req_fuel}K | HSABS
-                </Typography>
-              </Card>
-            </Grid>
-            <Grid item xs={5}>
-              <Card>  
-                <Typography>
-                  <b>{todaysSortie.tail_number}</b>
-                </Typography>
-                <Typography sx={{fontWeight: 'bold'}}>
-                  {statusColor(todaysSortie.status)} | {todaysSortie.fuel_quant}K
-                </Typography>
-                <Typography>
-                  Launch Location: {todaysSortie.launch_location}
-                </Typography>
-              </Card>  
-            </Grid>
-            <Grid item xs={7}>
-              <Card sx={{display: 'flex', flexDirection: 'column'}}>
-                <div>
-                  Crew Ready:&nbsp;
-                  {todaysSortie.crew_ready
-                    ? format(new Date(todaysSortie.crew_ready), 'HH:mm')
-                    : <input type='button' name='crew_ready' value={'Set'} onClick={(e) => {setTime(e)}} />}
-                </div>
-                <div>
-                  Crew Show:&nbsp;
-                  {todaysSortie.crew_show
-                    ? format(new Date(todaysSortie.crew_show), 'HH:mm')
-                    : <input type='button' name='crew_show' value={'Set'} onClick={(e) => {setTime(e)}} />}
-                </div>
-                <div>
-                  Engine Start:&nbsp;
-                  {todaysSortie.eng_start
-                    ? format(new Date(todaysSortie.eng_start), 'HH:mm') 
-                    : <input type='button' name='eng_start' value={'Set'} onClick={(e) => {setTime(e)}} />}
-                </div>
-                <div>
-                  Taxi:&nbsp;
-                  {todaysSortie.taxi
-                    ? format(new Date(todaysSortie.taxi), 'HH:mm') 
-                    : <input type='button' name='taxi' value={'Set'} onClick={(e) => {setTime(e)}} />}
-                </div>
-                <div>
-                  Take-Off:&nbsp;
-                  {todaysSortie.actual_launch 
-                    ? format(new Date(todaysSortie.actual_launch), 'HH:mm')
-                    : <input type='button' name='actual_launch' value={'Set'} onClick={(e) => {setTime(e)}} />}
-                </div>
-                  <EditUpdateLineAction flyer={todaysSortie} updateState={updateState}/>
-              </Card>  
-            </Grid>
-          </Grid>
+  return <Card sx={{marginBottom:1, backgroundColor: "#FDFD96", padding: '7px'}}>
+    <Grid container spacing={1}>
+      <Grid item xs={12} >
+        <Card>
+          <Typography>
+            <b>{todaysSortie.id} | {todaysSortie.callsign}</b>
+          </Typography>
+          <Typography>
+            <ArrowUpwardSharpIcon fontSize='small' sx={{color: green[500]}}/>
+            {format(new Date(todaysSortie.projected_launch), 'HH:mm')} <>&nbsp;</>
+              <ArrowDownwardSharpIcon fontSize='small' sx={{color: red[500]}}/> 
+            {format(new Date(todaysSortie.projected_land), 'HH:mm')}
+          </Typography>
+          <Typography>
+            {todaysSortie.req_fuel}K | HSABS
+          </Typography>
         </Card>
-      </div>
-  );
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Card>  
+          <Typography>
+            <b>{todaysSortie.tail_number}</b>
+          </Typography>
+          <Typography sx={{fontWeight: 'bold'}}>
+            {statusColor(todaysSortie.status)} | {todaysSortie.fuel_quant}K
+          </Typography>
+          <Typography>
+            Launch Location: {todaysSortie.launch_location}
+          </Typography>
+        </Card>  
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Card>
+          <div style={{padding: '5px 10px'}}>
+            <div style={{display:'flex', justifyContent: 'space-between'}}>
+              Crew&nbsp;Ready:
+              {todaysSortie.crew_ready
+                ? <span>
+                    {format(new Date(todaysSortie.crew_ready), 'HH:mm')}
+                  </span>
+                : <input type='button' name='crew_ready' value={'Set'} onClick={(e) => {setTime(e)}} />}
+            </div>
+            <div style={{display:'flex', justifyContent: 'space-between'}}>
+              Crew&nbsp;Show:
+              {todaysSortie.crew_show
+                ? <span>
+                    {format(new Date(todaysSortie.crew_show), 'HH:mm')}
+                  </span>
+                : <input type='button' name='crew_show' value={'Set'} onClick={(e) => {setTime(e)}} />}
+            </div>
+            <div style={{display:'flex', justifyContent: 'space-between'}}>
+              Eng&nbsp;Start:
+              {todaysSortie.eng_start
+                ? <span>
+                    {format(new Date(todaysSortie.eng_start), 'HH:mm')}
+                  </span>
+                : <input type='button' name='eng_start' value={'Set'} onClick={(e) => {setTime(e)}} />}
+            </div>
+            <div style={{display:'flex', justifyContent: 'space-between'}}>
+              Taxi:
+              {todaysSortie.taxi
+                ? <span>
+                    {format(new Date(todaysSortie.taxi), 'HH:mm')}
+                  </span>
+                : <input type='button' name='taxi' value={'Set'} onClick={(e) => {setTime(e)}} />}
+            </div>
+            <div style={{display:'flex', justifyContent: 'space-between'}}>
+              Take&nbsp;Off:
+              {todaysSortie.actual_launch 
+                ? <span>
+                    {format(new Date(todaysSortie.actual_launch), 'HH:mm')}
+                  </span>
+                : <input type='button' name='actual_launch' value={'Set'} onClick={(e) => {setTime(e)}} />}
+            </div>
+            <EditUpdateLineAction flyer={todaysSortie} updateState={updateState}/>
+          </div>
+        </Card>  
+      </Grid>
+    </Grid>
+  </Card>;
 };
