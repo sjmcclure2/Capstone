@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -10,6 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
 import { format } from 'date-fns';
+import axios from 'axios';
+import { BASE_URL } from '../../App';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -50,18 +52,63 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function UpdateStatusDriver(props) {
-  const [open, setOpen] = React.useState(false);
   const tail = props.tail;
+  const [open, setOpen] = useState(false);
+  const [etic, setEtic] = useState(tail.driver.mx_etic);
+  const [mxStart, setMxStart] = useState(tail.driver.mx_etic_start);
+  const [wuc, setWuc] = useState(tail.driver.wuc);
+  const [shop, setShop] = useState(tail.driver.shop);
 
-  const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'HH:mm, P')
+  const formatDate = (time) => {
+    if (time === null) return null;
+    return format(new Date(time), "yyyy-MM-dd'T'HH:mm:ss");
+  };
+
+  const handleUpdate = (e) => {
+    switch(e.target.name) {
+      case 'ETIC':
+        setEtic(e.target.value);
+        break;
+      case 'mxStart':
+        setMxStart(e.target.value);
+        break;
+      case 'wuc':
+        setWuc(e.target.value);
+        break;
+      case 'shop':
+        setShop(e.target.value)
+        break;
+      default:
+        break; 
+    }
   }
+
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSubmit = () => {
+    //handleUpdate();
+    console.log('ETIC:', etic);
+    console.log(new Date(etic));
+    console.log(new Date(etic).toISOString);
+    console.log('Mx Start:', mxStart);
+    console.log(new Date(mxStart));
+    console.log(new Date(mxStart).toISOString);
+    // axios.patch(`${BASE_URL}/imds/${tail.driver.jcn}`,
+    // {
+    //   'mx_etic': new Date(etic).toISOString(),
+    //   'mx_etic_start': new Date(mxStart).toISOString(),
+    //   'shop': shop,
+    //   'wuc': wuc
+    // })
+    //.then((res) => console.log(res))
+    handleClose();
+  }
 
   return (
     <div>
@@ -92,8 +139,12 @@ export default function UpdateStatusDriver(props) {
           />
           <TextField
             id='mx_etic'
+            name='ETIC'
             label='ETIC'
+            type='datetime-local'
+            onChange={e => {handleUpdate(e)}}
             defaultValue={formatDate(tail.driver.mx_etic)}
+            InputLabelProps={{ shrink: true }}
             sx={{
               paddingBottom: '20px',
               textAlign: 'center'
@@ -101,8 +152,12 @@ export default function UpdateStatusDriver(props) {
           />
           <TextField 
             id='mx_etic_start'
+            name='mxStart'
             label='Mx Start'
+            type='datetime-local'
+            onChange={e => {handleUpdate(e)}}
             defaultValue={formatDate(tail.driver.mx_etic_start)}
+            InputLabelProps={{ shrink: true }}
             sx={{
               paddingBottom: '20px',
               textAlign: 'center'
@@ -110,7 +165,9 @@ export default function UpdateStatusDriver(props) {
           />
           <TextField
             id='wuc'
+            name='wuc'
             label='WUC'
+            onChange={e => {handleUpdate(e)}}
             defaultValue={tail.driver.wuc}
             sx={{
               paddingBottom: '20px',
@@ -119,7 +176,9 @@ export default function UpdateStatusDriver(props) {
           />
           <TextField
             id='shop'
+            name='shop'
             label='Shop'
+            onChange={e => {handleUpdate(e)}}
             defaultValue={tail.driver.shop}
             sx={{
               paddingBottom: '20px',
@@ -128,7 +187,7 @@ export default function UpdateStatusDriver(props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={handleSubmit}>
             Save changes
           </Button>
         </DialogActions>

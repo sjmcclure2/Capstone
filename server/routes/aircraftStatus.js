@@ -63,9 +63,9 @@ router.get('/', async (req, res) => {
         .then(data => data.map(async job => {
           const notes = await knex('notes').where('jcn', job.jcn)
           job.notes = notes;
-          if(job.symbol === 'X'){ job.priority = 1;}
-          else if(job.symbol === '/') { job.priority = 2; }
-          else { job.priority = 3 };
+          if (job.symbol === 'X') job.priority = 1
+          else if (job.symbol === '/') job.priority = 2
+          else job.priority = 3 ;
           return job;
         }) 
         )

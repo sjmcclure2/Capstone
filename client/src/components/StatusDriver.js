@@ -20,7 +20,7 @@ export default function StatusDriver(props) {
   }
 
   const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'd MMM @ HH:mm')
+    return format(new Date(dateToFormat), 'd MMM @ HH:mm');
   }
 
   return(
