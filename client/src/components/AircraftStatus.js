@@ -6,7 +6,7 @@ import { noseArt } from '../noseArt'
 import { BASE_URL } from '../App';
 
 export default function AircraftStatus(props) {
-  const [ tail, setTail ] = useState(props.tail);
+  const [ tail, setTail ] = useState(props.acft);
   const [ locations, setLocations ] = useState([]);
 
   useEffect(() => {

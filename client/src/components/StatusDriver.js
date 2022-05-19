@@ -1,56 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { format } from 'date-fns';
-
 import Notes from './Notes';
 import UpdateStatusDriver from './modals/UpdateStatusDriver';
+import { BASE_URL } from '../App';
 
 export default function StatusDriver(props) {
-  const tail = props.tail;
+  const [driver, setDriver] = useState()
+  const jcn = props.acft.driver;
+  const tail = props.acft
+
+  useEffect(() => { 
+    let d = tail.jcns.find(element => element.jcn === jcn)
+    setDriver(d)
+  }, [])
+
+  const updateDriver = (tempDriver) => {
+    console.log(tempDriver);
+    const tempObj = {...driver, ...tempDriver};
+    setDriver(tempObj);
+  }
 
   const renderEticUpdate = (param) => {
     switch(param) {
       case null:
         return null;
       case 1:
-        return <i><small>(updated {tail.driver.etic_update} time)</small></i>;
+        return <i><small>(updated {driver.etic_update} time)</small></i>;
       default:
-        return <i><small>(updated {tail.driver.etic_update} times)</small></i>;
+        return <i><small>(updated {driver.etic_update} times)</small></i>;
     }
   }
 
   const formatDate = (dateToFormat) => {
-    return format(new Date(dateToFormat), 'd MMM @ HH:mm');
+    if(dateToFormat == null) {
+      return null;
+    }else
+      return format(new Date(dateToFormat), 'd MMM @ HH:mm');
   }
 
-  return(
+  return( 
     <Box>
+      {driver ?
       <Grid container spacing={1}>
         <Grid item xs={3}>
-          <Typography><b>JCN:</b> {tail.driver.jcn} </Typography>
+          <Typography><b>JCN:</b> {driver?.jcn} </Typography>
         </Grid>
         <Grid item xs={3}> 
           <Typography>
-            <b>ETIC:</b> {formatDate(tail.driver.mx_etic)}  {renderEticUpdate(tail.driver.etic_update)}
+            <b>ETIC:</b> {formatDate(driver?.mx_etic)} {renderEticUpdate(driver.etic_update)} 
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography><b>Mx Start:</b> {formatDate(tail.driver.mx_etic_start)}</Typography>
-        </Grid>
+          <Typography><b>Mx Start:</b> {formatDate(driver.mx_etic_start)}</Typography>
+        </Grid> 
         <Grid item xs={3} sx={{textAlign: 'right'}}>
-          <UpdateStatusDriver tail={tail}/>
+          <UpdateStatusDriver driver={driver} updateDriver={updateDriver}/>
         </Grid>
         <Grid item xs={3}>
-          <Typography><b>Symbol: <span style={{color: 'red'}}>{tail.driver.symbol}</span></b></Typography>
+          <Typography><b>Symbol: <span style={{color: 'red'}}>{driver.symbol}</span></b></Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography><b>WUC:</b> {tail.driver.wuc}</Typography>
+          <Typography><b>WUC:</b> {driver.wuc}</Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography><b>Shop:</b> {tail.driver.shop}</Typography>
+          <Typography><b>Shop:</b> {driver.shop}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography><b>Descrepancy:</b> {tail.driver.discrepancy}</Typography>
+          <Typography><b>Discrepancy:</b> {driver.discrepancy}</Typography>
         </Grid>
         <Grid item 
           xs={12}
@@ -59,9 +76,11 @@ export default function StatusDriver(props) {
           }}  
         >
           <h4>Notes</h4>
-          <Notes tail={tail} />
+          <Notes tail={driver.notes} />
         </Grid>
       </Grid>
+      :
+      null} 
     </Box>
   )
 }

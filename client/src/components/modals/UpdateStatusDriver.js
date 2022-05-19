@@ -52,12 +52,12 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function UpdateStatusDriver(props) {
-  const tail = props.tail;
+  const driver = props.driver;
   const [open, setOpen] = useState(false);
-  const [etic, setEtic] = useState(tail.driver.mx_etic);
-  const [mxStart, setMxStart] = useState(tail.driver.mx_etic_start);
-  const [wuc, setWuc] = useState(tail.driver.wuc);
-  const [shop, setShop] = useState(tail.driver.shop);
+  const [etic, setEtic] = useState(driver.mx_etic);
+  const [mxStart, setMxStart] = useState(driver.mx_etic_start);
+  const [wuc, setWuc] = useState(driver.wuc);
+  const [shop, setShop] = useState(driver.shop);
 
   const formatDate = (time) => {
     if (time === null) return null;
@@ -92,21 +92,21 @@ export default function UpdateStatusDriver(props) {
   };
 
   const handleSubmit = () => {
-    //handleUpdate();
-    console.log('ETIC:', etic);
-    console.log(new Date(etic));
-    console.log(new Date(etic).toISOString);
-    console.log('Mx Start:', mxStart);
-    console.log(new Date(mxStart));
-    console.log(new Date(mxStart).toISOString);
-    // axios.patch(`${BASE_URL}/imds/${tail.driver.jcn}`,
-    // {
-    //   'mx_etic': new Date(etic).toISOString(),
-    //   'mx_etic_start': new Date(mxStart).toISOString(),
-    //   'shop': shop,
-    //   'wuc': wuc
-    // })
-    //.then((res) => console.log(res))
+    let eUpdate = driver.etic_update;
+    if( eUpdate === null){
+      eUpdate = 0
+    }
+    eUpdate++;
+    const tempDriver = {
+      'mx_etic': new Date(etic).toISOString(),
+      'mx_etic_start': new Date(mxStart).toISOString(),
+      'etic_update': eUpdate,
+      'shop': shop,
+      'wuc': wuc
+    }
+    axios.patch(`${BASE_URL}/imds/${driver.jcn}`, tempDriver)
+    
+    props.updateDriver(tempDriver)
     handleClose();
   }
 
@@ -130,7 +130,7 @@ export default function UpdateStatusDriver(props) {
           <TextField 
             id='jcn'
             label='JCN'
-            defaultValue={tail.driver.jcn}
+            defaultValue={driver.jcn}
             type='tel' 
             sx={{
               paddingBottom: '20px',
@@ -143,7 +143,7 @@ export default function UpdateStatusDriver(props) {
             label='ETIC'
             type='datetime-local'
             onChange={e => {handleUpdate(e)}}
-            defaultValue={formatDate(tail.driver.mx_etic)}
+            // defaultValue={formatDate(driver.mx_etic)}
             InputLabelProps={{ shrink: true }}
             sx={{
               paddingBottom: '20px',
@@ -156,7 +156,7 @@ export default function UpdateStatusDriver(props) {
             label='Mx Start'
             type='datetime-local'
             onChange={e => {handleUpdate(e)}}
-            defaultValue={formatDate(tail.driver.mx_etic_start)}
+            // defaultValue={formatDate(driver.mx_etic_start)}
             InputLabelProps={{ shrink: true }}
             sx={{
               paddingBottom: '20px',
@@ -168,7 +168,7 @@ export default function UpdateStatusDriver(props) {
             name='wuc'
             label='WUC'
             onChange={e => {handleUpdate(e)}}
-            defaultValue={tail.driver.wuc}
+            defaultValue={driver.wuc}
             sx={{
               paddingBottom: '20px',
               textAlign: 'center'
@@ -179,7 +179,7 @@ export default function UpdateStatusDriver(props) {
             name='shop'
             label='Shop'
             onChange={e => {handleUpdate(e)}}
-            defaultValue={tail.driver.shop}
+            defaultValue={driver.shop}
             sx={{
               paddingBottom: '20px',
               textAlign: 'center'

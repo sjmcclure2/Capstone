@@ -62,7 +62,7 @@ export default function AddNote(props) {
   const handleSubmit = () => {
     axios.post(`${BASE_URL}/notes`,
       {
-        jcn: tail.driver.jcn,
+        jcn: tail.jcn,
         note: newNote
       }
     )
@@ -88,16 +88,16 @@ export default function AddNote(props) {
         New Note
       </BootstrapDialogTitle>
       <DialogContent dividers>
-          <TextField
+          {/* <TextField
             id='jcn'
             label="JCN"
-            defaultValue={tail.driver.jcn}
+            defaultValue={tail.jcn}
             type='tel'
             InputLabelProps={{ shrink: true }}
             sx={{
               paddingBottom: '20px'
             }}
-          /><br/>
+          /><br/> */}
           <TextField
             onChange={(e) => {handleChange(e)}}
             id="note"

@@ -73,7 +73,8 @@ router.get('/', async (req, res) => {
           return Promise.all(data).then(data => data)
         })
         .catch(err => console.error(err));
-        plane.driver = jobs.sort((a, b) => a.priority - b.priority)[0] ?? null;
+        plane.jcns = jobs;
+        // plane.driver = jobs.sort((a, b) => a.priority - b.priority)[0] ?? null;
         
         return plane;
       })

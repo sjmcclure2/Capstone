@@ -7,7 +7,7 @@ import EditNote from './modals/EditNote';
 
 export default function Notes(props) {
   const tail = props.tail;
-  const [ notes, setNotes ] = useState(props.tail.driver.notes)
+  const [ notes, setNotes ] = useState(props.tail)
 
   useEffect(() => {}, [notes]);
 
@@ -24,6 +24,7 @@ export default function Notes(props) {
 
   return (
     <Box>
+      {notes ?
       <Card elevation={0} sx = {{padding: '10px', marginBottom: '10px', backgroundColor: '#ded9cc', borderBottomStyle: 'groove'}}>
         {notes.map(note => ( 
           <Box key={note.id}>
@@ -44,6 +45,8 @@ export default function Notes(props) {
             </IconButton>
           </Tooltip>
       </Card>
+      : null
+      }
     </Box>
   )
 }

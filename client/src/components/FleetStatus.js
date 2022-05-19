@@ -23,7 +23,7 @@ export default function FleetStatus() {
     <div style={{backgroundColor: '3b3a38'}}> 
       {acft.map((tail, index) => (
         <div key={tail.id} style={{marginBottom: '5px'}}>
-          <AircraftStatus tail={tail} index={index}/> 
+          <AircraftStatus acft={tail} index={index}/> 
           <Accordion expanded={expanded === tail.id} onChange={handleChange(tail.id)} sx={{backgroundColor: '#1A2930'}}> 
             <AccordionSummary expandIcon={<ExpandMoreIcon style={{color: 'white'}}/>}
               aria-controls="panel1bh-content" id="panel1bh-header" sx={{color: 'orange', display: 'flex', flexDirection: 'column'}}>
@@ -31,7 +31,7 @@ export default function FleetStatus() {
             </AccordionSummary>
             <AccordionDetails> 
               <Card elevation={20} sx={{flexShrink: 0, backgroundColor: '#FDFD96', color: 'black', padding: '5px'}}>
-                <StatusDriver tail={tail}/> 
+                <StatusDriver acft={tail}/> 
               </Card>
             </AccordionDetails>
           </Accordion>

@@ -169,7 +169,7 @@ export default function PersistentDrawerLeft() {
             backgroundColor: '#1A2930', 
             height: '100%'}}
         >
-          {["Today's Flying",'Fleet Status', 'Weekly Flying Schedule', 'New Sortie'].map((text, index) => (
+          {["Today's Flying",'Fleet Status', 'Weekly Flying', 'New Sortie'].map((text, index) => (
             <ListItem 
               button 
               component={Link} 
@@ -197,7 +197,7 @@ export default function PersistentDrawerLeft() {
           <Route path='New%20Sortie' element={<BuildSortie />} />
           <Route path='Scheduled%20Mx' element={<ScheduledMx />} />
           <Route path="Today's%20Flying" element={<TodaySorties />} />
-          <Route path='Weekly%20Flying%20Schedule' element={<Flyingschedule />} />
+          <Route path='Weekly%20Flying' element={<Flyingschedule />} />
         </Routes>
       </Main>
     </Box>
