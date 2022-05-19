@@ -87,10 +87,12 @@ export default function PersistentDrawerLeft() {
 
   return (
     <Box
-      style={{ 
+      sx={{ 
         display: 'flex', 
         height: '100vh',
-        width: '100vw'
+        width: '100vw', 
+        paddingBottom: '15px',
+        margin: '0'
       }}
     >
       <CssBaseline />

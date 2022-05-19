@@ -1,7 +1,7 @@
 ## Streamlined Aircraft Logistics Tracking
 # SALT
 
-Logo: ![image](image url)
+ ![image](./client/public/salt-shaker-64.ico)
 
 ## Table of Contents
 

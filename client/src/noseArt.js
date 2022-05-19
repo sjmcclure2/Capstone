@@ -18,5 +18,5 @@ export const noseArt = [
   "https://i.pinimg.com/originals/fd/8f/32/fd8f321d59919aaa275394dbc72a48cb.jpg",
   "http://www.warbirdsnews.com/wp-content/uploads/New-Nose-art-for-B-17-Swamp-Ghost.jpg",
   "https://i.pinimg.com/236x/7a/a6/aa/7aa6aaab8628b2eedb3324a836017b64.jpg",
-  "https://i.pinimg.com/736x/1a/cd/65/1acd65318f9ee46554208cab509aa026--x-rays-wwii.jpg"
+  "https://www.wearethemighty.com/uploads/2018/04/origin-17.jpg"
 ]

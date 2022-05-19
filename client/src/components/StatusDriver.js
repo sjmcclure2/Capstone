@@ -16,7 +16,6 @@ export default function StatusDriver(props) {
   }, [])
 
   const updateDriver = (tempDriver) => {
-    console.log(tempDriver);
     const tempObj = {...driver, ...tempDriver};
     setDriver(tempObj);
   }

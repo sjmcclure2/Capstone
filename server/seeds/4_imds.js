@@ -11,7 +11,7 @@ exports.seed = async function(knex) {
   
   const aircraft = await knex('aircraft').select('tail_number');
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 200; i++) {
     const tail_number = faker.helpers.arrayElement(aircraft).tail_number;
     const mx_etic_start = faker.date.recent(30)
     const mx_etic = faker.date.soon(2, mx_etic_start)

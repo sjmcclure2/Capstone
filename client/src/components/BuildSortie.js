@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Card, Checkbox, FormControlLabel, MenuItem, Paper, TextField, Typography, FormControl } from '@mui/material';
 import axios from 'axios';
+import { format } from 'date-fns';
 // import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 import { BASE_URL } from '../App';
@@ -63,9 +64,13 @@ export default function BuildSortie() {
     setTail(e.target.value)
   }
 
+  const formatDate = (dateToFormat) => {
+    return format(new Date(dateToFormat), 'd MMM @ HH:mm');
+  }
+
   return (
     <Box>
-      <Paper sx={{margin: '15px', padding: '20px', height: '25%', textAlign: 'center', backgroundColor: '#c9cdd4'}}>
+      <Paper sx={{margin: '15px', padding: '20px', height: '25%', textAlign: 'center', backgroundColor: '#1A2930', color: 'white'}}>
         <h3> New </h3>
         <hr style={{marginBottom: '15px'}}></hr>
           <TextField
@@ -75,6 +80,7 @@ export default function BuildSortie() {
             type='datetime-local'
             variant='outlined'
             color='warning'
+            borderColor='white'
             InputLabelProps={{ shrink: true }}
             onChange={(e) => {updateLaunch(e)}}
             sx={{margin:'10px', minWidth:'225px'}}
@@ -113,6 +119,7 @@ export default function BuildSortie() {
           <FormControl sx={{minWidth: 160}}>
             <TextField
               select
+              color='warning'
               label='Aircraft'
               id={aircraft.id}
               value={aircraft.id}
@@ -149,8 +156,9 @@ export default function BuildSortie() {
           margin: '15px',
           padding: '15px',
           height: '50vh',
-          backgroundColor: '#c9cdd4',
-          textAlign: 'center'
+          backgroundColor: '#1A2930',
+          textAlign: 'center',
+          color: 'white'
         }}
       >
         <h2>Sorties Added to Schedule</h2>
@@ -161,8 +169,8 @@ export default function BuildSortie() {
             sx={{backgroundColor: '#FDFD96', textAlign: 'center', margin: '15px'}} 
           >
             <Typography>Aircraft: {sortie.tail_number}</Typography>
-            <Typography>Launch: {sortie.projected_launch}</Typography>
-            <Typography>Land: {sortie.projected_land}</Typography>
+            <Typography>Launch: {formatDate(sortie.projected_launch)}</Typography>
+            <Typography>Land: {formatDate(sortie.projected_land)}</Typography>
             <Typography>Callsign: {sortie.callsign}</Typography>
             <Typography>Fuel Load: {sortie.req_fuel}</Typography>
             {sortie.is_quickturn ? <Typography>Quickturn</Typography> : null}
