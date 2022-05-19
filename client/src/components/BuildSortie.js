@@ -68,88 +68,90 @@ export default function BuildSortie() {
     return format(new Date(dateToFormat), 'd MMM @ HH:mm');
   }
 
+
   return (
     <Box>
       <Paper sx={{margin: '15px', padding: '20px', height: '25%', textAlign: 'center', backgroundColor: '#1A2930', color: 'white'}}>
-        <h3> New </h3>
-        <hr style={{marginBottom: '15px'}}></hr>
-          <TextField
-            label='Take-Off'
-            id='projected_launch'
-            name='projected_launch'
-            type='datetime-local'
-            variant='outlined'
-            color='warning'
-            borderColor='white'
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) => {updateLaunch(e)}}
-            sx={{margin:'10px', minWidth:'225px'}}
-          />
-          <TextField
-            label='Land'
-            id='projected_land'
-            name='projected_land'
-            type='datetime-local'
-            variant='outlined'
-            color='warning'
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) => {updateLand(e)}}
-            sx={{margin:'10px', minWidth: '225px'}}
-          />
-          <TextField
-            label='Callsign'
-            id='callsign'
-            name='callsign'
-            type='callsign'
-            variant='outlined'
-            color='warning'
-            onChange={(e) => {updateCallsign(e)}}
-            sx={{margin:'10px'}}
-          />
-          <TextField
-            label='Fuel Load'
-            type='number'
-            id='req_fule'
-            name='req_fuel'
-            variant='outlined'
-            color='warning'
-            onChange={(e) => {updateReqFuel(e)}}
-            sx={{margin:'10px'}} 
-          />
-          <FormControl sx={{minWidth: 160}}>
+        <Card sx={{backgroundColor: '#FDFD96',}}>
+          <h3> New </h3>
+          <hr style={{marginBottom: '15px'}}></hr>
             <TextField
-              select
+              label='Take-Off'
+              id='projected_launch'
+              name='projected_launch'
+              type='datetime-local'
+              variant='outlined'
               color='warning'
-              label='Aircraft'
-              id={aircraft.id}
-              value={aircraft.id}
-              onChange={(e) => {updateAircraft(e)}}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) => {updateLaunch(e)}}
+              sx={{margin:'10px', minWidth:'225px'}}
+            />
+            <TextField
+              label='Land'
+              id='projected_land'
+              name='projected_land'
+              type='datetime-local'
+              variant='outlined'
+              color='warning'
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) => {updateLand(e)}}
+              sx={{margin:'10px', minWidth: '225px'}}
+            />
+            <TextField
+              label='Callsign'
+              id='callsign'
+              name='callsign'
+              type='callsign'
+              variant='outlined'
+              color='warning'
+              onChange={(e) => {updateCallsign(e)}}
               sx={{margin:'10px'}}
+            />
+            <TextField
+              label='Fuel Load'
+              type='number'
+              id='req_fule'
+              name='req_fuel'
+              variant='outlined'
+              color='warning'
+              onChange={(e) => {updateReqFuel(e)}}
+              sx={{margin:'10px'}} 
+            />
+            <FormControl sx={{minWidth: 160}}>
+              <TextField
+                select
+                color='warning'
+                label='Aircraft'
+                id={aircraft.id}
+                value={aircraft.id}
+                onChange={(e) => {updateAircraft(e)}}
+                sx={{margin:'10px'}}
+              >
+                {aircraft.map(acft =><MenuItem id={acft.id} value={acft}>{acft.tail_number}</MenuItem>)}
+              
+              </TextField>
+            </FormControl>
+            <FormControlLabel
+              label='Quickturn'
+              sx={{paddingBottom: '20px', margin: '15px'}}
+              control={
+                <Checkbox
+                  id='quickturn'
+                  label='Quickturn'
+                  onChange={updateQuickTurn}
+                />
+              }
+            />
+            <Button 
+              variant='text'
+              size='large'
+              onClick={postSortie}
+              color='success'
+              sx={{marginLeft: '20px', paddingBottom: ' 20px'}}  
             >
-              {aircraft.map(acft =><MenuItem id={acft.id} value={acft}>{acft.tail_number}</MenuItem>)}
-             
-            </TextField>
-          </FormControl>
-          <FormControlLabel
-            label='Quickturn'
-            sx={{paddingBottom: '20px', margin: '15px'}}
-            control={
-              <Checkbox
-                id='quickturn'
-                label='Quickturn'
-                onChange={updateQuickTurn}
-              />
-            }
-          />
-          <Button 
-            variant='text'
-            size='large'
-            onClick={postSortie}
-            color='success'
-            sx={{marginLeft: '20px', paddingBottom: ' 20px'}}  
-          >
-              Add Sortie
-          </Button>
+                Add Sortie
+            </Button>
+          </Card>
       </Paper>
       <Card
         sx={{
