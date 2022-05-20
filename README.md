@@ -1,4 +1,4 @@
-## Streamlined Aircraft Logistics Tracking
+## Synchronous Aircraft Logistics Tracking
 # SALT
 
  ![image](./client/public/salt-shaker-64.ico)
