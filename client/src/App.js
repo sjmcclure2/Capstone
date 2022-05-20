@@ -135,42 +135,36 @@ export default function PersistentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            borderColor: '#1A2930'
+            borderColor: '#1A2930',
+            background: '#1A2930',
+            color: 'white'
           },
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader 
-          sx={{
-            backgroundColor: '#1A2930'}}
-          >
+        <DrawerHeader>
           <Typography 
-            variant='h5' 
+            variant='h1' 
             sx={{
-              padding: '25px',
-              color: 'white', 
-              textAlign: 'center',
-              fontFamily: 'cursive'}}
+              font: 'italic 1.5em "Brush Script MT", "Brush Script Std", "Lucida Calligraphy", "Lucida Handwriting", "Apple Chancery", Cursive'
+            }}
           >
-            {/* <span>SALT</span><br/> */}
-            <small><b>S</b>ynchronus <b>A</b>ircraft <b>L</b>ogistics <b>T</b>racker</small>
-            <hr style={{marginBottom: '15px'}}></hr>
+            Synchronous<br />
+            Aircraft<br />
+            Logistics<br />
+            Tracker
           </Typography>
-          <IconButton 
-            onClick={handleDrawerClose} 
-            sx={{
-              color: 'white'}}
-            >
+          <IconButton
+            onClick={handleDrawerClose}
+            sx={{color: 'white'}}
+          >
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <List 
-          sx={{
-            backgroundColor: '#1A2930', 
-            height: '100%'}}
-        >
+        <hr style={{margin: '10px'}} />
+        <List>
           {["Today's Flying",'Fleet Status', 'Weekly Flying', 'New Sortie'].map((text, index) => (
             <ListItem 
               button 
